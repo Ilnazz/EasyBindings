@@ -3,41 +3,11 @@ using System.Linq.Expressions;
 
 namespace BindingServices;
 
+/// <summary>
+/// Allows you to bind the properties of one object to another
+/// </summary>
 public static class PropertyBindingService
 {
-    private class PropertyBinding
-    {
-        public object Context { get; init; }
-
-        public dynamic? Target { get; init; }
-
-        public string TargetPropertyName { get; init; }
-
-        public PropertyChangedEventHandler? TargetPropertyChangedEventHandler { get; init; }
-
-        public dynamic? Source { get; init; }
-
-        public string SourcePropertyName { get; init; }
-
-        public PropertyChangedEventHandler? SourcePropertyChangedEventHandler { get; init; }
-
-        public PropertyBinding
-        (
-            object context, dynamic? target, string targetPropertyName,
-            PropertyChangedEventHandler? targetPropertyChangedEventHandler,
-            dynamic? source, string sourcePropertyName,
-            PropertyChangedEventHandler sourcePropertyChangedEventHandler)
-        {
-            Context = context;
-            Target = target;
-            TargetPropertyName = targetPropertyName;
-            TargetPropertyChangedEventHandler = targetPropertyChangedEventHandler;
-            Source = source;
-            SourcePropertyName = sourcePropertyName;
-            SourcePropertyChangedEventHandler = sourcePropertyChangedEventHandler;
-        }
-    }
-
     private static readonly IList<PropertyBinding> _propertyBindings = new List<PropertyBinding>();
 
     #region Public methods 
@@ -254,4 +224,37 @@ public static class PropertyBindingService
         return propertySetter;
     }
     #endregion
+
+    private class PropertyBinding
+    {
+        public object Context { get; init; }
+
+        public dynamic? Target { get; init; }
+
+        public string TargetPropertyName { get; init; }
+
+        public PropertyChangedEventHandler? TargetPropertyChangedEventHandler { get; init; }
+
+        public dynamic? Source { get; init; }
+
+        public string SourcePropertyName { get; init; }
+
+        public PropertyChangedEventHandler? SourcePropertyChangedEventHandler { get; init; }
+
+        public PropertyBinding
+        (
+            object context, dynamic? target, string targetPropertyName,
+            PropertyChangedEventHandler? targetPropertyChangedEventHandler,
+            dynamic? source, string sourcePropertyName,
+            PropertyChangedEventHandler sourcePropertyChangedEventHandler)
+        {
+            Context = context;
+            Target = target;
+            TargetPropertyName = targetPropertyName;
+            TargetPropertyChangedEventHandler = targetPropertyChangedEventHandler;
+            Source = source;
+            SourcePropertyName = sourcePropertyName;
+            SourcePropertyChangedEventHandler = sourcePropertyChangedEventHandler;
+        }
+    }
 }
