@@ -18,17 +18,17 @@ Install-Package EasyBindings
 
 ### Examples
 
-1. Trigger binding
+* Trigger binding
 ```csharp
 ...
 ```
 
-2. Command binding
+* Command binding
 ```csharp
 ...
 ```
 
-3. Property binding
+* Property binding
 ```csharp
 ...
 ```
