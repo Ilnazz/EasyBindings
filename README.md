@@ -23,10 +23,12 @@ Install-Package EasyBindings
 ...
 ```
 
+
 * Command binding
 ```csharp
 ...
 ```
+
 
 * Property binding
 ```csharp
