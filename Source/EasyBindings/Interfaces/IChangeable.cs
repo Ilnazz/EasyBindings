@@ -1,4 +1,4 @@
-﻿namespace BindingServices.Interfaces;
+﻿namespace EasyBindings.Interfaces;
 
 /// <summary>
 /// Represents an object that can change state

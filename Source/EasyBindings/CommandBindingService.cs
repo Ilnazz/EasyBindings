@@ -1,8 +1,8 @@
-﻿using BindingServices.Interfaces;
+﻿using EasyBindings.Interfaces;
 using CommunityToolkit.Mvvm.Input;
 using System.Windows.Input;
 
-namespace BindingServices;
+namespace EasyBindings;
 
 /// <summary>
 /// Allows you to bind a <see cref="ICommand"/>s to a <see cref="ICommandExecutor"/>s.

@@ -1,3 +1,3 @@
 global using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace BindingServices.Tests;
+namespace EasyBindings.Tests;

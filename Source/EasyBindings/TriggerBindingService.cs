@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Linq.Expressions;
 
-namespace BindingServices;
+namespace EasyBindings;
 
 /// <summary>
 /// Allows you to bind event handlers (triggers) to a <see cref="INotifyPropertyChanged"/>, <see cref="INotifyPropertyChanging"/> and <see cref="INotifyCollectionChanged"/> events.

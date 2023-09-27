@@ -1,4 +1,4 @@
-﻿namespace BindingServices.Interfaces;
+﻿namespace EasyBindings.Interfaces;
 
 /// <summary>
 /// Provides a mechanism for unsubscribe object from all events.

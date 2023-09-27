@@ -1,4 +1,4 @@
-﻿namespace BindingServices.Interfaces;
+﻿namespace EasyBindings.Interfaces;
 
 /// <summary>
 /// Provides a mechanism for notifying about the need to execute a command and switch command execution ability

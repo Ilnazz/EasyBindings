@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Linq.Expressions;
 
-namespace BindingServices;
+namespace EasyBindings;
 
 /// <summary>
 /// Allows you to bind the properties of one object to another
