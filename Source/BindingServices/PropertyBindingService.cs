@@ -10,13 +10,13 @@ public static class PropertyBindingService
         public object Context { get; init; }
 
         public dynamic? Target { get; init; }
-        
+
         public string TargetPropertyName { get; init; }
 
         public PropertyChangedEventHandler? TargetPropertyChangedEventHandler { get; init; }
 
         public dynamic? Source { get; init; }
-        
+
         public string SourcePropertyName { get; init; }
 
         public PropertyChangedEventHandler? SourcePropertyChangedEventHandler { get; init; }
@@ -41,7 +41,7 @@ public static class PropertyBindingService
     private static readonly IList<PropertyBinding> _propertyBindings = new List<PropertyBinding>();
 
     #region Public methods 
-    #region Registration
+    #region Registering
     public static void OneWay<TTarget, TSource, TProperty>
     (
         object context,
@@ -78,7 +78,7 @@ public static class PropertyBindingService
             source, sourcePropertyName, sourcePropertyChangedEventHandler
         ));
 
-        // Set source property value to target property
+        // Initialize target property by source property value
         sourcePropertyChangedEventHandler(null, new PropertyChangedEventArgs(sourcePropertyName));
     }
 
@@ -120,7 +120,7 @@ public static class PropertyBindingService
             source, sourcePropertyName, sourcePropertyChangedEventHandler
         ));
 
-        // Set source property value to target property
+        // Initialize target property by source property value
         sourcePropertyChangedEventHandler(null, new PropertyChangedEventArgs(sourcePropertyName));
     }
 
@@ -174,7 +174,7 @@ public static class PropertyBindingService
     }
     #endregion
 
-    #region Unregistration
+    #region Unregistering
     public static void UnregisterFromTarget<T, TProperty>(object context, object target, Expression<Func<T, TProperty>> targetPropertyGetterExpr)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
@@ -243,8 +243,8 @@ public static class PropertyBindingService
         ArgumentNullException.ThrowIfNull(sourcePropertyGetterExpr, nameof(sourcePropertyGetterExpr));
     }
 
-    private static string GetPropertyName<T, TProperty>(Expression<Func<T, TProperty>> propertyGetterExpr)
-        => ((MemberExpression)propertyGetterExpr.Body).Member.Name;
+    private static string GetPropertyName<T, TProperty>(Expression<Func<T, TProperty>> propertyGetterExpr) =>
+        ((MemberExpression)propertyGetterExpr.Body).Member.Name;
 
     private static Action<T, TProperty> CreatePropertySetter<T, TProperty>(Expression<Func<T, TProperty>> propertyGetter)
     {

@@ -15,7 +15,7 @@ public static class CommandBindingService
         public Action CommandExecutionRequestedEventHandler { get; init; }
 
         public ICommand Command { get; init; }
-        
+
         public EventHandler CommanCanExecuteChangedEventHandler { get; init; }
 
         public CommandBinding
@@ -34,6 +34,8 @@ public static class CommandBindingService
 
     private static readonly IList<CommandBinding> _commandBindings = new List<CommandBinding>();
 
+    #region Public methods
+    #region Registering
     public static void Register(object context, ICommandExecutor commandExecutor, ICommand command)
     {
         CheckRegistrationArgs(context, commandExecutor, command);
@@ -71,7 +73,9 @@ public static class CommandBindingService
 
         commandExecutor.CanExecuteCommand = command.CanExecute(commandParameterGetter());
     }
+    #endregion
 
+    #region Unregistering
     public static void Unregister(object context)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
@@ -87,7 +91,10 @@ public static class CommandBindingService
         if (commandBinding is not null)
             Unregister(commandBinding);
     }
+    #endregion
+    #endregion
 
+    #region Private methods
     private static void Unregister(CommandBinding commandBinding)
     {
         commandBinding.CommandExecutor.CommandExecutionRequested -= commandBinding.CommandExecutionRequestedEventHandler;
@@ -124,4 +131,5 @@ public static class CommandBindingService
         if (_commandBindings.Any(cb => cb.CommandExecutor == commandExecutor))
             throw new Exception($"{commandExecutor} is already bound with command");
     }
+    #endregion
 }
