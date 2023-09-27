@@ -1,4 +1,3 @@
-using EasyBindings;
 using EasyBindings.Tests.Controls;
 
 namespace EasyBindings.Tests;
@@ -14,9 +13,22 @@ public class PropertyBindingServiceTests
 
         PropertyBindingService.OneWay(this, textLabel, t => t.Text, textInput, s => s.Text);
 
-        textInput.Text = "...";
+        textInput.Text = "text";
 
         Assert.AreEqual(textLabel.Text, textInput.Text);
+    }
+
+    [TestMethod]
+    public void TestOneWayWithConverter()
+    {
+        var textLabel = new TextLabel();
+        var textInput = new TextInput();
+
+        PropertyBindingService.OneWay(this, textLabel, t => t.Text, textInput, s => s.Text, sourceText => sourceText.ToUpper());
+
+        textInput.Text = "text";
+
+        Assert.AreEqual(textLabel.Text, textInput.Text.ToUpper());
     }
 
     [TestMethod]
@@ -27,9 +39,22 @@ public class PropertyBindingServiceTests
 
         PropertyBindingService.OneWayToSource(this, textInput, t => t.Text, textLabel, s => s.Text);
 
-        textInput.Text = "...";
+        textInput.Text = "text";
 
         Assert.AreEqual(textLabel.Text, textInput.Text);
+    }
+
+    [TestMethod]
+    public void TestOneWayToSourceWithConverter()
+    {
+        var textLabel = new TextLabel();
+        var textInput = new TextInput();
+
+        PropertyBindingService.OneWay(this, textLabel, t => t.Text, textInput, s => s.Text, sourceText => sourceText.ToUpper());
+
+        textInput.Text = "text";
+
+        Assert.AreEqual(textLabel.Text, textInput.Text.ToUpper());
     }
 
     [TestMethod]
@@ -40,11 +65,26 @@ public class PropertyBindingServiceTests
 
         PropertyBindingService.TwoWay(this, textInput1, t => t.Text, textInput2, s => s.Text);
 
-        textInput1.Text = "...";
+        textInput1.Text = "text";
         Assert.AreEqual(textInput2.Text, textInput1.Text);
 
         textInput2.Text = "";
         Assert.AreEqual(textInput1.Text, textInput2.Text);
+    }
+
+    [TestMethod]
+    public void TestTwoWayWithConverter()
+    {
+        var textInput1 = new TextInput();
+        var textInput2 = new TextInput();
+
+        PropertyBindingService.TwoWay(this, textInput1, t => t.Text, textInput2, s => s.Text, targetText => targetText.ToUpper(), sourceText => sourceText.ToLower());
+
+        textInput1.Text = "text";
+        Assert.AreEqual(textInput2.Text, textInput1.Text.ToUpper());
+
+        textInput2.Text = "TEXT";
+        Assert.AreEqual(textInput1.Text, textInput2.Text.ToLower());
     }
 
     [TestMethod]
