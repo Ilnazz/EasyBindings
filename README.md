@@ -7,11 +7,11 @@ EasyBindings - небольшая C# библиотека, которая поз
 EasyBindings is a tiny WPF-inspired library that makes it possible to perform WPF-like trigger, property and command bindings outside of WPF platform.
 
 ### Installation
-You can install EasyBindings using dotnet tool
+You can install EasyBindings using dotnet command-line tool
 ```sh
 dotnet add package EasyBindings
 ```
-or using NuGet
+or using NuGet package manager console
 ```sh
 Install-Package EasyBindings
 ```
