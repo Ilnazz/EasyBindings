@@ -4,64 +4,11 @@ using System.Linq.Expressions;
 
 namespace BindingServices;
 
+/// <summary>
+/// Allows you to bind event handlers (triggers) to a <see cref="INotifyPropertyChanged"/>, <see cref="INotifyPropertyChanging"/> and <see cref="INotifyCollectionChanged"/> events.
+/// </summary>
 public static class TriggerBindingService
 {
-    #region Data types
-    private class PropertyChangedTriggerBinding
-    {
-        public object Context { get; init; }
-
-        public INotifyPropertyChanged Observable { get; init; }
-
-        public string PropertyName { get; init; }
-
-        public PropertyChangedEventHandler EventHandler { get; init; }
-
-        public PropertyChangedTriggerBinding(object context, INotifyPropertyChanged observable, string propertyName, PropertyChangedEventHandler eventHandler)
-        {
-            Context = context;
-            Observable = observable;
-            PropertyName = propertyName;
-            EventHandler = eventHandler;
-        }
-    }
-
-    private class PropertyChangingTriggerBinding
-    {
-        public object Context { get; init; }
-
-        public INotifyPropertyChanging Observable { get; init; }
-
-        public string PropertyName { get; init; }
-
-        public PropertyChangingEventHandler EventHandler { get; init; }
-
-        public PropertyChangingTriggerBinding(object context, INotifyPropertyChanging observable, string propertyName, PropertyChangingEventHandler eventHandler)
-        {
-            Context = context;
-            Observable = observable;
-            PropertyName = propertyName;
-            EventHandler = eventHandler;
-        }
-    }
-
-    private class CollectionChangedTriggerBinding
-    {
-        public object Context { get; init; }
-
-        public INotifyCollectionChanged ObservableCollection { get; init; }
-
-        public NotifyCollectionChangedEventHandler EventHandler { get; init; }
-
-        public CollectionChangedTriggerBinding(object context, INotifyCollectionChanged observableCollection, NotifyCollectionChangedEventHandler eventHandler)
-        {
-            Context = context;
-            ObservableCollection = observableCollection;
-            EventHandler = eventHandler;
-        }
-    }
-    #endregion
-
     #region Fields
     private static readonly IList<PropertyChangedTriggerBinding> _propertyChangedTriggerBindings = new List<PropertyChangedTriggerBinding>();
 
@@ -73,6 +20,15 @@ public static class TriggerBindingService
     #region Public methods
     #region Registering
     #region PropertyChanged
+    /// <summary>
+    /// Binds a trigger to changes of a given property in the <paramref name="observable"/> object.
+    /// </summary>
+    /// <typeparam name="TObservable">The type of the observable object.</typeparam>
+    /// <typeparam name="TProperty">The type of the <paramref name="observable"/> object's property.</typeparam>
+    /// <param name="context">The context in which the binding is being made.</param>
+    /// <param name="observable">The observable object.</param>
+    /// <param name="observablePropertyGetterExpr">An expression representing the getter of the observable property.</param>
+    /// <param name="trigger">The trigger to be executed when the property changes.</param>
     public static void RegisterPropertyChanged<TObservable, TProperty>
     (
         object context,
@@ -94,6 +50,15 @@ public static class TriggerBindingService
         RegisterPropertyChangedInternal(context, observable, propertyName, eventHandler);
     }
 
+    /// <summary>
+    /// Binds a trigger to changes of a given property in the <paramref name="observable"/> object.
+    /// </summary>
+    /// <typeparam name="TObservable">The type of the observable object.</typeparam>
+    /// <typeparam name="TProperty">The type of the <paramref name="observable"/> object's property.</typeparam>
+    /// <param name="context">The context in which the binding is being made.</param>
+    /// <param name="observable">The observable object.</param>
+    /// <param name="observablePropertyGetterExpr">An expression representing the getter of the observable property.</param>
+    /// <param name="trigger">The trigger to be executed when the property changes.</param>
     public static void RegisterPropertyChanged<TObservable, TProperty>
     (
         object context,
@@ -115,6 +80,15 @@ public static class TriggerBindingService
         RegisterPropertyChangedInternal(context, observable, propertyName, eventHandler);
     }
 
+    /// <summary>
+    /// Binds a trigger to changes of a given property in the <paramref name="observable"/> object.
+    /// </summary>
+    /// <typeparam name="TObservable">The type of the observable object.</typeparam>
+    /// <typeparam name="TProperty">The type of the <paramref name="observable"/> object's property.</typeparam>
+    /// <param name="context">The context in which the binding is being made.</param>
+    /// <param name="observable">The observable object.</param>
+    /// <param name="observablePropertyGetterExpr">An expression representing the getter of the observable property.</param>
+    /// <param name="trigger">The trigger to be executed when the property changes.</param>
     public static void RegisterPropertyChanged<TObservable, TProperty>
     (
         object context,
@@ -138,6 +112,15 @@ public static class TriggerBindingService
     #endregion
 
     #region PropertyChanging
+    /// <summary>
+    /// Binds a trigger to changes of a given property in the <paramref name="observable"/> object.
+    /// </summary>
+    /// <typeparam name="TObservable">The type of the observable object.</typeparam>
+    /// <typeparam name="TProperty">The type of the <paramref name="observable"/> object's property.</typeparam>
+    /// <param name="context">The context in which the binding is being made.</param>
+    /// <param name="observable">The observable object.</param>
+    /// <param name="observablePropertyGetterExpr">An expression representing the getter of the observable property.</param>
+    /// <param name="trigger">The trigger to be executed when the property changes.</param>
     public static void RegisterPropertyChanging<TObservable, TProperty>
     (
         object context,
@@ -159,6 +142,15 @@ public static class TriggerBindingService
         RegisterPropertyChangingInternal(context, observable, propertyName, eventHandler);
     }
 
+    /// <summary>
+    /// Binds a trigger to changes of a given property in the <paramref name="observable"/> object.
+    /// </summary>
+    /// <typeparam name="TObservable">The type of the observable object.</typeparam>
+    /// <typeparam name="TProperty">The type of the <paramref name="observable"/> object's property.</typeparam>
+    /// <param name="context">The context in which the binding is being made.</param>
+    /// <param name="observable">The observable object.</param>
+    /// <param name="observablePropertyGetterExpr">An expression representing the getter of the observable property.</param>
+    /// <param name="trigger">The trigger to be executed when the property changes.</param>
     public static void RegisterPropertyChanging<TObservable, TProperty>
     (
         object context,
@@ -180,6 +172,15 @@ public static class TriggerBindingService
         RegisterPropertyChangingInternal(context, observable, propertyName, eventHandler);
     }
 
+    /// <summary>
+    /// Binds a trigger to changes of a given property in the <paramref name="observable"/> object.
+    /// </summary>
+    /// <typeparam name="TObservable">The type of the observable object.</typeparam>
+    /// <typeparam name="TProperty">The type of the <paramref name="observable"/> object's property.</typeparam>
+    /// <param name="context">The context in which the binding is being made.</param>
+    /// <param name="observable">The observable object.</param>
+    /// <param name="observablePropertyGetterExpr">An expression representing the getter of the observable property.</param>
+    /// <param name="trigger">The trigger to be executed when the property changes.</param>
     public static void RegisterPropertyChanging<TObservable, TProperty>
     (
         object context,
@@ -203,6 +204,13 @@ public static class TriggerBindingService
     #endregion
 
     #region CollectionChanged
+    /// <summary>
+    /// Binds a trigger to changes in the <paramref name="observableCollection"/> object.
+    /// </summary>
+    /// <typeparam name="TObservableCollection">The type of the observable object.</typeparam>
+    /// <param name="context">The context in which the binding is being made.</param>
+    /// <param name="observableCollection">The observable collection object.</param>
+    /// <param name="trigger">The trigger to be executed when the collection changes.</param>
     public static void RegisterCollectionChanged<TObservableCollection>
     (
         object context,
@@ -219,6 +227,12 @@ public static class TriggerBindingService
         RegisterCollectionChangedInternal(context, observableCollection, eventHandler);
     }
 
+    /// <summary>
+    /// Binds a trigger to changes in the <paramref name="observableCollection"/> object.
+    /// </summary>
+    /// <param name="context">The context in which the binding is being made.</param>
+    /// <param name="observableCollection">The observable collection object.</param>
+    /// <param name="trigger">The trigger to be executed when the collection changes.</param>
     public static void RegisterCollectionChanged
     (
         object context,
@@ -233,6 +247,12 @@ public static class TriggerBindingService
         RegisterCollectionChangedInternal(context, observableCollection, eventHandler);
     }
 
+    /// <summary>
+    /// Binds a trigger to changes in the <paramref name="observableCollection"/> object.
+    /// </summary>
+    /// <param name="context">The context in which the binding is being made.</param>
+    /// <param name="observableCollection">The observable collection object.</param>
+    /// <param name="trigger">The trigger to be executed when the collection changes.</param>
     public static void RegisterCollectionChanged
     (
         object context,
@@ -251,6 +271,11 @@ public static class TriggerBindingService
 
     #region Unregistering
     #region PropertyChanged
+    /// <summary>
+    /// Unbinds all triggers from <paramref name="observable"/> object in the given context.
+    /// </summary>
+    /// <param name="context">The context in which the binding was made.</param>
+    /// <param name="observable">Observable object.</param>
     public static void UnregisterPropertyChanged
     (
         object context,
@@ -265,6 +290,14 @@ public static class TriggerBindingService
             .ForEach(UnregisterPropertyChangedInternal);
     }
 
+    /// <summary>
+    /// Unbinds all triggers from <paramref name="observable"/> object's property in a given context.
+    /// </summary>
+    /// <typeparam name="TObservable">Type of the observable object.</typeparam>
+    /// <typeparam name="TProperty">Type of the <paramref name="observable"/> object's property.</typeparam>
+    /// <param name="context">The context in which the binding was made.</param>
+    /// <param name="observable">Observable object.</param>
+    /// <param name="observablePropertyGetterExpr">An expression representing the getter of the observable property.</param>
     public static void UnregisterPropertyChanged<TObservable, TProperty>
     (
         object context,
@@ -287,6 +320,10 @@ public static class TriggerBindingService
                                        .ForEach(UnregisterPropertyChangedInternal);
     }
 
+    /// <summary>
+    /// Unbinds all trigger bindings made in a given context
+    /// </summary>
+    /// <param name="context"></param>
     public static void UnregisterPropertyChanged(object context)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
@@ -380,7 +417,7 @@ public static class TriggerBindingService
     #endregion
 
     #region Private methods
-    #region Checking
+    #region Checkings
     private static void CheckPropertyChangedOrPropertyChangingRegistrationArgs(object context, object observable, object propertyGetterExpr, object trigger)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
@@ -436,5 +473,61 @@ public static class TriggerBindingService
         _collectionChangedTriggerBindings.Remove(triggerBinding);
     }
     #endregion
+    #endregion
+
+    #region Data types
+    private class PropertyChangedTriggerBinding
+    {
+        public object Context { get; init; }
+
+        public INotifyPropertyChanged Observable { get; init; }
+
+        public string PropertyName { get; init; }
+
+        public PropertyChangedEventHandler EventHandler { get; init; }
+
+        public PropertyChangedTriggerBinding(object context, INotifyPropertyChanged observable, string propertyName, PropertyChangedEventHandler eventHandler)
+        {
+            Context = context;
+            Observable = observable;
+            PropertyName = propertyName;
+            EventHandler = eventHandler;
+        }
+    }
+
+    private class PropertyChangingTriggerBinding
+    {
+        public object Context { get; init; }
+
+        public INotifyPropertyChanging Observable { get; init; }
+
+        public string PropertyName { get; init; }
+
+        public PropertyChangingEventHandler EventHandler { get; init; }
+
+        public PropertyChangingTriggerBinding(object context, INotifyPropertyChanging observable, string propertyName, PropertyChangingEventHandler eventHandler)
+        {
+            Context = context;
+            Observable = observable;
+            PropertyName = propertyName;
+            EventHandler = eventHandler;
+        }
+    }
+
+    private class CollectionChangedTriggerBinding
+    {
+        public object Context { get; init; }
+
+        public INotifyCollectionChanged ObservableCollection { get; init; }
+
+        public NotifyCollectionChangedEventHandler EventHandler { get; init; }
+
+        public CollectionChangedTriggerBinding(object context, INotifyCollectionChanged observableCollection, NotifyCollectionChangedEventHandler eventHandler)
+        {
+            Context = context;
+            ObservableCollection = observableCollection;
+            EventHandler = eventHandler;
+        }
+    }
     #endregion
 }

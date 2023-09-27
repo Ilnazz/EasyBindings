@@ -5,7 +5,7 @@ using System.Windows.Input;
 namespace BindingServices;
 
 /// <summary>
-/// Allows you to bind a <see cref="ICommand"/>s to a <see cref="ICommandExecutor"/>s
+/// Allows you to bind a <see cref="ICommand"/>s to a <see cref="ICommandExecutor"/>s.
 /// </summary>
 public static class CommandBindingService
 {
@@ -14,11 +14,11 @@ public static class CommandBindingService
     #region Public methods
     #region Registering
     /// <summary>
-    /// Binds <see cref="ICommand"/> to a <see cref="ICommandExecutor"/> in a given context
+    /// Binds <paramref name="command"/> to a <paramref name="commandExecutor"/> in a given context.
     /// </summary>
-    /// <param name="context"></param>
-    /// <param name="commandExecutor"></param>
-    /// <param name="command"></param>
+    /// <param name="context">The context in which the binding is being made.</param>
+    /// <param name="commandExecutor">The command executor that will execute the command.</param>
+    /// <param name="command">The command to bind.</param>
     public static void Register(object context, ICommandExecutor commandExecutor, ICommand command)
     {
         CheckRegistrationArgs(context, commandExecutor, command);
@@ -32,12 +32,12 @@ public static class CommandBindingService
     }
 
     /// <summary>
-    /// Binds <see cref="ICommand"/> to a <see cref="ICommandExecutor"/> in a given context
+    /// Binds <paramref name="command"/> to a <paramref name="commandExecutor"/> in a given context.
     /// </summary>
-    /// <param name="context"></param>
-    /// <param name="commandExecutor"></param>
-    /// <param name="command"></param>
-    /// <param name="commandParameterGetter">A function that returns the current value of the parameter to be passed to the command</param>
+    /// <param name="context">The context in which the binding is being made.</param>
+    /// <param name="commandExecutor">The command executor that will execute the command.</param>
+    /// <param name="command">The command to bind.</param>
+    /// <param name="commandParameterGetter">A function that returns the current value of the parameter to be passed to the command.</param>
     public static void Register(object context, ICommandExecutor commandExecutor, ICommand command, Func<object> commandParameterGetter)
     {
         CheckRegistrationArgs(context, commandExecutor, command);
@@ -52,12 +52,12 @@ public static class CommandBindingService
     }
 
     /// <summary>
-    /// Binds <see cref="IRelayCommand{T}"/> to a <see cref="ICommandExecutor"/> in a given context
+    /// Binds <paramref name="command"/> to a <paramref name="commandExecutor"/> in a given context.
     /// </summary>
-    /// <param name="context"></param>
-    /// <param name="commandExecutor"></param>
-    /// <param name="command"></param>
-    /// <param name="commandParameterGetter">A function that returns the current value of the parameter to be passed to the command</param>
+    /// <param name="context">The context in which the binding is being made.</param>
+    /// <param name="commandExecutor">The command executor that will execute the command.</param>
+    /// <param name="command">The command to bind.</param>
+    /// <param name="commandParameterGetter">A function that returns the current value of the parameter to be passed to the command.</param>
     public static void Register<T>(object context, ICommandExecutor commandExecutor, IRelayCommand<T> command, Func<T> commandParameterGetter)
     {
         CheckRegistrationArgs(context, commandExecutor, command);
@@ -74,9 +74,9 @@ public static class CommandBindingService
 
     #region Unregistering
     /// <summary>
-    /// Unbinds <see cref="ICommand"/>s from the corresponding <see cref="ICommandExecutor"/>s in a given context
+    /// Unbinds <see cref="ICommand"/>s from the corresponding <see cref="ICommandExecutor"/>s in a given context.
     /// </summary>
-    /// <param name="context"></param>
+    /// <param name="context">The context in which the binding was made.</param>
     public static void Unregister(object context)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
@@ -85,9 +85,9 @@ public static class CommandBindingService
     }
 
     /// <summary>
-    /// Unbinds a <see cref="ICommand"/> from <see cref="ICommandExecutor"/>, if there is a binding
+    /// Unbinds a <see cref="ICommand"/> from <paramref name="commandExecutor"/>, if there is a binding.
     /// </summary>
-    /// <param name="commandExecutor"></param>
+    /// <param name="commandExecutor">The command executor the command was bound to. </param>
     public static void Unregister(ICommandExecutor commandExecutor)
     {
         ArgumentNullException.ThrowIfNull(commandExecutor, nameof(commandExecutor));
