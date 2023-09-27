@@ -1,7 +1,7 @@
 # EasyBindings
 
 ## In Russian
-EasyBindings - небольшая C# библиотека, которая позволяет осуществлять привязки триггеров, команд и свойств, как в WPF.
+EasyBindings - РЅРµР±РѕР»СЊС€Р°СЏ C# Р±РёР±Р»РёРѕС‚РµРєР°, РєРѕС‚РѕСЂР°СЏ РїРѕР·РІРѕР»СЏРµС‚ РѕСЃСѓС‰РµСЃС‚РІР»СЏС‚СЊ РїСЂРёРІСЏР·РєРё С‚СЂРёРіРіРµСЂРѕРІ, РєРѕРјР°РЅРґ Рё СЃРІРѕР№СЃС‚РІ, РєР°Рє РІ WPF.
 
 ## In English
 EasyBindings is a tiny WPF-inspired library that makes it possible to perform WPF-like trigger, property and command bindings outside of WPF platform.
