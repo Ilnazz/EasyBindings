@@ -20,15 +20,15 @@ Install-Package EasyBindings
 
 1. Trigger binding
 ```csharp
-
+...
 ```
 
 2. Command binding
 ```csharp
-
+...
 ```
 
 3. Property binding
 ```csharp
-
+...
 ```
