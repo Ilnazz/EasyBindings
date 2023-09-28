@@ -22,7 +22,6 @@ public static class CommandBindingService
     public static void Register(object context, ICommandExecutor commandExecutor, ICommand command)
     {
         CheckRegistrationArgs(context, commandExecutor, command);
-        CheckCanRegister(commandExecutor);
 
         RegisterCommandBinding(context,
             commandExecutor, () => command.Execute(null),
@@ -42,7 +41,6 @@ public static class CommandBindingService
     {
         CheckRegistrationArgs(context, commandExecutor, command);
         ArgumentNullException.ThrowIfNull(commandParameterGetter, nameof(commandParameterGetter));
-        CheckCanRegister(commandExecutor);
 
         RegisterCommandBinding(context,
             commandExecutor, () => command.Execute(commandParameterGetter()),
@@ -54,6 +52,7 @@ public static class CommandBindingService
     /// <summary>
     /// Binds <paramref name="command"/> to a <paramref name="commandExecutor"/> in a given context.
     /// </summary>
+    /// <typeparam name="T">The type of the command parameter.</typeparam>
     /// <param name="context">The context in which the binding is being made.</param>
     /// <param name="commandExecutor">The command executor that will execute the command.</param>
     /// <param name="command">The command to bind.</param>
@@ -62,7 +61,6 @@ public static class CommandBindingService
     {
         CheckRegistrationArgs(context, commandExecutor, command);
         ArgumentNullException.ThrowIfNull(commandParameterGetter, nameof(commandParameterGetter));
-        CheckCanRegister(commandExecutor);
 
         RegisterCommandBinding(context,
             commandExecutor, () => command.Execute(commandParameterGetter()),
@@ -85,14 +83,15 @@ public static class CommandBindingService
     }
 
     /// <summary>
-    /// Unbinds a <see cref="ICommand"/> from <paramref name="commandExecutor"/>, if there is a binding.
+    /// Unbinds a <see cref="ICommand"/> from <paramref name="commandExecutor"/> in a given context, if there is a binding.
     /// </summary>
     /// <param name="commandExecutor">The command executor the command was bound to. </param>
-    public static void Unregister(ICommandExecutor commandExecutor)
+    public static void Unregister(object context, ICommandExecutor commandExecutor)
     {
+        ArgumentNullException.ThrowIfNull(context, nameof(context));
         ArgumentNullException.ThrowIfNull(commandExecutor, nameof(commandExecutor));
 
-        var commandBinding = _commandBindings.FirstOrDefault(cb => cb.CommandExecutor == commandExecutor);
+        var commandBinding = _commandBindings.FirstOrDefault(cb => cb.Context == context && cb.CommandExecutor == commandExecutor);
         if (commandBinding is not null)
             Unregister(commandBinding);
     }
@@ -129,12 +128,6 @@ public static class CommandBindingService
         ArgumentNullException.ThrowIfNull(context, nameof(context));
         ArgumentNullException.ThrowIfNull(commandExecutor, nameof(commandExecutor));
         ArgumentNullException.ThrowIfNull(command, nameof(command));
-    }
-
-    private static void CheckCanRegister(ICommandExecutor commandExecutor)
-    {
-        if (_commandBindings.Any(cb => cb.CommandExecutor == commandExecutor))
-            throw new Exception($"{commandExecutor} is already bound with command");
     }
     #endregion
 

@@ -41,6 +41,8 @@ public static class TriggerBindingService
         var propertyName = ((MemberExpression)observablePropertyGetterExpr.Body).Member.Name;
         var observablePropertyGetter = observablePropertyGetterExpr.Compile();
 
+
+
         void eventHandler(object? _, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == propertyName)

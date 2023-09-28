@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 namespace EasyBindings;
 
 /// <summary>
-/// Allows you to bind the properties of one object to another
+/// Allows you to bind the properties of one object to a <see cref="INotifyPropertyChanged"/> event of a property of another object.
 /// </summary>
 public static class PropertyBindingService
 {
@@ -12,6 +12,17 @@ public static class PropertyBindingService
 
     #region Public methods 
     #region Registering
+    /// <summary>
+    /// Binds <paramref name="target"/> object's property to changes of <paramref name="source"/> object's property in a given context.
+    /// </summary>
+    /// <typeparam name="TTarget">The type of the <paramref name="target"/> object.</typeparam>
+    /// <typeparam name="TSource">The type of the <paramref name="source"/> object.</typeparam>
+    /// <typeparam name="TProperty">The type of the property.</typeparam>
+    /// <param name="context">The context in which the binding is being made.</param>
+    /// <param name="target">The object to which the property is being bound.</param>
+    /// <param name="targetPropertyGetterExpr">An expression that identifies the property of the <paramref name="target"/> object.</param>
+    /// <param name="source">The object from which the property changes are being observed.</param>
+    /// <param name="sourcePropertyGetterExpr">An expression that identifies the property of the <paramref name="source"/> object.</param>
     public static void OneWay<TTarget, TSource, TProperty>
     (
         object context,
@@ -52,6 +63,19 @@ public static class PropertyBindingService
         sourcePropertyChangedEventHandler(null, new PropertyChangedEventArgs(sourcePropertyName));
     }
 
+    /// <summary>
+    /// Binds <paramref name="target"/> object's property to changes of <paramref name="source"/> object's property in a given context.
+    /// </summary>
+    /// <typeparam name="TTarget">The type of the <paramref name="target"/> object.</typeparam>
+    /// <typeparam name="TSource">The type of the <paramref name="source"/> object.</typeparam>
+    /// <typeparam name="TTargetProperty">The type of the property of the <paramref name="target"/> object.</typeparam>
+    /// <typeparam name="TSourceProperty">The type of the property of the <paramref name="source"/> object.</typeparam>
+    /// <param name="context">The context in which the binding is being made.</param>
+    /// <param name="target">The object to which the property is being bound.</param>
+    /// <param name="targetPropertyGetterExpr">An expression that identifies the property of the <paramref name="target"/> object.</param>
+    /// <param name="source">The object from which the property changes are being observed.</param>
+    /// <param name="sourcePropertyGetterExpr">An expression that identifies the property of the <paramref name="source"/> object.</param>
+    /// <param name="converter">A function that converts the <paramref name="source"/> property value to the <paramref name="target"/> property value.</param>
     public static void OneWay<TTarget, TSource, TTargetProperty, TSourceProperty>
     (
         object context,
@@ -94,6 +118,17 @@ public static class PropertyBindingService
         sourcePropertyChangedEventHandler(null, new PropertyChangedEventArgs(sourcePropertyName));
     }
 
+    /// <summary>
+    /// Binds <paramref name="source"/> object's property to changes of <paramref name="target"/> object's property in a given context.
+    /// </summary>
+    /// <typeparam name="TTarget">The type of the <paramref name="target"/> object.</typeparam>
+    /// <typeparam name="TSource">The type of the <paramref name="source"/> object.</typeparam>
+    /// <typeparam name="TProperty">The type of the property.</typeparam>
+    /// <param name="context">The context in which the binding is being made.</param>
+    /// <param name="target">The object from which the property changes are being observed.</param>
+    /// <param name="targetPropertyGetterExpr">An expression that identifies the property of the <paramref name="target"/> object.</param>
+    /// <param name="source">The object to which the property is being bound.</param>
+    /// <param name="sourcePropertyGetterExpr">An expression that identifies the property of the <paramref name="source"/> object.</param>
     public static void OneWayToSource<TTarget, TSource, TProperty>
     (
         object context,
@@ -105,6 +140,19 @@ public static class PropertyBindingService
         OneWay(context, source, sourcePropertyGetterExpr, target, targetPropertyGetterExpr);
     }
 
+    /// <summary>
+    /// Binds <paramref name="source"/> object's property to changes of <paramref name="target"/> object's property in a given context.
+    /// </summary>
+    /// <typeparam name="TTarget">The type of the <paramref name="target"/> object.</typeparam>
+    /// <typeparam name="TSource">The type of the <paramref name="source"/> object.</typeparam>
+    /// <typeparam name="TTargetProperty">The type of the property of the <paramref name="target"/> object.</typeparam>
+    /// <typeparam name="TSourceProperty">The type of the property of the <paramref name="source"/> object.</typeparam>
+    /// <param name="context">The context in which the binding is being made.</param>
+    /// <param name="target">The object from which the property changes are being observed.</param>
+    /// <param name="targetPropertyGetterExpr">An expression that identifies the property of the <paramref name="target"/> object.</param>
+    /// <param name="source">The object to which the property is being bound.</param>
+    /// <param name="sourcePropertyGetterExpr">An expression that identifies the property of the <paramref name="source"/> object.</param>
+    /// <param name="converter">A function that converts the <paramref name="target"/> property value to the <paramref name="source"/> property value.</param>
     public static void OneWayToSource<TTarget, TSource, TTargetProperty, TSourceProperty>
     (
         object context,
@@ -117,6 +165,17 @@ public static class PropertyBindingService
         OneWay(context, source, sourcePropertyGetterExpr, target, targetPropertyGetterExpr, converter);
     }
 
+    /// <summary>
+    /// Binds <paramref name="target"/> object's property to changes of <paramref name="source"/> object's property and vice versa in a given context.
+    /// </summary>
+    /// <typeparam name="TTarget">The type of the <paramref name="target"/> object.</typeparam>
+    /// <typeparam name="TSource">The type of the <paramref name="source"/> object.</typeparam>
+    /// <typeparam name="TProperty">The type of the property.</typeparam>
+    /// <param name="context">The context in which the binding is being made.</param>
+    /// <param name="target">The first binding participating object.</param>
+    /// <param name="targetPropertyGetterExpr">An expression that identifies the property of the <paramref name="target"/> object.</param>
+    /// <param name="source">The second binding participating object.</param>
+    /// <param name="sourcePropertyGetterExpr">An expression that identifies the property of the <paramref name="source"/> object.</param>
     public static void TwoWay<TTarget, TSource, TProperty>
     (
         object context,
@@ -129,6 +188,20 @@ public static class PropertyBindingService
         OneWay(context, source, sourcePropertyGetterExpr, target, targetPropertyGetterExpr);
     }
 
+    /// <summary>
+    /// Binds <paramref name="target"/> object's property to changes of <paramref name="source"/> object's property and vice versa in a given context.
+    /// </summary>
+    /// <typeparam name="TTarget">The type of the <paramref name="target"/> object.</typeparam>
+    /// <typeparam name="TSource">The type of the <paramref name="source"/> object.</typeparam>
+    /// <typeparam name="TTargetProperty">The type of the property of the <paramref name="target"/> object.</typeparam>
+    /// <typeparam name="TSourceProperty">The type of the property of the <paramref name="source"/> object.</typeparam>
+    /// <param name="context">The context in which the binding is being made.</param>
+    /// <param name="target">The first binding participating object.</param>
+    /// <param name="targetPropertyGetterExpr">An expression that identifies the property of the <paramref name="target"/> object.</param>
+    /// <param name="source">The second binding participating object.</param>
+    /// <param name="sourcePropertyGetterExpr">An expression that identifies the property of the <paramref name="source"/> object.</param>
+    /// <param name="targetValueConverter">A function that converts the <paramref name="target"/> property value to the <paramref name="source"/> property value.</param>
+    /// <param name="sourceValueConverter">A function that converts the <paramref name="source"/> property value to the <paramref name="target"/> property value.</param>
     public static void TwoWay<TTarget, TSource, TTargetProperty, TSourceProperty>
     (
         object context,
@@ -145,6 +218,14 @@ public static class PropertyBindingService
     #endregion
 
     #region Unregistering
+    /// <summary>
+    /// Removes bindings from <paramref name="target"/> object's property.
+    /// </summary>
+    /// <typeparam name="T">The type of the <paramref name="target"/> object.</typeparam>
+    /// <typeparam name="TProperty">The of the <paramref name="target"/> object's property.</typeparam>
+    /// <param name="context">The context in which the binding was made.</param>
+    /// <param name="target">The object whose property was bound.</param>
+    /// <param name="targetPropertyGetterExpr">An expression that identifies the property of the <paramref name="target"/> object.</param>
     public static void UnregisterFromTarget<T, TProperty>(object context, object target, Expression<Func<T, TProperty>> targetPropertyGetterExpr)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
@@ -157,6 +238,11 @@ public static class PropertyBindingService
             .ToList().ForEach(Unregister);
     }
 
+    /// <summary>
+    /// Removes bindings from <paramref name="target"/> object.
+    /// </summary>
+    /// <param name="context">The context in which the binding was made.</param>
+    /// <param name="target">The object whose properties were bound.</param>
     public static void UnregisterFromTarget(object context, object target)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
@@ -165,6 +251,14 @@ public static class PropertyBindingService
         _propertyBindings.Where(pb => pb.Context == context && pb.Target == target).ToList().ForEach(Unregister);
     }
 
+    /// <summary>
+    /// Removes bindings from <paramref name="source"/> object's property.
+    /// </summary>
+    /// <typeparam name="T">The type of the <paramref name="source"/> object.</typeparam>
+    /// <typeparam name="TProperty">The of the <paramref name="source"/> object's property.</typeparam>
+    /// <param name="context">The context in which the binding was made.</param>
+    /// <param name="source">The object whose property was bound.</param>
+    /// <param name="sourcePropertyGetterExpr">An expression that identifies the property of the <paramref name="source"/> object.</param>
     public static void UnregisterFromSource<T, TProperty>(object context, object source, Expression<Func<T, TProperty>> sourcePropertyGetterExpr)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
@@ -177,6 +271,11 @@ public static class PropertyBindingService
             .ToList().ForEach(Unregister);
     }
 
+    /// <summary>
+    /// Removes bindings from <paramref name="source"/> object.
+    /// </summary>
+    /// <param name="context">The context in which the binding was made.</param>
+    /// <param name="source">The object whose properties were bound.</param>
     public static void UnregisterFromSource(object context, object source)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
@@ -185,17 +284,11 @@ public static class PropertyBindingService
         _propertyBindings.Where(pb => pb.Context == context && pb.Source == source).ToList().ForEach(Unregister);
     }
 
+    /// <summary>
+    /// Unbinds all bindings made in a given context.
+    /// </summary>
+    /// <param name="context">The context in which the binding was made.</param>
     public static void Unregister(object context) => _propertyBindings.Where(pb => pb.Context == context).ToList().ForEach(Unregister);
-
-    private static void Unregister(PropertyBinding propertyBinding)
-    {
-        if (propertyBinding.Target is INotifyPropertyChanged observableTarget)
-            observableTarget.PropertyChanged -= propertyBinding.TargetPropertyChangedEventHandler;
-        else if (propertyBinding.Source is INotifyPropertyChanged observableSource)
-            observableSource.PropertyChanged -= propertyBinding.SourcePropertyChangedEventHandler;
-
-        _propertyBindings.Remove(propertyBinding);
-    }
     #endregion
     #endregion
 
@@ -222,6 +315,16 @@ public static class PropertyBindingService
         var propertyInfo = typeof(T).GetProperty(propertyName)!;
         var propertySetter = (T target, TProperty newValue) => propertyInfo.SetValue(target, newValue);
         return propertySetter;
+    }
+
+    private static void Unregister(PropertyBinding propertyBinding)
+    {
+        if (propertyBinding.Target is INotifyPropertyChanged observableTarget)
+            observableTarget.PropertyChanged -= propertyBinding.TargetPropertyChangedEventHandler;
+        else if (propertyBinding.Source is INotifyPropertyChanged observableSource)
+            observableSource.PropertyChanged -= propertyBinding.SourcePropertyChangedEventHandler;
+
+        _propertyBindings.Remove(propertyBinding);
     }
     #endregion
 
