@@ -1,10 +1,37 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <Title>EasyBindings</Title>
+    <Authors>Ilnaz</Authors>
+    <Description>EasyBindings is a tiny WPF-inspired library that makes it possible to perform WPF-like trigger, property and command bindings outside of WPF platform.</Description>
+    <Copyright>Copyright © 2023 Ilnaz Khasanov</Copyright>
+    <PackageProjectUrl>https://github.com/Ilnazz/EasyBindings</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/Ilnazz/EasyBindings</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <IncludeSymbols>True</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <EnforceCodeStyleInBuild>False</EnforceCodeStyleInBuild>
+    <PackageReleaseNotes>First version.</PackageReleaseNotes>
+    <PackageIcon>Icon.png</PackageIcon>
+    <PackageTags>mvvm wpf bindings</PackageTags>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\Icon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
