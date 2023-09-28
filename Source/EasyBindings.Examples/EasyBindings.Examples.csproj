@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\EasyBindings.Tests\EasyBindings.Tests.csproj" />
     <ProjectReference Include="..\EasyBindings\EasyBindings.csproj" />
   </ItemGroup>
 

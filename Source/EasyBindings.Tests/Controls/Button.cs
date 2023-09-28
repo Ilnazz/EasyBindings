@@ -1,6 +1,6 @@
 ﻿using EasyBindings.Interfaces;
 
-namespace EasyBindings.Test.Controls;
+namespace EasyBindings.Tests.Controls;
 
 public class Button : ICommandExecutor
 {
@@ -10,7 +10,7 @@ public class Button : ICommandExecutor
 
     public void Press()
     {
-        if (CanExecuteCommand)
+        if (CanExecuteCommand == false)
         {
             Console.WriteLine("Button can't be pressed.");
             return;
