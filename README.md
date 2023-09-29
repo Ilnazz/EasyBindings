@@ -19,13 +19,8 @@ dotnet add package EasyBindings
 ```
 или используя консоль менеджера пакетов NuGet:
 ```sh
-Install-Package EasyBindings
+PM> Install-Package EasyBindings
 ```
-
-### Примеры использования
-
-
-Вы можете найти больше примеров использования в проекте EasyBindings.Tests.
 
 ## In English
 
@@ -42,16 +37,52 @@ I was looking for a library that would allow me to do similar things, but I didn
 ### Installation
 You can install EasyBindings using dotnet command-line tool:
 ```sh
-dotnet add package EasyBindings
+> dotnet add package EasyBindings
 ```
-or using NuGet package manager console:
+or using [NuGet](https://www.nuget.org/packages/EasyBindings): package manager console:
 ```sh
-Install-Package EasyBindings
+PM> Install-Package EasyBindings
 ```
 
 ### Examples
-Classes used in examples:
+#### Classes used in examples
+- TextInput
+```csharp
+using CommunityToolkit.Mvvm.ComponentModel;
 
+public partial class TextInput : ObservableObject
+{
+    [ObservableProperty]
+    private string _text = string.Empty;
+}
+```
+
+- Button
+```csharp
+using System;
+using EasyBindings.Interfaces;
+
+public class Button : ICommandExecutor
+{
+    public bool CanExecuteCommand { get; set; }
+
+    public event Action? CommandExecutionRequested;
+
+    public void Press()
+    {
+        if (CanExecuteCommand == false)
+        {
+            Console.WriteLine("Button can't be pressed.");
+            return;
+        }
+
+        Console.WriteLine("Button was pressed.");
+        CommandExecutionRequested?.Invoke();
+    }
+}
+```
+
+- Person
 ```csharp
 partial class Person : ObservableObject, IChangeable
 {
@@ -67,8 +98,8 @@ partial class Person : ObservableObject, IChangeable
 }
 ```
 
-1. Bind trigger to property changed event:
-
+#### Creating trigger bindings
+- Bind trigger to property changed event:
 ```csharp
 // Create the observable object
 var person = new Person();
@@ -79,6 +110,109 @@ TriggerBindingService.OnPropertyChanged(this, person, o => o.Name, newName =>
 
 // Change person's name
 person.Name = "Ilnaz"; // Console output: Person's new name: Ilnaz
+```
+
+- Bind trigger to property changing event:
+```csharp
+// Create the observable object with initial property value
+var person = new Person
+{
+    Name = "Alfred"
+};
+
+// Create the trigger that will display person's name before it will be changed
+TriggerBindingService.OnPropertyChanging(this, person, o => o.Name, currentName =>
+    Console.WriteLine($"Person's name will be changed; current name: {currentName}"));
+
+// Change person's name
+person.Name = "Ilnaz"; // Console output: Person's name will be changed; current name: Alfred
+```
+
+- Bind trigger to collection changed event:
+```csharp
+// Create the observable collection
+var numbers = new ObservableCollection<int>();
+// Create the variable that stores sum of the numbers
+var numbersSum = 0;
+
+// Create the trigger that will update numberSum variable when numbers collection will change
+TriggerBindingService.OnCollectionChanged(this, numbers, () => numbersSum = numbers.Sum());
+
+// Add some numbers to collection
+numbers.Add(10); // numbersSum = 10
+numbers.Add(20); // numbersSum = 30
+numbers.Add(-30); // numbersSum = 0
+```
+
+#### Creating property binding
+```csharp
+// Create the observable object
+var person = new Person();
+
+// Create dummy text inputs to input text
+var nameTextInput = new TextInput();
+var ageTextInput = new TextInput();
+
+// Bind person.Name to nameTextInput.Text
+PropertyBindingService.BindOneWay(this, person, t => t.Name, nameTextInput, s => s.Text);
+// Bind person.Name to ageTextInput.Text using value converter
+PropertyBindingService.BindOneWay(this, person, t => t.Age, ageTextInput, s => s.Text,
+    ageText => int.TryParse(ageText, out var age) ? age : 0);
+
+// Enter text
+nameTextInput.Text = "Ilnaz"; // person.Name also will be set to Ilnaz
+ageTextInput.Text = "20"; // person.Age also will be set to 20
+```
+
+
+#### Creating command binding
+```csharp
+// Create the command to greet user with the given name
+var greetCommand = new RelayCommand<string>
+(
+    execute: userName => Console.WriteLine($"Hello, {userName}!"),
+    canExecute: userName => string.IsNullOrWhiteSpace(userName) == false
+);
+
+// Create the text input to enter name
+var nameTextInput = new TextInput();
+// Create the trigger that will notify command execution ability is changed
+TriggerBindingService.RegisterPropertyChanged(this, nameTextInput, o => o.Text, greetCommand.NotifyCanExecuteChanged);
+
+// Create the button that will execute a command
+var greetButton = new Button();
+
+// Bind the command to the button
+CommandBindingService.Bind(this, greetButton, greetCommand, () => nameTextInput.Text);
+
+// Change textInput's text
+nameTextInput.Text = "Ilnaz";
+greetButton.Press(); // Console output: Button was pressed.\nHello, Ilnaz!
+
+nameTextInput.Text = string.Empty;
+greetButton.Press(); // Console output: Button can't be pressed.
+```
+
+#### Using IChangeable interface
+```csharp
+// Create the new person object
+var person = new Person();
+
+// Bind the trigger to person's state property changed event
+TriggerBindingService.RegisterPropertyChanged(this, person, o => o.State, () =>
+    Console.WriteLine($"Person's state was changed: Name: {person.Name}, Age: {person.Age}."));
+
+// Change person's properties
+person.Name = "Ilnaz"; // Console output: Person's state was changed: Name: Ilnaz, Age: 0.
+person.Age = 20; // Console output: Person's state was changed: Name: Ilnaz, Age: 20.
+
+// Don't forget to unbind trigger
+TriggerBindingService.UnbindPropertyChanged(this, person);
+```
+
+#### Using IUnsubscribe interface
+```csharp
+...
 ```
 
 You can find more examples in EasyBindings.Tests project
