@@ -84,6 +84,8 @@ public class Button : ICommandExecutor
 
 - Person
 ```csharp
+using CommunityToolkit.Mvvm.ComponentModel;
+
 partial class Person : ObservableObject, IChangeable
 {
     public object? State { get; }
@@ -215,4 +217,4 @@ TriggerBindingService.UnbindPropertyChanged(this, person);
 ...
 ```
 
-You can find more examples in EasyBindings.Tests project
+You can find more examples in EasyBindings.Tests project.
