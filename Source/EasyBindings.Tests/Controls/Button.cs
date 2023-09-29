@@ -16,7 +16,7 @@ public class Button : ICommandExecutor
             return;
         }
 
-        Console.WriteLine("Button pressed.");
+        Console.WriteLine("Button was pressed.");
         CommandExecutionRequested?.Invoke();
     }
 }
