@@ -11,7 +11,7 @@ public static class PropertyBindingService
     private static readonly IList<PropertyBinding> _propertyBindings = new List<PropertyBinding>();
 
     #region Public methods 
-    #region Registering
+    #region Binding
     /// <summary>
     /// Binds <paramref name="target"/> object's property to changes of <paramref name="source"/> object's property in a given context.
     /// </summary>
@@ -23,7 +23,7 @@ public static class PropertyBindingService
     /// <param name="targetPropertyGetterExpr">An expression that identifies the property of the <paramref name="target"/> object.</param>
     /// <param name="source">The object from which the property changes are being observed.</param>
     /// <param name="sourcePropertyGetterExpr">An expression that identifies the property of the <paramref name="source"/> object.</param>
-    public static void OneWay<TTarget, TSource, TProperty>
+    public static void BindOneWay<TTarget, TSource, TProperty>
     (
         object context,
         TTarget target, Expression<Func<TTarget, TProperty>> targetPropertyGetterExpr,
@@ -31,7 +31,7 @@ public static class PropertyBindingService
     )
     where TTarget : class where TSource : INotifyPropertyChanged
     {
-        CheckRegistrationArgs(context, targetPropertyGetterExpr, targetPropertyGetterExpr, source, sourcePropertyGetterExpr);
+        CheckBindingArgs(context, targetPropertyGetterExpr, targetPropertyGetterExpr, source, sourcePropertyGetterExpr);
         var targetPropertyName = GetPropertyName(targetPropertyGetterExpr);
         var sourcePropertyName = GetPropertyName(sourcePropertyGetterExpr);
 
@@ -76,7 +76,7 @@ public static class PropertyBindingService
     /// <param name="source">The object from which the property changes are being observed.</param>
     /// <param name="sourcePropertyGetterExpr">An expression that identifies the property of the <paramref name="source"/> object.</param>
     /// <param name="converter">A function that converts the <paramref name="source"/> property value to the <paramref name="target"/> property value.</param>
-    public static void OneWay<TTarget, TSource, TTargetProperty, TSourceProperty>
+    public static void BindOneWay<TTarget, TSource, TTargetProperty, TSourceProperty>
     (
         object context,
         TTarget target, Expression<Func<TTarget, TTargetProperty>> targetPropertyGetterExpr,
@@ -85,7 +85,7 @@ public static class PropertyBindingService
     )
     where TTarget : class where TSource : INotifyPropertyChanged
     {
-        CheckRegistrationArgs(context, targetPropertyGetterExpr, targetPropertyGetterExpr, source, sourcePropertyGetterExpr);
+        CheckBindingArgs(context, targetPropertyGetterExpr, targetPropertyGetterExpr, source, sourcePropertyGetterExpr);
         ArgumentNullException.ThrowIfNull(converter, nameof(converter));
         var targetPropertyName = GetPropertyName(targetPropertyGetterExpr);
         var sourcePropertyName = GetPropertyName(sourcePropertyGetterExpr);
@@ -129,7 +129,7 @@ public static class PropertyBindingService
     /// <param name="targetPropertyGetterExpr">An expression that identifies the property of the <paramref name="target"/> object.</param>
     /// <param name="source">The object to which the property is being bound.</param>
     /// <param name="sourcePropertyGetterExpr">An expression that identifies the property of the <paramref name="source"/> object.</param>
-    public static void OneWayToSource<TTarget, TSource, TProperty>
+    public static void BindOneWayToSource<TTarget, TSource, TProperty>
     (
         object context,
         TTarget target, Expression<Func<TTarget, TProperty>> targetPropertyGetterExpr,
@@ -137,7 +137,7 @@ public static class PropertyBindingService
     )
     where TTarget : INotifyPropertyChanged where TSource : class
     {
-        OneWay(context, source, sourcePropertyGetterExpr, target, targetPropertyGetterExpr);
+        BindOneWay(context, source, sourcePropertyGetterExpr, target, targetPropertyGetterExpr);
     }
 
     /// <summary>
@@ -153,7 +153,7 @@ public static class PropertyBindingService
     /// <param name="source">The object to which the property is being bound.</param>
     /// <param name="sourcePropertyGetterExpr">An expression that identifies the property of the <paramref name="source"/> object.</param>
     /// <param name="converter">A function that converts the <paramref name="target"/> property value to the <paramref name="source"/> property value.</param>
-    public static void OneWayToSource<TTarget, TSource, TTargetProperty, TSourceProperty>
+    public static void BindOneWayToSource<TTarget, TSource, TTargetProperty, TSourceProperty>
     (
         object context,
         TTarget target, Expression<Func<TTarget, TTargetProperty>> targetPropertyGetterExpr,
@@ -162,7 +162,7 @@ public static class PropertyBindingService
     )
     where TTarget : INotifyPropertyChanged where TSource : class
     {
-        OneWay(context, source, sourcePropertyGetterExpr, target, targetPropertyGetterExpr, converter);
+        BindOneWay(context, source, sourcePropertyGetterExpr, target, targetPropertyGetterExpr, converter);
     }
 
     /// <summary>
@@ -176,7 +176,7 @@ public static class PropertyBindingService
     /// <param name="targetPropertyGetterExpr">An expression that identifies the property of the <paramref name="target"/> object.</param>
     /// <param name="source">The second binding participating object.</param>
     /// <param name="sourcePropertyGetterExpr">An expression that identifies the property of the <paramref name="source"/> object.</param>
-    public static void TwoWay<TTarget, TSource, TProperty>
+    public static void BindTwoWay<TTarget, TSource, TProperty>
     (
         object context,
         TTarget target, Expression<Func<TTarget, TProperty>> targetPropertyGetterExpr,
@@ -184,8 +184,8 @@ public static class PropertyBindingService
     )
     where TTarget : class, INotifyPropertyChanged where TSource : class, INotifyPropertyChanged
     {
-        OneWay(context, target, targetPropertyGetterExpr, source, sourcePropertyGetterExpr);
-        OneWay(context, source, sourcePropertyGetterExpr, target, targetPropertyGetterExpr);
+        BindOneWay(context, target, targetPropertyGetterExpr, source, sourcePropertyGetterExpr);
+        BindOneWay(context, source, sourcePropertyGetterExpr, target, targetPropertyGetterExpr);
     }
 
     /// <summary>
@@ -202,7 +202,7 @@ public static class PropertyBindingService
     /// <param name="sourcePropertyGetterExpr">An expression that identifies the property of the <paramref name="source"/> object.</param>
     /// <param name="targetValueConverter">A function that converts the <paramref name="target"/> property value to the <paramref name="source"/> property value.</param>
     /// <param name="sourceValueConverter">A function that converts the <paramref name="source"/> property value to the <paramref name="target"/> property value.</param>
-    public static void TwoWay<TTarget, TSource, TTargetProperty, TSourceProperty>
+    public static void BindTwoWay<TTarget, TSource, TTargetProperty, TSourceProperty>
     (
         object context,
         TTarget target, Expression<Func<TTarget, TTargetProperty>> targetPropertyGetterExpr,
@@ -212,12 +212,12 @@ public static class PropertyBindingService
     )
     where TTarget : class, INotifyPropertyChanged where TSource : class, INotifyPropertyChanged
     {
-        OneWay(context, target, targetPropertyGetterExpr, source, sourcePropertyGetterExpr, sourceValueConverter);
-        OneWay(context, source, sourcePropertyGetterExpr, target, targetPropertyGetterExpr, targetValueConverter);
+        BindOneWay(context, target, targetPropertyGetterExpr, source, sourcePropertyGetterExpr, sourceValueConverter);
+        BindOneWay(context, source, sourcePropertyGetterExpr, target, targetPropertyGetterExpr, targetValueConverter);
     }
     #endregion
 
-    #region Unregistering
+    #region Unbinding
     /// <summary>
     /// Removes bindings from <paramref name="target"/> object's property.
     /// </summary>
@@ -226,7 +226,7 @@ public static class PropertyBindingService
     /// <param name="context">The context in which the binding was made.</param>
     /// <param name="target">The object whose property was bound.</param>
     /// <param name="targetPropertyGetterExpr">An expression that identifies the property of the <paramref name="target"/> object.</param>
-    public static void UnregisterFromTarget<T, TProperty>(object context, object target, Expression<Func<T, TProperty>> targetPropertyGetterExpr)
+    public static void UnbindFromTarget<T, TProperty>(object context, object target, Expression<Func<T, TProperty>> targetPropertyGetterExpr)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
         ArgumentNullException.ThrowIfNull(target, nameof(target));
@@ -235,7 +235,7 @@ public static class PropertyBindingService
         var targetPropertyName = GetPropertyName(targetPropertyGetterExpr);
 
         _propertyBindings.Where(pb => pb.Context == context && pb.Target == target && pb.TargetPropertyName == targetPropertyName)
-            .ToList().ForEach(Unregister);
+            .ToList().ForEach(Unbind);
     }
 
     /// <summary>
@@ -243,12 +243,12 @@ public static class PropertyBindingService
     /// </summary>
     /// <param name="context">The context in which the binding was made.</param>
     /// <param name="target">The object whose properties were bound.</param>
-    public static void UnregisterFromTarget(object context, object target)
+    public static void UnbindFromTarget(object context, object target)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
         ArgumentNullException.ThrowIfNull(target, nameof(target));
 
-        _propertyBindings.Where(pb => pb.Context == context && pb.Target == target).ToList().ForEach(Unregister);
+        _propertyBindings.Where(pb => pb.Context == context && pb.Target == target).ToList().ForEach(Unbind);
     }
 
     /// <summary>
@@ -259,7 +259,7 @@ public static class PropertyBindingService
     /// <param name="context">The context in which the binding was made.</param>
     /// <param name="source">The object whose property was bound.</param>
     /// <param name="sourcePropertyGetterExpr">An expression that identifies the property of the <paramref name="source"/> object.</param>
-    public static void UnregisterFromSource<T, TProperty>(object context, object source, Expression<Func<T, TProperty>> sourcePropertyGetterExpr)
+    public static void UnbindFromSource<T, TProperty>(object context, object source, Expression<Func<T, TProperty>> sourcePropertyGetterExpr)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
         ArgumentNullException.ThrowIfNull(source, nameof(source));
@@ -268,7 +268,7 @@ public static class PropertyBindingService
         var sourcePropertyName = GetPropertyName(sourcePropertyGetterExpr);
 
         _propertyBindings.Where(pb => pb.Context == context && pb.Source == source && pb.SourcePropertyName == sourcePropertyName)
-            .ToList().ForEach(Unregister);
+            .ToList().ForEach(Unbind);
     }
 
     /// <summary>
@@ -276,24 +276,24 @@ public static class PropertyBindingService
     /// </summary>
     /// <param name="context">The context in which the binding was made.</param>
     /// <param name="source">The object whose properties were bound.</param>
-    public static void UnregisterFromSource(object context, object source)
+    public static void UnbindFromSource(object context, object source)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
         ArgumentNullException.ThrowIfNull(source, nameof(source));
 
-        _propertyBindings.Where(pb => pb.Context == context && pb.Source == source).ToList().ForEach(Unregister);
+        _propertyBindings.Where(pb => pb.Context == context && pb.Source == source).ToList().ForEach(Unbind);
     }
 
     /// <summary>
     /// Unbinds all bindings made in a given context.
     /// </summary>
     /// <param name="context">The context in which the binding was made.</param>
-    public static void Unregister(object context) => _propertyBindings.Where(pb => pb.Context == context).ToList().ForEach(Unregister);
+    public static void Unbind(object context) => _propertyBindings.Where(pb => pb.Context == context).ToList().ForEach(Unbind);
     #endregion
     #endregion
 
     #region Private methods 
-    private static void CheckRegistrationArgs
+    private static void CheckBindingArgs
     (
         object context,
         object target, object targetPropertyGetterExpr,
@@ -317,7 +317,7 @@ public static class PropertyBindingService
         return propertySetter;
     }
 
-    private static void Unregister(PropertyBinding propertyBinding)
+    private static void Unbind(PropertyBinding propertyBinding)
     {
         if (propertyBinding.Target is INotifyPropertyChanged observableTarget)
             observableTarget.PropertyChanged -= propertyBinding.TargetPropertyChangedEventHandler;

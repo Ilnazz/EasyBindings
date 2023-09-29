@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using EasyBindings.Interfaces;
 using EasyBindings.Tests.Controls;
+using System.Collections.ObjectModel;
 
 namespace EasyBindings.Examples;
 
@@ -11,17 +12,72 @@ public class Program
     {
         var programInstance = new Program();
 
-        programInstance.IChangeableExample();
+        programInstance.PropertyBindingExample();
     }
 
-    void TriggerBindingExample()
+    void PropertyChangedTriggerBindingExample()
     {
+        // Create the observable object
+        var person = new Person();
 
+        // Create the trigger that will display person's new name
+        TriggerBindingService.OnPropertyChanged(this, person, o => o.Name, newName =>
+            Console.WriteLine($"Person's new name: {newName}"));
+
+        // Change person's name
+        person.Name = "Ilnaz"; // Console output: Person's new name: Ilnaz
+    }
+
+    void PropertyChangingTriggerBindingExample()
+    {
+        // Create the observable object with initial property value
+        var person = new Person
+        {
+            Name = "Alfred"
+        };
+
+        // Create the trigger that will display person's name before it will be changed
+        TriggerBindingService.OnPropertyChanging(this, person, o => o.Name, currentName =>
+            Console.WriteLine($"Person's name will be changed; current name: {currentName}"));
+
+        // Change person's name
+        person.Name = "Ilnaz"; // Console output: Person's name will be changed; current name: Alfred
+    }
+
+    void CollectionChangedTriggerBindingExample()
+    {
+        // Create the observable collection
+        var numbers = new ObservableCollection<int>();
+        // Create the variable that stores sum of the numbers
+        var numbersSum = 0;
+
+        // Create the trigger that will update numberSum variable when numbers collection will change
+        TriggerBindingService.OnCollectionChanged(this, numbers, () => numbersSum = numbers.Sum());
+
+        // Add some numbers to collection
+        numbers.Add(10); // numbersSum = 10
+        numbers.Add(20); // numbersSum = 30
+        numbers.Add(-30); // numbersSum = 0
     }
 
     void PropertyBindingExample()
     {
+        // Create the observable object
+        var person = new Person();
 
+        // Create dummy text inputs to input text
+        var nameTextInput = new TextInput();
+        var ageTextInput = new TextInput();
+
+        // Bind person.Name to nameTextInput.Text
+        PropertyBindingService.BindOneWay(this, person, t => t.Name, nameTextInput, s => s.Text);
+        // Bind person.Name to ageTextInput.Text using value converter
+        PropertyBindingService.BindOneWay(this, person, t => t.Age, ageTextInput, s => s.Text,
+            ageText => int.TryParse(ageText, out var age) ? age : 0);
+
+        // Enter text
+        nameTextInput.Text = "Ilnaz"; // person.Name also will be set to Ilnaz
+        ageTextInput.Text = "20"; // person.Age also will be set to 20
     }
 
     void CommandBindingExample()
@@ -42,7 +98,7 @@ public class Program
         var greetButton = new Button();
 
         // Bind the command to the button
-        CommandBindingService.Register(this, greetButton, greetCommand, () => nameTextInput.Text);
+        CommandBindingService.Bind(this, greetButton, greetCommand, () => nameTextInput.Text);
 
         // Change textInput's text
         nameTextInput.Text = "Ilnaz";
@@ -66,7 +122,7 @@ public class Program
         person.Age = 20; // Console output: Person's state was changed: Name: Ilnaz, Age: 20.
 
         // Don't forget to unbind trigger
-        TriggerBindingService.UnregisterPropertyChanged(this, person);
+        TriggerBindingService.UnbindPropertyChanged(this, person);
     }
 
     void IUnsubscribeExample()

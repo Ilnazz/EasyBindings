@@ -12,18 +12,18 @@ public static class CommandBindingService
     private static readonly IList<CommandBinding> _commandBindings = new List<CommandBinding>();
 
     #region Public methods
-    #region Registering
+    #region Binding
     /// <summary>
     /// Binds <paramref name="command"/> to a <paramref name="commandExecutor"/> in a given context.
     /// </summary>
     /// <param name="context">The context in which the binding is being made.</param>
     /// <param name="commandExecutor">The command executor that will execute the command.</param>
     /// <param name="command">The command to bind.</param>
-    public static void Register(object context, ICommandExecutor commandExecutor, ICommand command)
+    public static void Bind(object context, ICommandExecutor commandExecutor, ICommand command)
     {
-        CheckRegistrationArgs(context, commandExecutor, command);
+        CheckBindingArgs(context, commandExecutor, command);
 
-        RegisterCommandBinding(context,
+        UnbindCommandBinding(context,
             commandExecutor, () => command.Execute(null),
             command, (object? _, EventArgs _) => commandExecutor.CanExecuteCommand = command.CanExecute(null));
 
@@ -37,12 +37,12 @@ public static class CommandBindingService
     /// <param name="commandExecutor">The command executor that will execute the command.</param>
     /// <param name="command">The command to bind.</param>
     /// <param name="commandParameterGetter">A function that returns the current value of the parameter to be passed to the command.</param>
-    public static void Register(object context, ICommandExecutor commandExecutor, ICommand command, Func<object> commandParameterGetter)
+    public static void Bind(object context, ICommandExecutor commandExecutor, ICommand command, Func<object> commandParameterGetter)
     {
-        CheckRegistrationArgs(context, commandExecutor, command);
+        CheckBindingArgs(context, commandExecutor, command);
         ArgumentNullException.ThrowIfNull(commandParameterGetter, nameof(commandParameterGetter));
 
-        RegisterCommandBinding(context,
+        UnbindCommandBinding(context,
             commandExecutor, () => command.Execute(commandParameterGetter()),
             command, (object? _, EventArgs _) => commandExecutor.CanExecuteCommand = command.CanExecute(commandParameterGetter()));
 
@@ -57,12 +57,12 @@ public static class CommandBindingService
     /// <param name="commandExecutor">The command executor that will execute the command.</param>
     /// <param name="command">The command to bind.</param>
     /// <param name="commandParameterGetter">A function that returns the current value of the parameter to be passed to the command.</param>
-    public static void Register<T>(object context, ICommandExecutor commandExecutor, IRelayCommand<T> command, Func<T> commandParameterGetter)
+    public static void Bind<T>(object context, ICommandExecutor commandExecutor, IRelayCommand<T> command, Func<T> commandParameterGetter)
     {
-        CheckRegistrationArgs(context, commandExecutor, command);
+        CheckBindingArgs(context, commandExecutor, command);
         ArgumentNullException.ThrowIfNull(commandParameterGetter, nameof(commandParameterGetter));
 
-        RegisterCommandBinding(context,
+        UnbindCommandBinding(context,
             commandExecutor, () => command.Execute(commandParameterGetter()),
             command, (object? _, EventArgs _) => commandExecutor.CanExecuteCommand = command.CanExecute(commandParameterGetter()));
 
@@ -70,43 +70,43 @@ public static class CommandBindingService
     }
     #endregion
 
-    #region Unregistering
+    #region Unbinding
     /// <summary>
     /// Unbinds <see cref="ICommand"/>s from the corresponding <see cref="ICommandExecutor"/>s in a given context.
     /// </summary>
     /// <param name="context">The context in which the binding was made.</param>
-    public static void Unregister(object context)
+    public static void Unbind(object context)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
 
-        _commandBindings.Where(cb => cb.Context == context).ToList().ForEach(Unregister);
+        _commandBindings.Where(cb => cb.Context == context).ToList().ForEach(Unbind);
     }
 
     /// <summary>
     /// Unbinds a <see cref="ICommand"/> from <paramref name="commandExecutor"/> in a given context, if there is a binding.
     /// </summary>
     /// <param name="commandExecutor">The command executor the command was bound to. </param>
-    public static void Unregister(object context, ICommandExecutor commandExecutor)
+    public static void Unbind(object context, ICommandExecutor commandExecutor)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
         ArgumentNullException.ThrowIfNull(commandExecutor, nameof(commandExecutor));
 
         var commandBinding = _commandBindings.FirstOrDefault(cb => cb.Context == context && cb.CommandExecutor == commandExecutor);
         if (commandBinding is not null)
-            Unregister(commandBinding);
+            Unbind(commandBinding);
     }
     #endregion
     #endregion
 
     #region Private methods
-    private static void Unregister(CommandBinding commandBinding)
+    private static void Unbind(CommandBinding commandBinding)
     {
         commandBinding.CommandExecutor.CommandExecutionRequested -= commandBinding.CommandExecutionRequestedEventHandler;
         commandBinding.Command.CanExecuteChanged -= commandBinding.CommanCanExecuteChangedEventHandler;
         _commandBindings.Remove(commandBinding);
     }
 
-    private static void RegisterCommandBinding
+    private static void UnbindCommandBinding
     (
         object context,
         ICommandExecutor commandExecutor, Action commandExecutionRequestedEventHandler,
@@ -123,7 +123,7 @@ public static class CommandBindingService
         ));
     }
 
-    private static void CheckRegistrationArgs(object context, object commandExecutor, object command)
+    private static void CheckBindingArgs(object context, object commandExecutor, object command)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
         ArgumentNullException.ThrowIfNull(commandExecutor, nameof(commandExecutor));

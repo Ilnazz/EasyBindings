@@ -24,7 +24,7 @@ public class TriggerBindingServiceTests
     {
         var textInput = new TextInput();
 
-        TriggerBindingService.RegisterPropertyChanged(this, textInput, o => o.Text, newText => Assert.AreEqual(newText, textInput.Text));
+        TriggerBindingService.OnPropertyChanged(this, textInput, o => o.Text, newText => Assert.AreEqual(newText, textInput.Text));
 
         textInput.Text = "text";
     }
@@ -34,7 +34,7 @@ public class TriggerBindingServiceTests
     {
         var textInput = new TextInput();
 
-        TriggerBindingService.RegisterPropertyChanged(this, textInput, o => o.Text, (sender, _) => Assert.AreEqual(sender, textInput));
+        TriggerBindingService.OnPropertyChanged(this, textInput, o => o.Text, (sender, _) => Assert.AreEqual(sender, textInput));
 
         textInput.Text = "text";
     }
@@ -60,7 +60,7 @@ public class TriggerBindingServiceTests
         var textInput = new TextInput();
 
         var wasTriggerCalled = false;
-        TriggerBindingService.RegisterPropertyChanging(this, textInput, o => o.Text, () => wasTriggerCalled = true);
+        TriggerBindingService.OnPropertyChanging(this, textInput, o => o.Text, () => wasTriggerCalled = true);
 
         textInput.Text = "text";
 
@@ -73,7 +73,7 @@ public class TriggerBindingServiceTests
         var textInput = new TextInput();
 
         var oldText = textInput.Text;
-        TriggerBindingService.RegisterPropertyChanging(this, textInput, o => o.Text, text => Assert.AreEqual(text, oldText));
+        TriggerBindingService.OnPropertyChanging(this, textInput, o => o.Text, text => Assert.AreEqual(text, oldText));
 
         textInput.Text = "text";
     }
@@ -83,7 +83,7 @@ public class TriggerBindingServiceTests
     {
         var textInput = new TextInput();
 
-        TriggerBindingService.RegisterPropertyChanging(this, textInput, o => o.Text, (sender, _) => Assert.AreEqual(sender, textInput));
+        TriggerBindingService.OnPropertyChanging(this, textInput, o => o.Text, (sender, _) => Assert.AreEqual(sender, textInput));
 
         textInput.Text = "text";
     }
@@ -95,8 +95,8 @@ public class TriggerBindingServiceTests
 
         bool wasFirstTriggerCalled = false,
              wasSecondTriggerCalled = false;
-        TriggerBindingService.RegisterPropertyChanging(this, textInput, o => o.Text, () => wasFirstTriggerCalled = true);
-        TriggerBindingService.RegisterPropertyChanging(this, textInput, o => o.Text, () => wasSecondTriggerCalled = true);
+        TriggerBindingService.OnPropertyChanging(this, textInput, o => o.Text, () => wasFirstTriggerCalled = true);
+        TriggerBindingService.OnPropertyChanging(this, textInput, o => o.Text, () => wasSecondTriggerCalled = true);
 
         textInput.Text = "text";
 
@@ -109,7 +109,7 @@ public class TriggerBindingServiceTests
         var observableCollection = new ObservableCollection<object?>();
 
         var wasTriggerCalled = false;
-        TriggerBindingService.RegisterCollectionChanged(this, observableCollection, () => wasTriggerCalled = true);
+        TriggerBindingService.OnCollectionChanged(this, observableCollection, () => wasTriggerCalled = true);
 
         observableCollection.Add(null);
 
@@ -121,7 +121,7 @@ public class TriggerBindingServiceTests
     {
         var observableCollection = new ObservableCollection<object?>();
 
-        TriggerBindingService.RegisterCollectionChanged(this, observableCollection, (_, eventArgs) => Assert.IsNotNull(eventArgs));
+        TriggerBindingService.OnCollectionChanged(this, observableCollection, (_, eventArgs) => Assert.IsNotNull(eventArgs));
 
         observableCollection.Add(null);
     }
@@ -131,7 +131,7 @@ public class TriggerBindingServiceTests
     {
         var observableCollection = new ObservableCollection<object?>();
 
-        TriggerBindingService.RegisterCollectionChanged(this, observableCollection, (sender, _) => Assert.AreEqual(sender, observableCollection));
+        TriggerBindingService.OnCollectionChanged(this, observableCollection, (sender, _) => Assert.AreEqual(sender, observableCollection));
 
         observableCollection.Add(null);
     }
@@ -143,8 +143,8 @@ public class TriggerBindingServiceTests
 
         bool wasFirstTriggerCalled = false,
              wasSecondTriggerCalled = false;
-        TriggerBindingService.RegisterCollectionChanged(this, observableCollection, () => wasFirstTriggerCalled = true);
-        TriggerBindingService.RegisterCollectionChanged(this, observableCollection, () => wasSecondTriggerCalled = true);
+        TriggerBindingService.OnCollectionChanged(this, observableCollection, () => wasFirstTriggerCalled = true);
+        TriggerBindingService.OnCollectionChanged(this, observableCollection, () => wasSecondTriggerCalled = true);
 
         observableCollection.Add(null);
 
@@ -158,7 +158,7 @@ public class TriggerBindingServiceTests
 
         var wasTriggerCalled = false;
         TriggerBindingService.RegisterPropertyChanged(this, textInput, o => o.Text, () => wasTriggerCalled = true);
-        TriggerBindingService.UnregisterPropertyChanged(this, textInput);
+        TriggerBindingService.UnbindPropertyChanged(this, textInput);
 
         textInput.Text = "text";
 
@@ -174,7 +174,7 @@ public class TriggerBindingServiceTests
              wasSecondTriggerCalled = false;
         TriggerBindingService.RegisterPropertyChanged(this, textInput, o => o.Text, () => wasFirstTriggerCalled = true);
         TriggerBindingService.RegisterPropertyChanged(this, textInput, o => o.Text, () => wasSecondTriggerCalled = true);
-        TriggerBindingService.UnregisterPropertyChanged(this, textInput);
+        TriggerBindingService.UnbindPropertyChanged(this, textInput);
 
         textInput.Text = "text";
 
@@ -187,8 +187,8 @@ public class TriggerBindingServiceTests
         var textInput = new TextInput();
 
         var wasTriggerCalled = false;
-        TriggerBindingService.RegisterPropertyChanging(this, textInput, o => o.Text, () => wasTriggerCalled = true);
-        TriggerBindingService.UnregisterPropertyChanging(this, textInput);
+        TriggerBindingService.OnPropertyChanging(this, textInput, o => o.Text, () => wasTriggerCalled = true);
+        TriggerBindingService.UnbindPropertyChanging(this, textInput);
 
         textInput.Text = "text";
 
@@ -202,9 +202,9 @@ public class TriggerBindingServiceTests
 
         bool wasFirstTriggerCalled = false,
              wasSecondTriggerCalled = false;
-        TriggerBindingService.RegisterPropertyChanging(this, textInput, o => o.Text, () => wasFirstTriggerCalled = true);
-        TriggerBindingService.RegisterPropertyChanging(this, textInput, o => o.Text, () => wasSecondTriggerCalled = true);
-        TriggerBindingService.UnregisterPropertyChanging(this, textInput);
+        TriggerBindingService.OnPropertyChanging(this, textInput, o => o.Text, () => wasFirstTriggerCalled = true);
+        TriggerBindingService.OnPropertyChanging(this, textInput, o => o.Text, () => wasSecondTriggerCalled = true);
+        TriggerBindingService.UnbindPropertyChanging(this, textInput);
 
         textInput.Text = "text";
 
@@ -217,8 +217,8 @@ public class TriggerBindingServiceTests
         var observableCollection = new ObservableCollection<object?>();
 
         var wasTriggerCalled = false;
-        TriggerBindingService.RegisterCollectionChanged(this, observableCollection, () => wasTriggerCalled = true);
-        TriggerBindingService.UnregisterCollectionChanged(this, observableCollection);
+        TriggerBindingService.OnCollectionChanged(this, observableCollection, () => wasTriggerCalled = true);
+        TriggerBindingService.UnbindCollectionChanged(this, observableCollection);
 
         observableCollection.Add(null);
 
@@ -232,9 +232,9 @@ public class TriggerBindingServiceTests
 
         bool wasFirstTriggerCalled = false,
              wasSecondTriggerCalled = false;
-        TriggerBindingService.RegisterCollectionChanged(this, observableCollection, () => wasFirstTriggerCalled = true);
-        TriggerBindingService.RegisterCollectionChanged(this, observableCollection, () => wasSecondTriggerCalled = true);
-        TriggerBindingService.UnregisterCollectionChanged(this, observableCollection);
+        TriggerBindingService.OnCollectionChanged(this, observableCollection, () => wasFirstTriggerCalled = true);
+        TriggerBindingService.OnCollectionChanged(this, observableCollection, () => wasSecondTriggerCalled = true);
+        TriggerBindingService.UnbindCollectionChanged(this, observableCollection);
 
         observableCollection.Add(null);
 
