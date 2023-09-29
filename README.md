@@ -3,7 +3,7 @@
 ## In Russian
 
 ### Что это?
-EasyBindings - крохотная C# библиотека, которая позволяет осуществлять привязки триггеров, команд и свойств, как в WPF.
+EasyBindings - крохотная C# библиотека, которая позволяет осуществлять привязки триггеров, свойств и команд, как в WPF.
 
 ### Для чего это нужно?
 EasyBindings даёт возможность использовать специфичный для WPF механизм привязок свойств, триггеров и команд за пределами какого-либо MVVM фреймворка.
@@ -17,7 +17,7 @@ EasyBindings даёт возможность использовать специ
 ```sh
 dotnet add package EasyBindings
 ```
-или используя консоль менеджера пакетов NuGet:
+или используя консоль менеджера пакетов [NuGet](https://www.nuget.org/packages/EasyBindings):
 ```sh
 PM> Install-Package EasyBindings
 ```
@@ -25,7 +25,7 @@ PM> Install-Package EasyBindings
 ## In English
 
 ### What is it?
-EasyBindings is a tiny C# library that allows you to bind triggers, commands and properties, as in WPF.
+EasyBindings is a tiny C# library that allows you perform trigger, property and command bindings, as in WPF.
 
 ### What is it for?
 EasyBindings makes it possible to use a WPF-specific mechanism for binding properties, triggers and commands outside of any MVVM framework.
@@ -39,7 +39,7 @@ You can install EasyBindings using dotnet command-line tool:
 ```sh
 > dotnet add package EasyBindings
 ```
-or using [NuGet](https://www.nuget.org/packages/EasyBindings): package manager console:
+or using [NuGet](https://www.nuget.org/packages/EasyBindings) package manager console:
 ```sh
 PM> Install-Package EasyBindings
 ```
