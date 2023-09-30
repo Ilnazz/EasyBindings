@@ -1,6 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using EasyBindings.Interfaces;
+﻿using CommunityToolkit.Mvvm.Input;
 using EasyBindings.Tests.Controls;
 using System.Collections.ObjectModel;
 
@@ -153,27 +151,4 @@ public class Program
         // you should call unsubscribe method to clean up subscriptions
         personObserver.Unsubscribe();
     }
-}
-
-partial class Person : ObservableObject, IChangeable
-{
-    public object? State { get; }
-
-    [NotifyPropertyChangedFor(nameof(State))]
-    [ObservableProperty]
-    private string _name = string.Empty;
-
-    [NotifyPropertyChangedFor(nameof(State))]
-    [ObservableProperty]
-    private int _age;
-
-    public override string ToString() => $"Person {{ Name = {Name}, Age = {Age} }}";
-}
-
-class PersonObserver : IUnsubscribe
-{
-    public void Observe(IChangeable changeable) =>
-        TriggerBinder.OnPropertyChanged(this, changeable, o => o.State, () => Console.WriteLine($"{changeable}'s state was changed"));
-
-    public void Unsubscribe() => TriggerBinder.Unbind(this);
 }
