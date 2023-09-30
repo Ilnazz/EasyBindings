@@ -140,7 +140,7 @@ public class PropertyBindingServiceTests
     }
 
     [TestMethod]
-    public void TestUnregisterFromTarget()
+    public void TestUnbindFromTarget()
     {
         var textLabel = new TextLabel();
         var textInput = new TextInput();
@@ -153,7 +153,7 @@ public class PropertyBindingServiceTests
     }
 
     [TestMethod]
-    public void TestUnregisterFromTargetMultiple()
+    public void TestUnbindFromTargetMultiple()
     {
         var textLabel = new TextLabel();
         var textInput = new TextInput();
@@ -167,7 +167,7 @@ public class PropertyBindingServiceTests
     }
 
     [TestMethod]
-    public void TestUnregisterFromSource()
+    public void TestUnbindFromSource()
     {
         var textLabel = new TextLabel();
         var textInput = new TextInput();
@@ -180,7 +180,7 @@ public class PropertyBindingServiceTests
     }
 
     [TestMethod]
-    public void TestUnregisterFromSourceMultiple()
+    public void TestUnbindFromSourceMultiple()
     {
         var textLabel = new TextLabel();
         var textInput = new TextInput();
@@ -194,7 +194,7 @@ public class PropertyBindingServiceTests
     }
 
     [TestMethod]
-    public void TestUnregister()
+    public void TestUnbind()
     {
         var textLabel = new TextLabel();
         var textInput = new TextInput();
@@ -207,7 +207,7 @@ public class PropertyBindingServiceTests
     }
 
     [TestMethod]
-    public void TestUnregisterMultiple()
+    public void TestUnbindMultiple()
     {
         var textLabel = new TextLabel();
         var textInput = new TextInput();

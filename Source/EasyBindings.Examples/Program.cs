@@ -92,7 +92,7 @@ public class Program
         // Create the text input to enter name
         var nameTextInput = new TextInput();
         // Create the trigger that will notify command execution ability is changed
-        TriggerBindingService.RegisterPropertyChanged(this, nameTextInput, o => o.Text, greetCommand.NotifyCanExecuteChanged);
+        TriggerBindingService.OnPropertyChanged(this, nameTextInput, o => o.Text, greetCommand.NotifyCanExecuteChanged);
 
         // Create the button that will execute a command
         var greetButton = new Button();
@@ -114,7 +114,7 @@ public class Program
         var person = new Person();
 
         // Bind the trigger to person's state property changed event
-        TriggerBindingService.RegisterPropertyChanged(this, person, o => o.State, () =>
+        TriggerBindingService.OnPropertyChanged(this, person, o => o.State, () =>
             Console.WriteLine($"Person's state was changed: Name: {person.Name}, Age: {person.Age}."));
 
         // Change person's properties

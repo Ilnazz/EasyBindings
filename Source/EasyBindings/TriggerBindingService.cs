@@ -89,7 +89,7 @@ public static class TriggerBindingService
     /// <param name="observable">The observable object.</param>
     /// <param name="observablePropertyGetterExpr">An expression representing the getter of the observable property.</param>
     /// <param name="trigger">The trigger to be executed when the property changes.</param>
-    public static void RegisterPropertyChanged<TObservable, TProperty>
+    public static void OnPropertyChanged<TObservable, TProperty>
     (
         object context,
         TObservable observable, Expression<Func<TObservable, TProperty>> observablePropertyGetterExpr,
