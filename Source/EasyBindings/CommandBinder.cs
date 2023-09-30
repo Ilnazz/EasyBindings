@@ -7,7 +7,7 @@ namespace EasyBindings;
 /// <summary>
 /// Allows you to bind a <see cref="ICommand"/>s to a <see cref="ICommandExecutor"/>s.
 /// </summary>
-public static class CommandBindingService
+public static class CommandBinder
 {
     private static readonly IList<CommandBinding> _commandBindings = new List<CommandBinding>();
 

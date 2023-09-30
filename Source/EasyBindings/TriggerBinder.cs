@@ -7,7 +7,7 @@ namespace EasyBindings;
 /// <summary>
 /// Allows you to bind event handlers (triggers) to a <see cref="INotifyPropertyChanged"/>, <see cref="INotifyPropertyChanging"/> and <see cref="INotifyCollectionChanged"/> events.
 /// </summary>
-public static class TriggerBindingService
+public static class TriggerBinder
 {
     #region Fields
     private static readonly IList<PropertyChangedTriggerBinding> _propertyChangedTriggerBindings = new List<PropertyChangedTriggerBinding>();

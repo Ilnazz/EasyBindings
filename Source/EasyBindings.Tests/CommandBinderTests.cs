@@ -4,7 +4,7 @@ using EasyBindings.Tests.Controls;
 namespace EasyBindings.Tests;
 
 [TestClass]
-public class CommandBindingServiceTests
+public class CommandBinderTests
 {
     [TestMethod]
     public void TestWithoutCanExecuteAndWithoutParameter()
@@ -13,7 +13,7 @@ public class CommandBindingServiceTests
         var command = new RelayCommand(() => wasCommandExecuted = true);
 
         var button = new Button();
-        CommandBindingService.Bind(this, button, command);
+        CommandBinder.Bind(this, button, command);
 
         button.Press();
 
@@ -27,7 +27,7 @@ public class CommandBindingServiceTests
         var command = new RelayCommand(() => wasCommandExecuted = true, () => false);
 
         var button = new Button();
-        CommandBindingService.Bind(this, button, command);
+        CommandBinder.Bind(this, button, command);
 
         button.Press();
 
@@ -48,7 +48,7 @@ public class CommandBindingServiceTests
         );
 
         var doDivisionButton = new Button();
-        CommandBindingService.Bind(this, doDivisionButton, divideCommand, () => (leftNumber, rightNumber));
+        CommandBinder.Bind(this, doDivisionButton, divideCommand, () => (leftNumber, rightNumber));
 
         leftNumber = 10;
         rightNumber = 5;

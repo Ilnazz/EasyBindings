@@ -6,7 +6,7 @@ namespace EasyBindings;
 /// <summary>
 /// Allows you to bind the properties of one object to a <see cref="INotifyPropertyChanged"/> event of a property of another object.
 /// </summary>
-public static class PropertyBindingService
+public static class PropertyBinder
 {
     private static readonly IList<PropertyBinding> _propertyBindings = new List<PropertyBinding>();
 

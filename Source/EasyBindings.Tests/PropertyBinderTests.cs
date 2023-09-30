@@ -3,7 +3,7 @@ using EasyBindings.Tests.Controls;
 namespace EasyBindings.Tests;
 
 [TestClass]
-public class PropertyBindingServiceTests
+public class PropertyBinderTests
 {
     [TestMethod]
     public void TestOneWay()
@@ -11,7 +11,7 @@ public class PropertyBindingServiceTests
         var textLabel = new TextLabel();
         var textInput = new TextInput();
 
-        PropertyBindingService.BindOneWay(this, textLabel, t => t.Text, textInput, s => s.Text);
+        PropertyBinder.BindOneWay(this, textLabel, t => t.Text, textInput, s => s.Text);
 
         textInput.Text = "text";
         Assert.AreEqual(textLabel.Text, textInput.Text);
@@ -23,7 +23,7 @@ public class PropertyBindingServiceTests
         var textLabel = new TextLabel();
         var textInput = new TextInput();
 
-        PropertyBindingService.BindOneWay(this, textLabel, t => t.Text, textInput, s => s.Text, sourceText => sourceText.ToUpper());
+        PropertyBinder.BindOneWay(this, textLabel, t => t.Text, textInput, s => s.Text, sourceText => sourceText.ToUpper());
 
         textInput.Text = "text";
         Assert.AreEqual(textLabel.Text, textInput.Text.ToUpper());
@@ -36,8 +36,8 @@ public class PropertyBindingServiceTests
         var textInput1 = new TextInput();
         var textInput2 = new TextInput();
 
-        PropertyBindingService.BindOneWay(this, textLabel, t => t.Text, textInput1, s => s.Text);
-        PropertyBindingService.BindOneWay(this, textLabel, t => t.Text, textInput2, s => s.Text);
+        PropertyBinder.BindOneWay(this, textLabel, t => t.Text, textInput1, s => s.Text);
+        PropertyBinder.BindOneWay(this, textLabel, t => t.Text, textInput2, s => s.Text);
 
         textInput1.Text = "text";
         Assert.AreEqual(textLabel.Text, textInput1.Text);
@@ -52,7 +52,7 @@ public class PropertyBindingServiceTests
         var textInput = new TextInput();
         var textLabel = new TextLabel();
 
-        PropertyBindingService.BindOneWayToSource(this, textInput, t => t.Text, textLabel, s => s.Text);
+        PropertyBinder.BindOneWayToSource(this, textInput, t => t.Text, textLabel, s => s.Text);
 
         textInput.Text = "text";
         Assert.AreEqual(textLabel.Text, textInput.Text);
@@ -64,7 +64,7 @@ public class PropertyBindingServiceTests
         var textLabel = new TextLabel();
         var textInput = new TextInput();
 
-        PropertyBindingService.BindOneWay(this, textLabel, t => t.Text, textInput, s => s.Text, sourceText => sourceText.ToUpper());
+        PropertyBinder.BindOneWay(this, textLabel, t => t.Text, textInput, s => s.Text, sourceText => sourceText.ToUpper());
 
         textInput.Text = "text";
         Assert.AreEqual(textLabel.Text, textInput.Text.ToUpper());
@@ -77,8 +77,8 @@ public class PropertyBindingServiceTests
         var textInput2 = new TextInput();
         var textLabel = new TextLabel();
 
-        PropertyBindingService.BindOneWayToSource(this, textInput1, t => t.Text, textLabel, s => s.Text);
-        PropertyBindingService.BindOneWayToSource(this, textInput2, t => t.Text, textLabel, s => s.Text);
+        PropertyBinder.BindOneWayToSource(this, textInput1, t => t.Text, textLabel, s => s.Text);
+        PropertyBinder.BindOneWayToSource(this, textInput2, t => t.Text, textLabel, s => s.Text);
 
         textInput1.Text = "text";
         Assert.AreEqual(textLabel.Text, textInput1.Text);
@@ -93,7 +93,7 @@ public class PropertyBindingServiceTests
         var textInput1 = new TextInput();
         var textInput2 = new TextInput();
 
-        PropertyBindingService.BindTwoWay(this, textInput1, t => t.Text, textInput2, s => s.Text);
+        PropertyBinder.BindTwoWay(this, textInput1, t => t.Text, textInput2, s => s.Text);
 
         textInput1.Text = "text";
         Assert.AreEqual(textInput2.Text, textInput1.Text);
@@ -108,7 +108,7 @@ public class PropertyBindingServiceTests
         var textInput1 = new TextInput();
         var textInput2 = new TextInput();
 
-        PropertyBindingService.BindTwoWay(this, textInput1, t => t.Text, textInput2, s => s.Text, targetText => targetText.ToUpper(), sourceText => sourceText.ToLower());
+        PropertyBinder.BindTwoWay(this, textInput1, t => t.Text, textInput2, s => s.Text, targetText => targetText.ToUpper(), sourceText => sourceText.ToLower());
 
         textInput1.Text = "text";
         Assert.AreEqual(textInput2.Text, textInput1.Text.ToUpper());
@@ -125,8 +125,8 @@ public class PropertyBindingServiceTests
         var textInput3 = new TextInput();
         var textInput4 = new TextInput();
 
-        PropertyBindingService.BindTwoWay(this, textInput1, t => t.Text, textInput2, s => s.Text);
-        PropertyBindingService.BindTwoWay(this, textInput3, t => t.Text, textInput4, s => s.Text);
+        PropertyBinder.BindTwoWay(this, textInput1, t => t.Text, textInput2, s => s.Text);
+        PropertyBinder.BindTwoWay(this, textInput3, t => t.Text, textInput4, s => s.Text);
 
         textInput1.Text = "text1";
         Assert.AreEqual(textInput1.Text, textInput2.Text);
@@ -145,8 +145,8 @@ public class PropertyBindingServiceTests
         var textLabel = new TextLabel();
         var textInput = new TextInput();
 
-        PropertyBindingService.BindOneWay(this, textLabel, t => t.Text, textInput, s => s.Text);
-        PropertyBindingService.UnbindFromTarget(this, textLabel);
+        PropertyBinder.BindOneWay(this, textLabel, t => t.Text, textInput, s => s.Text);
+        PropertyBinder.UnbindFromTarget(this, textLabel);
 
         textInput.Text = "text";
         Assert.AreNotEqual(textLabel.Text, textInput.Text);
@@ -158,9 +158,9 @@ public class PropertyBindingServiceTests
         var textLabel = new TextLabel();
         var textInput = new TextInput();
 
-        PropertyBindingService.BindOneWay(this, textLabel, t => t.Text, textInput, s => s.Text);
-        PropertyBindingService.BindOneWay(this, textLabel, t => t.Text, textInput, s => s.Text);
-        PropertyBindingService.UnbindFromTarget(this, textLabel);
+        PropertyBinder.BindOneWay(this, textLabel, t => t.Text, textInput, s => s.Text);
+        PropertyBinder.BindOneWay(this, textLabel, t => t.Text, textInput, s => s.Text);
+        PropertyBinder.UnbindFromTarget(this, textLabel);
 
         textInput.Text = "text";
         Assert.AreNotEqual(textLabel.Text, textInput.Text);
@@ -172,8 +172,8 @@ public class PropertyBindingServiceTests
         var textLabel = new TextLabel();
         var textInput = new TextInput();
 
-        PropertyBindingService.BindOneWay(this, textLabel, t => t.Text, textInput, s => s.Text);
-        PropertyBindingService.UnbindFromSource(this, textInput);
+        PropertyBinder.BindOneWay(this, textLabel, t => t.Text, textInput, s => s.Text);
+        PropertyBinder.UnbindFromSource(this, textInput);
 
         textInput.Text = "text";
         Assert.AreNotEqual(textLabel.Text, textInput.Text);
@@ -185,9 +185,9 @@ public class PropertyBindingServiceTests
         var textLabel = new TextLabel();
         var textInput = new TextInput();
 
-        PropertyBindingService.BindOneWay(this, textLabel, t => t.Text, textInput, s => s.Text);
-        PropertyBindingService.BindOneWay(this, textLabel, t => t.Text, textInput, s => s.Text);
-        PropertyBindingService.UnbindFromSource(this, textInput);
+        PropertyBinder.BindOneWay(this, textLabel, t => t.Text, textInput, s => s.Text);
+        PropertyBinder.BindOneWay(this, textLabel, t => t.Text, textInput, s => s.Text);
+        PropertyBinder.UnbindFromSource(this, textInput);
 
         textInput.Text = "text";
         Assert.AreNotEqual(textLabel.Text, textInput.Text);
@@ -199,8 +199,8 @@ public class PropertyBindingServiceTests
         var textLabel = new TextLabel();
         var textInput = new TextInput();
 
-        PropertyBindingService.BindOneWay(this, textLabel, t => t.Text, textInput, s => s.Text);
-        PropertyBindingService.Unbind(this);
+        PropertyBinder.BindOneWay(this, textLabel, t => t.Text, textInput, s => s.Text);
+        PropertyBinder.Unbind(this);
 
         textInput.Text = "text";
         Assert.AreNotEqual(textLabel.Text, textInput.Text);
@@ -212,9 +212,9 @@ public class PropertyBindingServiceTests
         var textLabel = new TextLabel();
         var textInput = new TextInput();
 
-        PropertyBindingService.BindOneWay(this, textLabel, t => t.Text, textInput, s => s.Text);
-        PropertyBindingService.BindOneWay(this, textLabel, t => t.Text, textInput, s => s.Text);
-        PropertyBindingService.Unbind(this);
+        PropertyBinder.BindOneWay(this, textLabel, t => t.Text, textInput, s => s.Text);
+        PropertyBinder.BindOneWay(this, textLabel, t => t.Text, textInput, s => s.Text);
+        PropertyBinder.Unbind(this);
 
         textInput.Text = "text";
         Assert.AreNotEqual(textLabel.Text, textInput.Text);
