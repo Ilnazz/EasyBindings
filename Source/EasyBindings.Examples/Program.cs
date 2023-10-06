@@ -17,6 +17,23 @@ public class Program
         //programInstance.CommandBindingExample();
         //programInstance.IChangeableExample();
         //programInstance.IUnsubscribeExample();
+
+        // First option:
+        // First option:
+        TriggerBinder.PropertyChanged();
+        TriggerBinder.PropertyChanging();
+        TriggerBinder.CollectionChanged();
+        TriggerBinder.DeepCollectionChanged();
+        // Second option:
+        TriggerBinder.UnPropertyChanged();
+        TriggerBinder.OnPropertyChanging();
+        TriggerBinder.OnCollectionChanged();
+        TriggerBinder.OnDeepCollectionChanged();
+        // Third option:
+        TriggerBinder.PropertyChanged();
+        TriggerBinder.BindPropertyChanging();
+        TriggerBinder.BindCollectionChanged();
+        TriggerBinder.BindDeepCollectionChanged();
     }
 
     void PropertyChangedTriggerBindingExample()
