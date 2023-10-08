@@ -18,22 +18,13 @@ public class Program
         //programInstance.IChangeableExample();
         //programInstance.IUnsubscribeExample();
 
-        // First option:
-        // First option:
-        TriggerBinder.PropertyChanged();
-        TriggerBinder.PropertyChanging();
-        TriggerBinder.CollectionChanged();
-        TriggerBinder.DeepCollectionChanged();
-        // Second option:
-        TriggerBinder.UnPropertyChanged();
-        TriggerBinder.OnPropertyChanging();
-        TriggerBinder.OnCollectionChanged();
-        TriggerBinder.OnDeepCollectionChanged();
-        // Third option:
-        TriggerBinder.PropertyChanged();
-        TriggerBinder.BindPropertyChanging();
-        TriggerBinder.BindCollectionChanged();
-        TriggerBinder.BindDeepCollectionChanged();
+        var c = new object();
+        var oc = new ObservableCollection<Person>();
+        TriggerBinder.OnCollectionChangedAndItemPropertyChanged(c, oc, (_ ,_) => { }, s => s.Age, (_, _) => { });
+        //Binder.Property.OneWay();
+        //Binding.Property.OneWay();
+        //Binding.Trigger.PropertyChanged();
+        //Binding.Command.
     }
 
     void PropertyChangedTriggerBindingExample()
