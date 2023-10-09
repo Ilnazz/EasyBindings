@@ -1,6 +1,9 @@
 ﻿using EasyBindings.Interfaces;
 using CommunityToolkit.Mvvm.Input;
 using System.Windows.Input;
+using System.Collections.Generic;
+using System;
+using System.Linq;
 
 namespace EasyBindings;
 

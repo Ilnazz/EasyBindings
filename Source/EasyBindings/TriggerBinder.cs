@@ -1935,6 +1935,7 @@ public static class TriggerBinder
         triggerBinding.ObservableCollection.CollectionChanged -= triggerBinding.EventHandler;
 
         _propertyChangedTriggerBindings.Where(pb =>
+            pb.Owner == triggerBinding &&
             pb.Context == triggerBinding.Context &&
             pb.PropertyName == triggerBinding.ItemPropertyName &&
             pb.Trigger == triggerBinding.ItemPropertyChangedTrigger).ToList().ForEach(UnbindPropertyChangedInternal);
@@ -1993,19 +1994,23 @@ public static class TriggerBinder
 
         public PropertyChangedEventHandler EventHandler { get; init; }
 
+        public object? Owner { get; init; }
+
         public PropertyChangedTriggerBinding
         (
             object context,
             INotifyPropertyChanged observable,
             string propertyName,
             object trigger,
-            PropertyChangedEventHandler eventHandler)
+            PropertyChangedEventHandler eventHandler,
+            object? owner = null)
         {
             Context = context;
             Observable = observable;
             PropertyName = propertyName;
             Trigger = trigger;
             EventHandler = eventHandler;
+            Owner = owner;
         }
     }
 

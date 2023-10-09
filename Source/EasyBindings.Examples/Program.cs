@@ -19,8 +19,15 @@ public class Program
         //programInstance.IUnsubscribeExample();
 
         var c = new object();
-        var oc = new ObservableCollection<Person>();
-        TriggerBinder.OnCollectionChangedAndItemPropertyChanged(c, oc, (_ ,_) => { }, s => s.Age, (_, _) => { });
+        var t = () => { };
+
+        //TriggerBinder.OnPropertyChanged(c, p, o => o.Name, t);
+        //TriggerBinder.UnbindPropertyChanged(c, p);
+
+        Binder.Trigger.PropertyChanged();
+        Binder.Property.OneWay();
+        Binder.Command.Bind();
+
         //Binder.Property.OneWay();
         //Binding.Property.OneWay();
         //Binding.Trigger.PropertyChanged();
