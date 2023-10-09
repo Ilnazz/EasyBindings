@@ -34,7 +34,12 @@ public static class PropertyBinder
     )
     where TTarget : class where TSource : INotifyPropertyChanged
     {
-        CheckBindingArgs(context, targetPropertyGetterExpr, targetPropertyGetterExpr, source, sourcePropertyGetterExpr);
+        ArgumentNullException.ThrowIfNull(context, nameof(context));
+        ArgumentNullException.ThrowIfNull(target, nameof(target));
+        ArgumentNullException.ThrowIfNull(targetPropertyGetterExpr, nameof(targetPropertyGetterExpr));
+        ArgumentNullException.ThrowIfNull(source, nameof(source));
+        ArgumentNullException.ThrowIfNull(sourcePropertyGetterExpr, nameof(sourcePropertyGetterExpr));
+
         var targetPropertyName = GetPropertyName(targetPropertyGetterExpr);
         var sourcePropertyName = GetPropertyName(sourcePropertyGetterExpr);
 
@@ -88,8 +93,13 @@ public static class PropertyBinder
     )
     where TTarget : class where TSource : INotifyPropertyChanged
     {
-        CheckBindingArgs(context, targetPropertyGetterExpr, targetPropertyGetterExpr, source, sourcePropertyGetterExpr);
+        ArgumentNullException.ThrowIfNull(context, nameof(context));
+        ArgumentNullException.ThrowIfNull(target, nameof(target));
+        ArgumentNullException.ThrowIfNull(targetPropertyGetterExpr, nameof(targetPropertyGetterExpr));
+        ArgumentNullException.ThrowIfNull(source, nameof(source));
+        ArgumentNullException.ThrowIfNull(sourcePropertyGetterExpr, nameof(sourcePropertyGetterExpr));
         ArgumentNullException.ThrowIfNull(converter, nameof(converter));
+
         var targetPropertyName = GetPropertyName(targetPropertyGetterExpr);
         var sourcePropertyName = GetPropertyName(sourcePropertyGetterExpr);
 
@@ -295,20 +305,7 @@ public static class PropertyBinder
     #endregion
     #endregion
 
-    #region Private methods 
-    private static void CheckBindingArgs
-    (
-        object context,
-        object target, object targetPropertyGetterExpr,
-        object source, object sourcePropertyGetterExpr)
-    {
-        ArgumentNullException.ThrowIfNull(context, nameof(context));
-        ArgumentNullException.ThrowIfNull(target, nameof(target));
-        ArgumentNullException.ThrowIfNull(targetPropertyGetterExpr, nameof(targetPropertyGetterExpr));
-        ArgumentNullException.ThrowIfNull(source, nameof(source));
-        ArgumentNullException.ThrowIfNull(sourcePropertyGetterExpr, nameof(sourcePropertyGetterExpr));
-    }
-
+    #region Private methods
     private static string GetPropertyName<T, TProperty>(Expression<Func<T, TProperty>> propertyGetterExpr) =>
         ((MemberExpression)propertyGetterExpr.Body).Member.Name;
 

@@ -19,14 +19,27 @@ public class Program
         //programInstance.IUnsubscribeExample();
 
         var c = new object();
-        var t = () => { };
+        
+        var persons = new ObservableCollection<Person>();
+
+        var person = new Person();
+        persons.Add(person);
+
+        var trigger = () => { };
+
+        TriggerBinder.OnCollectionItemPropertyChanged(c, persons, p => p.Name, trigger);
+
+        // Если мы сделаем так: - эта штука должна или не должна отвязать триггер, привязанный внутри коллекции?
+        // 1) Если отвяжет - то ... - верно ли это?
+        // Не должен - так как триггер этот был привязан в контексте коллекции; это нарушит логику
+        TriggerBinder.UnbindPropertyChanged(c, person, p => p.Name, trigger);
 
         //TriggerBinder.OnPropertyChanged(c, p, o => o.Name, t);
         //TriggerBinder.UnbindPropertyChanged(c, p);
 
-        Binder.Trigger.PropertyChanged();
-        Binder.Property.OneWay();
-        Binder.Command.Bind();
+        //Binder.Trigger.PropertyChanged();
+        //Binder.Property.OneWay();
+        //Binder.Command.Bind();
 
         //Binder.Property.OneWay();
         //Binding.Property.OneWay();
