@@ -1210,13 +1210,14 @@ public static class TriggerBinder
 
         // TODO: можно ли привязать один и тот же триггер несколько раз?
 
-        var propertyName = ((MemberExpression)observablePropertyGetterExpr.Body).Member.Name;
+        var propertyName = GetPropertyName(observablePropertyGetterExpr);
 
-        _propertyChangedTriggerBindings.Where(pb =>
-            pb.Context == context &&
-            pb.Observable == (INotifyPropertyChanged)observable &&
-            pb.PropertyName == propertyName &&
-            pb.Trigger == trigger).ToList().ForEach(UnbindPropertyChangedInternal);
+        UnbindPropertyChangedBindings(
+            _propertyChangedTriggerBindings
+            .Where(b => b.Context == context &&
+                        b.Observable == (INotifyPropertyChanged)observable &&
+                        b.PropertyName == propertyName &&
+                        b.Trigger == trigger));
     }
 
     /// <summary>
@@ -1239,12 +1240,13 @@ public static class TriggerBinder
         ArgumentNullException.ThrowIfNull(observable, nameof(observable));
         ArgumentNullException.ThrowIfNull(observablePropertyGetterExpr, nameof(observablePropertyGetterExpr));
 
-        var propertyName = ((MemberExpression)observablePropertyGetterExpr.Body).Member.Name;
+        var propertyName = GetPropertyName(observablePropertyGetterExpr);
 
-        _propertyChangedTriggerBindings.Where(pb =>
-            pb.Context == context &&
-            pb.Observable == (INotifyPropertyChanged)observable &&
-            pb.PropertyName == propertyName).ToList().ForEach(UnbindPropertyChangedInternal);
+        UnbindPropertyChangedBindings(
+            _propertyChangedTriggerBindings
+            .Where(b => b.Context == context &&
+                        b.Observable == (INotifyPropertyChanged)observable &&
+                        b.PropertyName == propertyName));
     }
 
     /// <summary>
@@ -1260,10 +1262,8 @@ public static class TriggerBinder
         ArgumentNullException.ThrowIfNull(context, nameof(context));
         ArgumentNullException.ThrowIfNull(observable, nameof(observable));
 
-        _propertyChangedTriggerBindings.Where(tb =>
-            tb.Context == context &&
-            tb.Observable == observable)
-            .ToList().ForEach(UnbindPropertyChangedInternal);
+        UnbindPropertyChangedBindings(
+            _propertyChangedTriggerBindings.Where(b => b.Context == context && b.Observable == observable));
     }
 
     /// <summary>
@@ -1274,8 +1274,7 @@ public static class TriggerBinder
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
 
-        _propertyChangedTriggerBindings.Where(tb => tb.Context == context)
-            .ToList().ForEach(UnbindPropertyChangedInternal);
+        UnbindPropertyChangedBindings(_propertyChangedTriggerBindings.Where(b => b.Context == context));
     }
     #endregion
 
@@ -1294,13 +1293,14 @@ public static class TriggerBinder
         ArgumentNullException.ThrowIfNull(observablePropertyGetterExpr, nameof(observablePropertyGetterExpr));
         ArgumentNullException.ThrowIfNull(trigger, nameof(trigger));
 
-        var propertyName = ((MemberExpression)observablePropertyGetterExpr.Body).Member.Name;
+        var propertyName = GetPropertyName(observablePropertyGetterExpr);
 
-        _propertyChangingTriggerBindings.Where(pb =>
-            pb.Context == context &&
-            pb.Observable == (INotifyPropertyChanging)observable &&
-            pb.PropertyName == propertyName &&
-            pb.Trigger == trigger).ToList().ForEach(UnbindPropertyChangingInternal);
+        UnbindPropertyChangingBindings(
+            _propertyChangingTriggerBindings
+            .Where(b => b.Context == context &&
+                        b.Observable == (INotifyPropertyChanging)observable &&
+                        b.PropertyName == propertyName &&
+                        b.Trigger == trigger));
     }
 
     public static void UnbindPropertyChanging<TObservable, TProperty>
@@ -1315,12 +1315,13 @@ public static class TriggerBinder
         ArgumentNullException.ThrowIfNull(observable, nameof(observable));
         ArgumentNullException.ThrowIfNull(observablePropertyGetterExpr, nameof(observablePropertyGetterExpr));
 
-        var propertyName = ((MemberExpression)observablePropertyGetterExpr.Body).Member.Name;
+        var propertyName = GetPropertyName(observablePropertyGetterExpr);
 
-        _propertyChangingTriggerBindings.Where(pb =>
-            pb.Context == context &&
-            pb.Observable == (INotifyPropertyChanging)observable &&
-            pb.PropertyName == propertyName).ToList().ForEach(UnbindPropertyChangingInternal);
+        UnbindPropertyChangingBindings(
+            _propertyChangingTriggerBindings
+            .Where(b => b.Context == context &&
+                        b.Observable == (INotifyPropertyChanging)observable &&
+                        b.PropertyName == propertyName));
     }
 
     public static void UnbindPropertyChanging
@@ -1331,17 +1332,15 @@ public static class TriggerBinder
         ArgumentNullException.ThrowIfNull(context, nameof(context));
         ArgumentNullException.ThrowIfNull(observable, nameof(observable));
 
-        _propertyChangingTriggerBindings.Where(tb =>
-            tb.Context == context &&
-            tb.Observable == observable).ToList().ForEach(UnbindPropertyChangingInternal);
+        UnbindPropertyChangingBindings(
+            _propertyChangingTriggerBindings.Where(b => b.Context == context && b.Observable == observable));
     }
 
     public static void UnbindPropertyChanging(object context)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
 
-        _propertyChangingTriggerBindings.Where(tb =>
-            tb.Context == context).ToList().ForEach(UnbindPropertyChangingInternal);
+        UnbindPropertyChangingBindings(_propertyChangingTriggerBindings.Where(b => b.Context == context));
     }
     #endregion
 
@@ -1356,10 +1355,11 @@ public static class TriggerBinder
         ArgumentNullException.ThrowIfNull(observableCollection, nameof(observableCollection));
         ArgumentNullException.ThrowIfNull(trigger, nameof(trigger));
 
-        _collectionChangedTriggerBindings.Where(tb =>
-            tb.Context == context &&
-            tb.ObservableCollection == observableCollection &&
-            tb.Trigger == trigger).ToList().ForEach(UnbindCollectionChangedInternal);
+        UnbindCollectionChangedBindings(
+            _collectionChangedTriggerBindings
+            .Where(b => b.Context == context &&
+                        b.ObservableCollection == observableCollection &&
+                        b.Trigger == trigger));
     }
 
     public static void UnbindCollectionChanged(object context, INotifyCollectionChanged observableCollection)
@@ -1367,17 +1367,16 @@ public static class TriggerBinder
         ArgumentNullException.ThrowIfNull(context, nameof(context));
         ArgumentNullException.ThrowIfNull(observableCollection, nameof(observableCollection));
 
-        _collectionChangedTriggerBindings.Where(tb =>
-            tb.Context == context &&
-            tb.ObservableCollection == observableCollection).ToList().ForEach(UnbindCollectionChangedInternal);
+        UnbindCollectionChangedBindings(
+            _collectionChangedTriggerBindings
+            .Where(b => b.Context == context && b.ObservableCollection == observableCollection));
     }
 
     public static void UnbindCollectionChanged(object context)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
 
-        _collectionChangedTriggerBindings.Where(tb =>
-            tb.Context == context).ToList().ForEach(UnbindCollectionChangedInternal);
+        UnbindCollectionChangedBindings(_collectionChangedTriggerBindings.Where(b => b.Context == context));
     }
     #endregion
 
@@ -1398,13 +1397,13 @@ public static class TriggerBinder
 
         var itemPropertyName = ((MemberExpression)itemPropertyGetterExpr.Body).Member.Name;
 
-        _collectionChangedAndItemPropertyChangedTriggerBindings.Where(tb =>
-            tb.Context == context &&
-            tb.ObservableCollection == observableCollection &&
-            tb.CollectionChangedTrigger == collectionChangedTrigger &&
-            tb.ItemPropertyName == itemPropertyName &&
-            tb.ItemPropertyChangedTrigger == itemPropertyChangedTrigger)
-            .ToList().ForEach(UnbindCollectionChangedAndItemPropertyChangedInternal);
+        UnbindCollectionChangedAndItemPropertyChangedBindings(
+            _collectionChangedAndItemPropertyChangedTriggerBindings
+                .Where(b => b.Context == context &&
+                            b.ObservableCollection == observableCollection &&
+                            b.CollectionChangedTrigger == collectionChangedTrigger &&
+                            b.ItemPropertyName == itemPropertyName &&
+                            b.ItemPropertyChangedTrigger == itemPropertyChangedTrigger));
     }
 
     public static void UnbindCollectionChangedAndItemPropertyChanged<TItem, TItemProperty>
@@ -1421,12 +1420,12 @@ public static class TriggerBinder
 
         var itemPropertyName = ((MemberExpression)itemPropertyGetterExpr.Body).Member.Name;
 
-        _collectionChangedAndItemPropertyChangedTriggerBindings.Where(tb =>
-            tb.Context == context &&
-            tb.ObservableCollection == observableCollection &&
-            tb.CollectionChangedTrigger == collectionChangedTrigger &&
-            tb.ItemPropertyName == itemPropertyName)
-            .ToList().ForEach(UnbindCollectionChangedAndItemPropertyChangedInternal);
+        UnbindCollectionChangedAndItemPropertyChangedBindings(
+            _collectionChangedAndItemPropertyChangedTriggerBindings
+                .Where(b => b.Context == context &&
+                            b.ObservableCollection == observableCollection &&
+                            b.CollectionChangedTrigger == collectionChangedTrigger &&
+                            b.ItemPropertyName == itemPropertyName));
     }
 
     public static void UnbindCollectionChangedAndItemPropertyChanged<TItem, TItemProperty>
@@ -1439,11 +1438,11 @@ public static class TriggerBinder
         ArgumentNullException.ThrowIfNull(observableCollection, nameof(observableCollection));
         ArgumentNullException.ThrowIfNull(collectionChangedTrigger, nameof(collectionChangedTrigger));
 
-        _collectionChangedAndItemPropertyChangedTriggerBindings.Where(tb =>
-            tb.Context == context &&
-            tb.ObservableCollection == observableCollection &&
-            tb.CollectionChangedTrigger == collectionChangedTrigger)
-            .ToList().ForEach(UnbindCollectionChangedAndItemPropertyChangedInternal);
+        UnbindCollectionChangedAndItemPropertyChangedBindings(
+            _collectionChangedAndItemPropertyChangedTriggerBindings
+                .Where(b => b.Context == context &&
+                            b.ObservableCollection == observableCollection &&
+                            b.CollectionChangedTrigger == collectionChangedTrigger));
     }
 
     public static void UnbindCollectionChangedAndItemPropertyChanged<TItem, TItemProperty>
@@ -1454,22 +1453,22 @@ public static class TriggerBinder
         ArgumentNullException.ThrowIfNull(context, nameof(context));
         ArgumentNullException.ThrowIfNull(observableCollection, nameof(observableCollection));
 
-        _collectionChangedAndItemPropertyChangedTriggerBindings.Where(tb =>
-            tb.Context == context &&
-            tb.ObservableCollection == observableCollection)
-            .ToList().ForEach(UnbindCollectionChangedAndItemPropertyChangedInternal);
+        UnbindCollectionChangedAndItemPropertyChangedBindings(
+            _collectionChangedAndItemPropertyChangedTriggerBindings
+                .Where(b => b.Context == context &&
+                            b.ObservableCollection == observableCollection));
     }
 
     public static void UnbindCollectionChangedAndItemPropertyChanged<TItem, TItemProperty>(object context)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
 
-        _collectionChangedAndItemPropertyChangedTriggerBindings.Where(tb =>
-            tb.Context == context)
-            .ToList().ForEach(UnbindCollectionChangedAndItemPropertyChangedInternal);
+        UnbindCollectionChangedAndItemPropertyChangedBindings(
+            _collectionChangedAndItemPropertyChangedTriggerBindings.Where(b => b.Context == context));
     }
     #endregion
 
+    // !!! YOU STOPPED HERE
     #region CollectionChangedAndItemPropertyChanging
     public static void UnbindCollectionChangedAndItemPropertyChanging<TItem, TItemProperty>
     (
@@ -1493,7 +1492,7 @@ public static class TriggerBinder
             tb.CollectionChangedTrigger == collectionChangedTrigger &&
             tb.ItemPropertyName == itemPropertyName &&
             tb.ItemPropertyChangingTrigger == itemPropertyChangingTrigger)
-            .ToList().ForEach(UnbindCollectionChangedAndItemPropertyChangingInternal);
+            .ToList().ForEach(UnbindCollectionChangedAndItemPropertyChangingBinding);
     }
 
     public static void UnbindCollectionChangedAndItemPropertyChanging<TItem, TItemProperty>
@@ -1515,7 +1514,7 @@ public static class TriggerBinder
             tb.ObservableCollection == observableCollection &&
             tb.CollectionChangedTrigger == collectionChangedTrigger &&
             tb.ItemPropertyName == itemPropertyName)
-            .ToList().ForEach(UnbindCollectionChangedAndItemPropertyChangingInternal);
+            .ToList().ForEach(UnbindCollectionChangedAndItemPropertyChangingBinding);
     }
 
     public static void UnbindCollectionChangedAndItemPropertyChanging<TItem, TItemProperty>
@@ -1532,7 +1531,7 @@ public static class TriggerBinder
             tb.Context == context &&
             tb.ObservableCollection == observableCollection &&
             tb.CollectionChangedTrigger == collectionChangedTrigger)
-            .ToList().ForEach(UnbindCollectionChangedAndItemPropertyChangingInternal);
+            .ToList().ForEach(UnbindCollectionChangedAndItemPropertyChangingBinding);
     }
 
     public static void UnbindCollectionChangedAndItemPropertyChanging<TItem, TItemProperty>
@@ -1546,7 +1545,7 @@ public static class TriggerBinder
         _collectionChangedAndItemPropertyChangingTriggerBindings.Where(tb =>
             tb.Context == context &&
             tb.ObservableCollection == observableCollection)
-            .ToList().ForEach(UnbindCollectionChangedAndItemPropertyChangingInternal);
+            .ToList().ForEach(UnbindCollectionChangedAndItemPropertyChangingBinding);
     }
 
     public static void UnbindCollectionChangedAndItemPropertyChanging<TItem, TItemProperty>(object context)
@@ -1555,7 +1554,7 @@ public static class TriggerBinder
 
         _collectionChangedAndItemPropertyChangingTriggerBindings.Where(tb =>
             tb.Context == context)
-            .ToList().ForEach(UnbindCollectionChangedAndItemPropertyChangingInternal);
+            .ToList().ForEach(UnbindCollectionChangedAndItemPropertyChangingBinding);
     }
     #endregion
 
@@ -1579,7 +1578,7 @@ public static class TriggerBinder
             tb.ObservableCollection == observableCollection &&
             tb.ItemPropertyName == itemPropertyName &&
             tb.ItemPropertyChangedTrigger == itemPropertyChangedTrigger)
-            .ToList().ForEach(UnbindCollectionItemPropertyChangedInternal);
+            .ToList().ForEach(UnbindCollectionItemPropertyChangedBinding);
     }
 
     public static void UnbindCollectionItemPropertyChanged<TItem, TItemProperty>
@@ -1598,7 +1597,7 @@ public static class TriggerBinder
             tb.Context == context &&
             tb.ObservableCollection == observableCollection &&
             tb.ItemPropertyName == itemPropertyName)
-            .ToList().ForEach(UnbindCollectionItemPropertyChangedInternal);
+            .ToList().ForEach(UnbindCollectionItemPropertyChangedBinding);
     }
 
     public static void UnbindCollectionItemPropertyChanged<TItem, TItemProperty>
@@ -1612,7 +1611,7 @@ public static class TriggerBinder
         _collectionItemPropertyChangedTriggerBindings.Where(tb =>
             tb.Context == context &&
             tb.ObservableCollection == observableCollection)
-            .ToList().ForEach(UnbindCollectionItemPropertyChangedInternal);
+            .ToList().ForEach(UnbindCollectionItemPropertyChangedBinding);
     }
 
     public static void UnbindCollectionItemPropertyChanged<TItem, TItemProperty>(object context)
@@ -1621,7 +1620,7 @@ public static class TriggerBinder
 
         _collectionItemPropertyChangedTriggerBindings.Where(tb =>
             tb.Context == context)
-            .ToList().ForEach(UnbindCollectionItemPropertyChangedInternal);
+            .ToList().ForEach(UnbindCollectionItemPropertyChangedBinding);
     }
     #endregion
 
@@ -1645,7 +1644,7 @@ public static class TriggerBinder
             tb.ObservableCollection == observableCollection &&
             tb.ItemPropertyName == itemPropertyName &&
             tb.ItemPropertyChangingTrigger == itemPropertyChangingTrigger)
-            .ToList().ForEach(UnbindCollectionItemPropertyChangingInternal);
+            .ToList().ForEach(UnbindCollectionItemPropertyChangingBinding);
     }
 
     public static void UnbindCollectionItemPropertyChanging<TItem, TItemProperty>
@@ -1664,7 +1663,7 @@ public static class TriggerBinder
             tb.Context == context &&
             tb.ObservableCollection == observableCollection &&
             tb.ItemPropertyName == itemPropertyName)
-            .ToList().ForEach(UnbindCollectionItemPropertyChangingInternal);
+            .ToList().ForEach(UnbindCollectionItemPropertyChangingBinding);
     }
 
     public static void UnbindCollectionItemPropertyChanging<TItem, TItemProperty>
@@ -1678,7 +1677,7 @@ public static class TriggerBinder
         _collectionItemPropertyChangingTriggerBindings.Where(tb =>
             tb.Context == context &&
             tb.ObservableCollection == observableCollection)
-            .ToList().ForEach(UnbindCollectionItemPropertyChangingInternal);
+            .ToList().ForEach(UnbindCollectionItemPropertyChangingBinding);
     }
 
     public static void UnbindCollectionItemPropertyChanging<TItem, TItemProperty>(object context)
@@ -1687,7 +1686,7 @@ public static class TriggerBinder
 
         _collectionItemPropertyChangingTriggerBindings.Where(tb =>
             tb.Context == context)
-            .ToList().ForEach(UnbindCollectionItemPropertyChangingInternal);
+            .ToList().ForEach(UnbindCollectionItemPropertyChangingBinding);
     }
     #endregion
 
@@ -1756,6 +1755,9 @@ public static class TriggerBinder
         ArgumentNullException.ThrowIfNull(itemPropertyChangedOrChangingTrigger, nameof(itemPropertyChangedOrChangingTrigger));
     }
     #endregion
+
+    private static string GetPropertyName<TObject, TProperty>(Expression<Func<TObject, TProperty>> propertyGetterExpr) =>
+        ((MemberExpression)propertyGetterExpr.Body).Member.Name;
 
     #region Binding methods
     private static void OnPropertyChangedInternal
@@ -1915,7 +1917,7 @@ public static class TriggerBinder
     #endregion
 
     #region Unbinding methods
-    private static void UnbindPropertyChangedInternal(PropertyChangedTriggerBinding triggerBinding)
+    private static void UnbindPropertyChangedBinding(PropertyChangedTriggerBinding binding)
     {
         var isObservablePartOfCollectionChangedTriggerBinding =
             _collectionChangedAndItemPropertyChangedTriggerBindings
@@ -1923,16 +1925,22 @@ public static class TriggerBinder
             .Concat(_collectionItemPropertyChangedTriggerBindings
             .Select(b => (IEnumerable<INotifyPropertyChanged>)b.ObservableCollection))
             .SelectMany(e => e)
-            .Any(item => item == triggerBinding.Observable);
+            .Any(item => item == binding.Observable);
 
         if (isObservablePartOfCollectionChangedTriggerBinding)
             return;
         
-        triggerBinding.Observable.PropertyChanged -= triggerBinding.EventHandler;
-        _propertyChangedTriggerBindings.Remove(triggerBinding);
+        binding.Observable.PropertyChanged -= binding.EventHandler;
+        _propertyChangedTriggerBindings.Remove(binding);
     }
 
-    private static void UnbindPropertyChangingInternal(PropertyChangingTriggerBinding triggerBinding)
+    private static void UnbindPropertyChangedBindings(IEnumerable<PropertyChangedTriggerBinding> bindings)
+    {
+        foreach (var binding in bindings)
+            UnbindPropertyChangedBinding(binding);
+    }
+
+    private static void UnbindPropertyChangingBinding(PropertyChangingTriggerBinding binding)
     {
         var isObservablePartOfCollectionChangedTriggerBinding =
             _collectionChangedAndItemPropertyChangingTriggerBindings
@@ -1940,83 +1948,123 @@ public static class TriggerBinder
             .Concat(_collectionItemPropertyChangingTriggerBindings
             .Select(b => (IEnumerable<INotifyPropertyChanging>)b.ObservableCollection))
             .SelectMany(e => e)
-            .Any(item => item == triggerBinding.Observable);
+            .Any(item => item == binding.Observable);
 
         if (isObservablePartOfCollectionChangedTriggerBinding)
             return;
 
-        triggerBinding.Observable.PropertyChanging -= triggerBinding.EventHandler;
-        _propertyChangingTriggerBindings.Remove(triggerBinding);
+        binding.Observable.PropertyChanging -= binding.EventHandler;
+        _propertyChangingTriggerBindings.Remove(binding);
     }
 
-    private static void UnbindCollectionChangedInternal(CollectionChangedTriggerBinding triggerBinding)
+    private static void UnbindPropertyChangingBindings(IEnumerable<PropertyChangingTriggerBinding> bindings)
     {
-        triggerBinding.ObservableCollection.CollectionChanged -= triggerBinding.EventHandler;
-        _collectionChangedTriggerBindings.Remove(triggerBinding);
-    }
-
-    private static void UnbindCollectionChangedAndItemPropertyChangedInternal(CollectionChangedAndItemPropertyChangedTriggerBinding triggerBinding)
-    {
-        triggerBinding.ObservableCollection.CollectionChanged -= triggerBinding.EventHandler;
-        _collectionChangedAndItemPropertyChangedTriggerBindings.Remove(triggerBinding);
-
-        var items = (IEnumerable<INotifyPropertyChanged>)triggerBinding.ObservableCollection;
-        var bindings = _propertyChangedTriggerBindings
-            .IntersectBy(items, pb => pb.Observable)
-            .Where(pb => pb.Context == triggerBinding.Context &&
-                         pb.PropertyName == triggerBinding.ItemPropertyName &&
-                         pb.Trigger == triggerBinding.ItemPropertyChangedTrigger);
-
         foreach (var binding in bindings)
-            UnbindPropertyChangedInternal(binding);
+            UnbindPropertyChangingBinding(binding);
     }
 
-    private static void UnbindCollectionChangedAndItemPropertyChangingInternal(CollectionChangedAndItemPropertyChangingTriggerBinding triggerBinding)
+    private static void UnbindCollectionChangedBinding(CollectionChangedTriggerBinding binding)
+    {
+        binding.ObservableCollection.CollectionChanged -= binding.EventHandler;
+        _collectionChangedTriggerBindings.Remove(binding);
+    }
+
+    private static void UnbindCollectionChangedBindings(IEnumerable<CollectionChangedTriggerBinding> bindings)
+    {
+        foreach (var binding in bindings)
+            UnbindCollectionChangedBinding(binding);
+    }
+
+    private static void UnbindCollectionChangedAndItemPropertyChangedBinding
+    (
+        CollectionChangedAndItemPropertyChangedTriggerBinding binding)
+    {
+        binding.ObservableCollection.CollectionChanged -= binding.EventHandler;
+        _collectionChangedAndItemPropertyChangedTriggerBindings.Remove(binding);
+
+        UnbindPropertyChangedBindings(
+            _propertyChangedTriggerBindings
+                .IntersectBy((IEnumerable<INotifyPropertyChanged>)binding.ObservableCollection, pb => pb.Observable)
+                .Where(pb => pb.Context == binding.Context &&
+                             pb.PropertyName == binding.ItemPropertyName &&
+                             pb.Trigger == binding.ItemPropertyChangedTrigger));
+    }
+
+    private static void UnbindCollectionChangedAndItemPropertyChangedBindings
+    (
+        IEnumerable<CollectionChangedAndItemPropertyChangedTriggerBinding> bindings)
+    {
+        foreach (var binding in bindings)
+            UnbindCollectionChangedAndItemPropertyChangedBinding(binding);
+    }
+
+    private static void UnbindCollectionChangedAndItemPropertyChangingBinding
+    (
+        CollectionChangedAndItemPropertyChangingTriggerBinding triggerBinding)
     {
         triggerBinding.ObservableCollection.CollectionChanged -= triggerBinding.EventHandler;
         _collectionChangedAndItemPropertyChangingTriggerBindings.Remove(triggerBinding);
 
-        var items = (IEnumerable<INotifyPropertyChanging>)triggerBinding.ObservableCollection;
-        var bindings = _propertyChangingTriggerBindings
-            .IntersectBy(items, pb => pb.Observable)
-            .Where(pb => pb.Context == triggerBinding.Context &&
-                         pb.PropertyName == triggerBinding.ItemPropertyName &&
-                         pb.Trigger == triggerBinding.ItemPropertyChangingTrigger);
-
-        foreach (var binding in bindings)
-            UnbindPropertyChangingInternal(binding);
+        UnbindPropertyChangingBindings(
+            _propertyChangingTriggerBindings
+                .IntersectBy((IEnumerable<INotifyPropertyChanging>)triggerBinding.ObservableCollection, pb => pb.Observable)
+                .Where(pb => pb.Context == triggerBinding.Context &&
+                             pb.PropertyName == triggerBinding.ItemPropertyName &&
+                             pb.Trigger == triggerBinding.ItemPropertyChangingTrigger));
     }
 
-    private static void UnbindCollectionItemPropertyChangedInternal(CollectionItemPropertyChangedTriggerBinding triggerBinding)
+    private static void UnbindCollectionChangedAndItemPropertyChangingBindings
+    (
+        IEnumerable<CollectionChangedAndItemPropertyChangingTriggerBinding> bindings)
+    {
+        foreach (var binding in bindings)
+            UnbindCollectionChangedAndItemPropertyChangingBinding(binding);
+    }
+
+    private static void UnbindCollectionItemPropertyChangedBinding
+    (
+        CollectionItemPropertyChangedTriggerBinding triggerBinding)
     {
         triggerBinding.ObservableCollection.CollectionChanged -= triggerBinding.EventHandler;
         _collectionItemPropertyChangedTriggerBindings.Remove(triggerBinding);
 
-        var items = (IEnumerable<INotifyPropertyChanged>)triggerBinding.ObservableCollection;
-        var bindings = _propertyChangedTriggerBindings
-            .IntersectBy(items, pb => pb.Observable)
-            .Where(pb => pb.Context == triggerBinding.Context &&
-                         pb.PropertyName == triggerBinding.ItemPropertyName &&
-                         pb.Trigger == triggerBinding.ItemPropertyChangedTrigger);
-
-        foreach (var binding in bindings)
-            UnbindPropertyChangedInternal(binding);
+        UnbindPropertyChangedBindings(
+            _propertyChangedTriggerBindings
+                .IntersectBy((IEnumerable<INotifyPropertyChanged>)triggerBinding.ObservableCollection, pb => pb.Observable)
+                .Where(pb => pb.Context == triggerBinding.Context &&
+                             pb.PropertyName == triggerBinding.ItemPropertyName &&
+                             pb.Trigger == triggerBinding.ItemPropertyChangedTrigger));
     }
 
-    private static void UnbindCollectionItemPropertyChangingInternal(CollectionItemPropertyChangingTriggerBinding triggerBinding)
+    private static void UnbindCollectionItemPropertyChangedBindings
+    (
+        IEnumerable<CollectionItemPropertyChangedTriggerBinding> bindings)
+    {
+        foreach (var binding in bindings)
+            UnbindCollectionItemPropertyChangedBinding(binding);
+    }
+
+    private static void UnbindCollectionItemPropertyChangingBinding
+    (
+        CollectionItemPropertyChangingTriggerBinding triggerBinding)
     {
         triggerBinding.ObservableCollection.CollectionChanged -= triggerBinding.EventHandler;
         _collectionItemPropertyChangingTriggerBindings.Remove(triggerBinding);
 
-        var items = (IEnumerable<INotifyPropertyChanging>)triggerBinding.ObservableCollection;
-        var bindings = _propertyChangingTriggerBindings
-            .IntersectBy(items, pb => pb.Observable)
-            .Where(pb => pb.Context == triggerBinding.Context &&
-                         pb.PropertyName == triggerBinding.ItemPropertyName &&
-                         pb.Trigger == triggerBinding.ItemPropertyChangingTrigger);
+        UnbindPropertyChangingBindings(
+            _propertyChangingTriggerBindings
+                .IntersectBy((IEnumerable<INotifyPropertyChanging>)triggerBinding.ObservableCollection, pb => pb.Observable)
+                .Where(pb => pb.Context == triggerBinding.Context &&
+                             pb.PropertyName == triggerBinding.ItemPropertyName &&
+                             pb.Trigger == triggerBinding.ItemPropertyChangingTrigger));
+    }
 
+    private static void UnbindCollectionItemPropertyChangingBindings
+    (
+        IEnumerable<CollectionItemPropertyChangingTriggerBinding> bindings)
+    {
         foreach (var binding in bindings)
-            UnbindPropertyChangingInternal(binding);
+            UnbindCollectionItemPropertyChangingBinding(binding);
     }
     #endregion
     #endregion
