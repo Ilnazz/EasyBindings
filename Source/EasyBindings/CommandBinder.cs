@@ -73,7 +73,46 @@ public static class CommandBinder
     }
     #endregion
 
-    #region Unbinding
+    #region Unbinding methods
+    /// <summary>
+    /// Unbinds a <see cref="ICommand"/> from <paramref name="commandExecutor"/> in a given context, if there is a binding.
+    /// </summary>
+    /// <param name="context">The context in which the binding was made.</param>
+    /// <param name="commandExecutor">The command executor the command was bound to. </param>
+    /// <param name="command">The command which was bound to the executor.</param>
+    public static void Unbind(object context, ICommandExecutor commandExecutor, ICommand command)
+    {
+        ArgumentNullException.ThrowIfNull(context, nameof(context));
+        ArgumentNullException.ThrowIfNull(commandExecutor, nameof(commandExecutor));
+        ArgumentNullException.ThrowIfNull(command, nameof(command));
+
+        var binding = _commandBindings.FirstOrDefault(b =>
+            b.Context == context &&
+            b.CommandExecutor == commandExecutor &&
+            b.Command == command);
+
+        if (binding is not null)
+            UnbindInternal(binding);
+    }
+
+    /// <summary>
+    /// Unbinds a <see cref="ICommand"/> from <paramref name="commandExecutor"/> in a given context, if there is a binding.
+    /// </summary>
+    /// <param name="context">The context in which the binding was made.</param>
+    /// <param name="commandExecutor">The command executor the command was bound to. </param>
+    public static void Unbind(object context, ICommandExecutor commandExecutor)
+    {
+        ArgumentNullException.ThrowIfNull(context, nameof(context));
+        ArgumentNullException.ThrowIfNull(commandExecutor, nameof(commandExecutor));
+
+        var binding = _commandBindings.FirstOrDefault(b =>
+            b.Context == context &&
+            b.CommandExecutor == commandExecutor);
+
+        if (binding is not null)
+            UnbindInternal(binding);
+    }
+
     /// <summary>
     /// Unbinds <see cref="ICommand"/>s from the corresponding <see cref="ICommandExecutor"/>s in a given context.
     /// </summary>
@@ -82,21 +121,9 @@ public static class CommandBinder
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
 
-        _commandBindings.Where(cb => cb.Context == context).ToList().ForEach(Unbind);
-    }
-
-    /// <summary>
-    /// Unbinds a <see cref="ICommand"/> from <paramref name="commandExecutor"/> in a given context, if there is a binding.
-    /// </summary>
-    /// <param name="commandExecutor">The command executor the command was bound to. </param>
-    public static void Unbind(object context, ICommandExecutor commandExecutor)
-    {
-        ArgumentNullException.ThrowIfNull(context, nameof(context));
-        ArgumentNullException.ThrowIfNull(commandExecutor, nameof(commandExecutor));
-
-        var commandBinding = _commandBindings.FirstOrDefault(cb => cb.Context == context && cb.CommandExecutor == commandExecutor);
-        if (commandBinding is not null)
-            Unbind(commandBinding);
+        var bindings = _commandBindings.Where(b => b.Context == context);
+        foreach (var binding in bindings)
+            UnbindInternal(binding);
     }
     #endregion
     #endregion
@@ -124,9 +151,14 @@ public static class CommandBinder
         ArgumentNullException.ThrowIfNull(context, nameof(context));
         ArgumentNullException.ThrowIfNull(commandExecutor, nameof(commandExecutor));
         ArgumentNullException.ThrowIfNull(command, nameof(command));
+
+        var bindings = _commandBindings.Where(b => b.Context == context);
+
+        var isExecutorBoundToCommand = bindings.Any(b => b.CommandExecutor == commandExecutor);
+        if (isExecutorBoundToCommand)
     }
 
-    private static void Unbind(CommandBinding commandBinding)
+    private static void UnbindInternal(CommandBinding commandBinding)
     {
         commandBinding.CommandExecutor.CommandExecutionRequested -= commandBinding.CommandExecutionRequestedEventHandler;
         commandBinding.Command.CanExecuteChanged -= commandBinding.CommanCanExecuteChangedEventHandler;

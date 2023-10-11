@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -60,7 +59,7 @@ public static class TriggerBinder
     {
         CheckPropertyChangedOrChangingBindingArgs(context, observable, observablePropertyGetterExpr, trigger);
 
-        var propertyName = ((MemberExpression)observablePropertyGetterExpr.Body).Member.Name;
+        var propertyName = GetPropertyName(observablePropertyGetterExpr);
         var observablePropertyGetter = observablePropertyGetterExpr.Compile();
 
         void eventHandler(object? _, PropertyChangedEventArgs e)
@@ -91,7 +90,7 @@ public static class TriggerBinder
     {
         CheckPropertyChangedOrChangingBindingArgs(context, observable, observablePropertyGetterExpr, trigger);
 
-        var propertyName = ((MemberExpression)observablePropertyGetterExpr.Body).Member.Name;
+        var propertyName = GetPropertyName(observablePropertyGetterExpr);
         var observablePropertyGetter = observablePropertyGetterExpr.Compile();
 
         void eventHandler(object? _, PropertyChangedEventArgs e)
@@ -122,7 +121,7 @@ public static class TriggerBinder
     {
         CheckPropertyChangedOrChangingBindingArgs(context, observable, observablePropertyGetterExpr, trigger);
 
-        var propertyName = ((MemberExpression)observablePropertyGetterExpr.Body).Member.Name;
+        var propertyName = GetPropertyName(observablePropertyGetterExpr);
         var observablePropertyGetter = observablePropertyGetterExpr.Compile();
 
         void eventHandler(object? _, PropertyChangedEventArgs e)
@@ -154,7 +153,8 @@ public static class TriggerBinder
     where TObservable : INotifyPropertyChanging
     {
         CheckPropertyChangedOrChangingBindingArgs(context, observable, observablePropertyGetterExpr, trigger);
-        var propertyName = ((MemberExpression)observablePropertyGetterExpr.Body).Member.Name;
+
+        var propertyName = GetPropertyName(observablePropertyGetterExpr);
         var observablePropertyGetter = observablePropertyGetterExpr.Compile();
 
         void eventHandler(object? _, PropertyChangingEventArgs e)
@@ -184,7 +184,8 @@ public static class TriggerBinder
     where TObservable : INotifyPropertyChanging
     {
         CheckPropertyChangedOrChangingBindingArgs(context, observable, observablePropertyGetterExpr, trigger);
-        var propertyName = ((MemberExpression)observablePropertyGetterExpr.Body).Member.Name;
+
+        var propertyName = GetPropertyName(observablePropertyGetterExpr);
         var observablePropertyGetter = observablePropertyGetterExpr.Compile();
 
         void eventHandler(object? _, PropertyChangingEventArgs e)
@@ -214,7 +215,8 @@ public static class TriggerBinder
     where TObservable : INotifyPropertyChanging
     {
         CheckPropertyChangedOrChangingBindingArgs(context, observable, observablePropertyGetterExpr, trigger);
-        var propertyName = ((MemberExpression)observablePropertyGetterExpr.Body).Member.Name;
+
+        var propertyName = GetPropertyName(observablePropertyGetterExpr);
         var observablePropertyGetter = observablePropertyGetterExpr.Compile();
 
         void eventHandler(object? _, PropertyChangingEventArgs e)
@@ -293,7 +295,7 @@ public static class TriggerBinder
     #endregion
 
     #region CollectionChangedAndItemPropertyChanged
-    #region First group
+    #region First group (with collectionChangedTrigger with two parameters)
     public static void OnCollectionChangedAndItemPropertyChanged<TItem, TItemProperty>
     (
         object context,
@@ -326,9 +328,8 @@ public static class TriggerBinder
                     UnbindPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
         }
 
-        var itemPropertyName = ((MemberExpression)itemPropertyGetterExpr.Body).Member.Name;
         OnCollectionChangedAndItemPropertyChangedInternal(context, observableCollection,
-            collectionChangedTrigger, itemPropertyName, itemPropertyChangedTrigger, eventHandler);
+            collectionChangedTrigger, GetPropertyName(itemPropertyGetterExpr), itemPropertyChangedTrigger, eventHandler);
     }
 
     public static void OnCollectionChangedAndItemPropertyChanged<TItem, TItemProperty>
@@ -363,9 +364,8 @@ public static class TriggerBinder
                     UnbindPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
         }
 
-        var itemPropertyName = ((MemberExpression)itemPropertyGetterExpr.Body).Member.Name;
         OnCollectionChangedAndItemPropertyChangedInternal(context, observableCollection,
-            collectionChangedTrigger, itemPropertyName, itemPropertyChangedTrigger, eventHandler);
+            collectionChangedTrigger, GetPropertyName(itemPropertyGetterExpr), itemPropertyChangedTrigger, eventHandler);
     }
 
     public static void OnCollectionChangedAndItemPropertyChanged<TItem, TItemProperty>
@@ -400,13 +400,12 @@ public static class TriggerBinder
                     UnbindPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
         }
 
-        var itemPropertyName = ((MemberExpression)itemPropertyGetterExpr.Body).Member.Name;
         OnCollectionChangedAndItemPropertyChangedInternal(context, observableCollection,
-            collectionChangedTrigger, itemPropertyName, itemPropertyChangedTrigger, eventHandler);
+            collectionChangedTrigger, GetPropertyName(itemPropertyGetterExpr), itemPropertyChangedTrigger, eventHandler);
     }
     #endregion
 
-    #region Second group
+    #region Second group (with collectionChangedTrigger with one parameter)
     public static void OnCollectionChangedAndItemPropertyChanged<TItem, TItemProperty>
     (
         object context,
@@ -439,9 +438,8 @@ public static class TriggerBinder
                     UnbindPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
         }
 
-        var itemPropertyName = ((MemberExpression)itemPropertyGetterExpr.Body).Member.Name;
         OnCollectionChangedAndItemPropertyChangedInternal(context, observableCollection,
-            collectionChangedTrigger, itemPropertyName, itemPropertyChangedTrigger, eventHandler);
+            collectionChangedTrigger, GetPropertyName(itemPropertyGetterExpr), itemPropertyChangedTrigger, eventHandler);
     }
 
     public static void OnCollectionChangedAndItemPropertyChanged<TItem, TItemProperty>
@@ -476,9 +474,8 @@ public static class TriggerBinder
                     UnbindPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
         }
 
-        var itemPropertyName = ((MemberExpression)itemPropertyGetterExpr.Body).Member.Name;
         OnCollectionChangedAndItemPropertyChangedInternal(context, observableCollection,
-            collectionChangedTrigger, itemPropertyName, itemPropertyChangedTrigger, eventHandler);
+            collectionChangedTrigger, GetPropertyName(itemPropertyGetterExpr), itemPropertyChangedTrigger, eventHandler);
     }
 
     public static void OnCollectionChangedAndItemPropertyChanged<TItem, TItemProperty>
@@ -513,13 +510,12 @@ public static class TriggerBinder
                     UnbindPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
         }
 
-        var itemPropertyName = ((MemberExpression)itemPropertyGetterExpr.Body).Member.Name;
         OnCollectionChangedAndItemPropertyChangedInternal(context, observableCollection,
-            collectionChangedTrigger, itemPropertyName, itemPropertyChangedTrigger, eventHandler);
+            collectionChangedTrigger, GetPropertyName(itemPropertyGetterExpr), itemPropertyChangedTrigger, eventHandler);
     }
     #endregion
 
-    #region Third group
+    #region Third group (with collectionChangedTrigger without parameters)
     public static void OnCollectionChangedAndItemPropertyChanged<TItem, TItemProperty>
     (
         object context,
@@ -552,9 +548,8 @@ public static class TriggerBinder
                     UnbindPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
         }
 
-        var itemPropertyName = ((MemberExpression)itemPropertyGetterExpr.Body).Member.Name;
         OnCollectionChangedAndItemPropertyChangedInternal(context, observableCollection,
-            collectionChangedTrigger, itemPropertyName, itemPropertyChangedTrigger, eventHandler);
+            collectionChangedTrigger, GetPropertyName(itemPropertyGetterExpr), itemPropertyChangedTrigger, eventHandler);
     }
 
     public static void OnCollectionChangedAndItemPropertyChanged<TItem, TItemProperty>
@@ -589,9 +584,8 @@ public static class TriggerBinder
                     UnbindPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
         }
 
-        var itemPropertyName = ((MemberExpression)itemPropertyGetterExpr.Body).Member.Name;
         OnCollectionChangedAndItemPropertyChangedInternal(context, observableCollection,
-            collectionChangedTrigger, itemPropertyName, itemPropertyChangedTrigger, eventHandler);
+            collectionChangedTrigger, GetPropertyName(itemPropertyGetterExpr), itemPropertyChangedTrigger, eventHandler);
     }
 
     public static void OnCollectionChangedAndItemPropertyChanged<TItem, TItemProperty>
@@ -626,15 +620,14 @@ public static class TriggerBinder
                     UnbindPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
         }
 
-        var itemPropertyName = ((MemberExpression)itemPropertyGetterExpr.Body).Member.Name;
         OnCollectionChangedAndItemPropertyChangedInternal(context, observableCollection,
-            collectionChangedTrigger, itemPropertyName, itemPropertyChangedTrigger, eventHandler);
+            collectionChangedTrigger, GetPropertyName(itemPropertyGetterExpr), itemPropertyChangedTrigger, eventHandler);
     }
     #endregion
     #endregion
 
     #region CollectionChangedAndItemPropertyChanging
-    #region First group
+    #region First group (with collectionChangedTrigger with two parameters)
     public static void OnCollectionChangedAndItemPropertyChanging<TItem, TItemProperty>
     (
         object context,
@@ -667,9 +660,8 @@ public static class TriggerBinder
                     OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
         }
 
-        var itemPropertyName = ((MemberExpression)itemPropertyGetterExpr.Body).Member.Name;
         OnCollectionChangedAndItemPropertyChangingInternal(context, observableCollection,
-            collectionChangedTrigger, itemPropertyName, itemPropertyChangingTrigger, eventHandler);
+            collectionChangedTrigger, GetPropertyName(itemPropertyGetterExpr), itemPropertyChangingTrigger, eventHandler);
     }
 
     public static void OnCollectionChangedAndItemPropertyChanging<TItem, TItemProperty>
@@ -704,9 +696,8 @@ public static class TriggerBinder
                     OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
         }
 
-        var itemPropertyName = ((MemberExpression)itemPropertyGetterExpr.Body).Member.Name;
         OnCollectionChangedAndItemPropertyChangingInternal(context, observableCollection,
-            collectionChangedTrigger, itemPropertyName, itemPropertyChangingTrigger, eventHandler);
+            collectionChangedTrigger, GetPropertyName(itemPropertyGetterExpr), itemPropertyChangingTrigger, eventHandler);
     }
 
     public static void OnCollectionChangedAndItemPropertyChanging<TItem, TItemProperty>
@@ -741,13 +732,12 @@ public static class TriggerBinder
                     OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
         }
 
-        var itemPropertyName = ((MemberExpression)itemPropertyGetterExpr.Body).Member.Name;
         OnCollectionChangedAndItemPropertyChangingInternal(context, observableCollection,
-            collectionChangedTrigger, itemPropertyName, itemPropertyChangingTrigger, eventHandler);
+            collectionChangedTrigger, GetPropertyName(itemPropertyGetterExpr), itemPropertyChangingTrigger, eventHandler);
     }
     #endregion
 
-    #region Second group
+    #region Second group (with collectionChangedTrigger with one parameter)
     public static void OnCollectionChangedAndItemPropertyChanging<TItem, TItemProperty>
     (
         object context,
@@ -780,9 +770,8 @@ public static class TriggerBinder
                     OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
         }
 
-        var itemPropertyName = ((MemberExpression)itemPropertyGetterExpr.Body).Member.Name;
         OnCollectionChangedAndItemPropertyChangingInternal(context, observableCollection,
-            collectionChangedTrigger, itemPropertyName, itemPropertyChangingTrigger, eventHandler);
+            collectionChangedTrigger, GetPropertyName(itemPropertyGetterExpr), itemPropertyChangingTrigger, eventHandler);
     }
 
     public static void OnCollectionChangedAndItemPropertyChanging<TItem, TItemProperty>
@@ -817,9 +806,8 @@ public static class TriggerBinder
                     OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
         }
 
-        var itemPropertyName = ((MemberExpression)itemPropertyGetterExpr.Body).Member.Name;
         OnCollectionChangedAndItemPropertyChangingInternal(context, observableCollection,
-            collectionChangedTrigger, itemPropertyName, itemPropertyChangingTrigger, eventHandler);
+            collectionChangedTrigger, GetPropertyName(itemPropertyGetterExpr), itemPropertyChangingTrigger, eventHandler);
     }
 
     public static void OnCollectionChangedAndItemPropertyChanging<TItem, TItemProperty>
@@ -854,13 +842,12 @@ public static class TriggerBinder
                     OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
         }
 
-        var itemPropertyName = ((MemberExpression)itemPropertyGetterExpr.Body).Member.Name;
         OnCollectionChangedAndItemPropertyChangingInternal(context, observableCollection,
-            collectionChangedTrigger, itemPropertyName, itemPropertyChangingTrigger, eventHandler);
+            collectionChangedTrigger, GetPropertyName(itemPropertyGetterExpr), itemPropertyChangingTrigger, eventHandler);
     }
     #endregion
 
-    #region Third group
+    #region Third group (with collectionChangedTrigger without parameters)
     public static void OnCollectionChangedAndItemPropertyChanging<TItem, TItemProperty>
     (
         object context,
@@ -893,9 +880,8 @@ public static class TriggerBinder
                     OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
         }
 
-        var itemPropertyName = ((MemberExpression)itemPropertyGetterExpr.Body).Member.Name;
         OnCollectionChangedAndItemPropertyChangingInternal(context, observableCollection,
-            collectionChangedTrigger, itemPropertyName, itemPropertyChangingTrigger, eventHandler);
+            collectionChangedTrigger, GetPropertyName(itemPropertyGetterExpr), itemPropertyChangingTrigger, eventHandler);
     }
 
     public static void OnCollectionChangedAndItemPropertyChanging<TItem, TItemProperty>
@@ -930,9 +916,8 @@ public static class TriggerBinder
                     OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
         }
 
-        var itemPropertyName = ((MemberExpression)itemPropertyGetterExpr.Body).Member.Name;
         OnCollectionChangedAndItemPropertyChangingInternal(context, observableCollection,
-            collectionChangedTrigger, itemPropertyName, itemPropertyChangingTrigger, eventHandler);
+            collectionChangedTrigger, GetPropertyName(itemPropertyGetterExpr), itemPropertyChangingTrigger, eventHandler);
     }
 
     public static void OnCollectionChangedAndItemPropertyChanging<TItem, TItemProperty>
@@ -967,9 +952,8 @@ public static class TriggerBinder
                     OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
         }
 
-        var itemPropertyName = ((MemberExpression)itemPropertyGetterExpr.Body).Member.Name;
         OnCollectionChangedAndItemPropertyChangingInternal(context, observableCollection,
-            collectionChangedTrigger, itemPropertyName, itemPropertyChangingTrigger, eventHandler);
+            collectionChangedTrigger, GetPropertyName(itemPropertyGetterExpr), itemPropertyChangingTrigger, eventHandler);
     }
     #endregion
     #endregion
@@ -1004,9 +988,8 @@ public static class TriggerBinder
                     UnbindPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
         }
 
-        var itemPropertyName = ((MemberExpression)itemPropertyGetterExpr.Body).Member.Name;
-        OnCollectionItemPropertyChangedInternal(context,
-            observableCollection, itemPropertyName, itemPropertyChangedTrigger, eventHandler);
+        OnCollectionItemPropertyChangedInternal(context, observableCollection,
+            GetPropertyName(itemPropertyGetterExpr), itemPropertyChangedTrigger, eventHandler);
     }
 
     public static void OnCollectionItemPropertyChanged<TItem, TItemProperty>
@@ -1038,9 +1021,8 @@ public static class TriggerBinder
                     UnbindPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
         }
 
-        var itemPropertyName = ((MemberExpression)itemPropertyGetterExpr.Body).Member.Name;
-        OnCollectionItemPropertyChangedInternal(context,
-            observableCollection, itemPropertyName, itemPropertyChangedTrigger, eventHandler);
+        OnCollectionItemPropertyChangedInternal(context, observableCollection,
+            GetPropertyName(itemPropertyGetterExpr), itemPropertyChangedTrigger, eventHandler);
     }
 
     public static void OnCollectionItemPropertyChanged<TItem, TItemProperty>
@@ -1072,9 +1054,8 @@ public static class TriggerBinder
                     UnbindPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
         }
 
-        var itemPropertyName = ((MemberExpression)itemPropertyGetterExpr.Body).Member.Name;
-        OnCollectionItemPropertyChangedInternal(context,
-            observableCollection, itemPropertyName, itemPropertyChangedTrigger, eventHandler);
+        OnCollectionItemPropertyChangedInternal(context, observableCollection,
+            GetPropertyName(itemPropertyGetterExpr), itemPropertyChangedTrigger, eventHandler);
     }
     #endregion
 
@@ -1108,9 +1089,8 @@ public static class TriggerBinder
                     UnbindPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
         }
 
-        var itemPropertyName = ((MemberExpression)itemPropertyGetterExpr.Body).Member.Name;
-        OnCollectionItemPropertyChangingInternal(context,
-            observableCollection, itemPropertyName, itemPropertyChangingTrigger, eventHandler);
+        OnCollectionItemPropertyChangingInternal(context, observableCollection,
+            GetPropertyName(itemPropertyGetterExpr), itemPropertyChangingTrigger, eventHandler);
     }
 
     public static void OnCollectionItemPropertyChanging<TItem, TItemProperty>
@@ -1142,9 +1122,8 @@ public static class TriggerBinder
                     UnbindPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
         }
 
-        var itemPropertyName = ((MemberExpression)itemPropertyGetterExpr.Body).Member.Name;
-        OnCollectionItemPropertyChangingInternal(context,
-            observableCollection, itemPropertyName, itemPropertyChangingTrigger, eventHandler);
+        OnCollectionItemPropertyChangingInternal(context, observableCollection,
+            GetPropertyName(itemPropertyGetterExpr), itemPropertyChangingTrigger, eventHandler);
     }
 
     public static void OnCollectionItemPropertyChanging<TItem, TItemProperty>
@@ -1176,9 +1155,8 @@ public static class TriggerBinder
                     UnbindPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
         }
 
-        var itemPropertyName = ((MemberExpression)itemPropertyGetterExpr.Body).Member.Name;
-        OnCollectionItemPropertyChangingInternal(context,
-            observableCollection, itemPropertyName, itemPropertyChangingTrigger, eventHandler);
+        OnCollectionItemPropertyChangingInternal(context, observableCollection,
+            GetPropertyName(itemPropertyGetterExpr), itemPropertyChangingTrigger, eventHandler);
     }
     #endregion
     #endregion
@@ -1211,7 +1189,6 @@ public static class TriggerBinder
         // TODO: можно ли привязать один и тот же триггер несколько раз?
 
         var propertyName = GetPropertyName(observablePropertyGetterExpr);
-
         UnbindPropertyChangedBindings(
             _propertyChangedTriggerBindings
             .Where(b => b.Context == context &&
@@ -1241,7 +1218,6 @@ public static class TriggerBinder
         ArgumentNullException.ThrowIfNull(observablePropertyGetterExpr, nameof(observablePropertyGetterExpr));
 
         var propertyName = GetPropertyName(observablePropertyGetterExpr);
-
         UnbindPropertyChangedBindings(
             _propertyChangedTriggerBindings
             .Where(b => b.Context == context &&
@@ -1294,7 +1270,6 @@ public static class TriggerBinder
         ArgumentNullException.ThrowIfNull(trigger, nameof(trigger));
 
         var propertyName = GetPropertyName(observablePropertyGetterExpr);
-
         UnbindPropertyChangingBindings(
             _propertyChangingTriggerBindings
             .Where(b => b.Context == context &&
@@ -1316,7 +1291,6 @@ public static class TriggerBinder
         ArgumentNullException.ThrowIfNull(observablePropertyGetterExpr, nameof(observablePropertyGetterExpr));
 
         var propertyName = GetPropertyName(observablePropertyGetterExpr);
-
         UnbindPropertyChangingBindings(
             _propertyChangingTriggerBindings
             .Where(b => b.Context == context &&
@@ -1395,8 +1369,7 @@ public static class TriggerBinder
         ArgumentNullException.ThrowIfNull(itemPropertyGetterExpr, nameof(itemPropertyGetterExpr));
         ArgumentNullException.ThrowIfNull(itemPropertyChangedTrigger, nameof(itemPropertyChangedTrigger));
 
-        var itemPropertyName = ((MemberExpression)itemPropertyGetterExpr.Body).Member.Name;
-
+        var itemPropertyName = GetPropertyName(itemPropertyGetterExpr);
         UnbindCollectionChangedAndItemPropertyChangedBindings(
             _collectionChangedAndItemPropertyChangedTriggerBindings
                 .Where(b => b.Context == context &&
@@ -1418,8 +1391,7 @@ public static class TriggerBinder
         ArgumentNullException.ThrowIfNull(collectionChangedTrigger, nameof(collectionChangedTrigger));
         ArgumentNullException.ThrowIfNull(itemPropertyGetterExpr, nameof(itemPropertyGetterExpr));
 
-        var itemPropertyName = ((MemberExpression)itemPropertyGetterExpr.Body).Member.Name;
-
+        var itemPropertyName = GetPropertyName(itemPropertyGetterExpr);
         UnbindCollectionChangedAndItemPropertyChangedBindings(
             _collectionChangedAndItemPropertyChangedTriggerBindings
                 .Where(b => b.Context == context &&
@@ -1482,8 +1454,7 @@ public static class TriggerBinder
         ArgumentNullException.ThrowIfNull(itemPropertyGetterExpr, nameof(itemPropertyGetterExpr));
         ArgumentNullException.ThrowIfNull(itemPropertyChangingTrigger, nameof(itemPropertyChangingTrigger));
 
-        var itemPropertyName = ((MemberExpression)itemPropertyGetterExpr.Body).Member.Name;
-
+        var itemPropertyName = GetPropertyName(itemPropertyGetterExpr);
         UnbindCollectionChangedAndItemPropertyChangingBindings(
             _collectionChangedAndItemPropertyChangingTriggerBindings
             .Where(tb => tb.Context == context &&
@@ -1505,8 +1476,7 @@ public static class TriggerBinder
         ArgumentNullException.ThrowIfNull(collectionChangedTrigger, nameof(collectionChangedTrigger));
         ArgumentNullException.ThrowIfNull(itemPropertyGetterExpr, nameof(itemPropertyGetterExpr));
 
-        var itemPropertyName = ((MemberExpression)itemPropertyGetterExpr.Body).Member.Name;
-
+        var itemPropertyName = GetPropertyName(itemPropertyGetterExpr);
         UnbindCollectionChangedAndItemPropertyChangingBindings(
             _collectionChangedAndItemPropertyChangingTriggerBindings
             .Where(tb => tb.Context == context &&
@@ -1567,8 +1537,7 @@ public static class TriggerBinder
         ArgumentNullException.ThrowIfNull(itemPropertyGetterExpr, nameof(itemPropertyGetterExpr));
         ArgumentNullException.ThrowIfNull(itemPropertyChangedTrigger, nameof(itemPropertyChangedTrigger));
 
-        var itemPropertyName = ((MemberExpression)itemPropertyGetterExpr.Body).Member.Name;
-
+        var itemPropertyName = GetPropertyName(itemPropertyGetterExpr);
         UnbindCollectionItemPropertyChangedBindings(
             _collectionItemPropertyChangedTriggerBindings
             .Where(tb => tb.Context == context &&
@@ -1587,8 +1556,7 @@ public static class TriggerBinder
         ArgumentNullException.ThrowIfNull(observableCollection, nameof(observableCollection));
         ArgumentNullException.ThrowIfNull(itemPropertyGetterExpr, nameof(itemPropertyGetterExpr));
 
-        var itemPropertyName = ((MemberExpression)itemPropertyGetterExpr.Body).Member.Name;
-
+        var itemPropertyName = GetPropertyName(itemPropertyGetterExpr);
         UnbindCollectionItemPropertyChangedBindings(
             _collectionItemPropertyChangedTriggerBindings
             .Where(tb => tb.Context == context &&
@@ -1631,8 +1599,7 @@ public static class TriggerBinder
         ArgumentNullException.ThrowIfNull(itemPropertyGetterExpr, nameof(itemPropertyGetterExpr));
         ArgumentNullException.ThrowIfNull(itemPropertyChangingTrigger, nameof(itemPropertyChangingTrigger));
 
-        var itemPropertyName = ((MemberExpression)itemPropertyGetterExpr.Body).Member.Name;
-
+        var itemPropertyName = GetPropertyName(itemPropertyGetterExpr);
         UnbindCollectionItemPropertyChangingBindings(
             _collectionItemPropertyChangingTriggerBindings
             .Where(tb => tb.Context == context &&
@@ -1651,8 +1618,7 @@ public static class TriggerBinder
         ArgumentNullException.ThrowIfNull(observableCollection, nameof(observableCollection));
         ArgumentNullException.ThrowIfNull(itemPropertyGetterExpr, nameof(itemPropertyGetterExpr));
 
-        var itemPropertyName = ((MemberExpression)itemPropertyGetterExpr.Body).Member.Name;
-
+        var itemPropertyName = GetPropertyName(itemPropertyGetterExpr);
         UnbindCollectionItemPropertyChangingBindings(
             _collectionItemPropertyChangingTriggerBindings
             .Where(tb => tb.Context == context &&
@@ -1751,9 +1717,6 @@ public static class TriggerBinder
         ArgumentNullException.ThrowIfNull(itemPropertyChangedOrChangingTrigger, nameof(itemPropertyChangedOrChangingTrigger));
     }
     #endregion
-
-    private static string GetPropertyName<TObject, TProperty>(Expression<Func<TObject, TProperty>> propertyGetterExpr) =>
-        ((MemberExpression)propertyGetterExpr.Body).Member.Name;
 
     #region Binding methods
     private static void OnPropertyChangedInternal
@@ -1915,7 +1878,7 @@ public static class TriggerBinder
     #region Unbinding methods
     private static void UnbindPropertyChangedBinding(PropertyChangedTriggerBinding binding)
     {
-        var isObservablePartOfCollectionChangedTriggerBinding =
+        var isObservableObjectPartOfCollectionChangedTriggerBinding =
             _collectionChangedAndItemPropertyChangedTriggerBindings
             .Select(b => (IEnumerable<INotifyPropertyChanged>)b.ObservableCollection)
             .Concat(_collectionItemPropertyChangedTriggerBindings
@@ -1923,7 +1886,7 @@ public static class TriggerBinder
             .SelectMany(e => e)
             .Any(item => item == binding.Observable);
 
-        if (isObservablePartOfCollectionChangedTriggerBinding)
+        if (isObservableObjectPartOfCollectionChangedTriggerBinding)
             return;
         
         binding.Observable.PropertyChanged -= binding.EventHandler;
@@ -1938,7 +1901,7 @@ public static class TriggerBinder
 
     private static void UnbindPropertyChangingBinding(PropertyChangingTriggerBinding binding)
     {
-        var isObservablePartOfCollectionChangedTriggerBinding =
+        var isObservableObjectPartOfCollectionChangedTriggerBinding =
             _collectionChangedAndItemPropertyChangingTriggerBindings
             .Select(b => (IEnumerable<INotifyPropertyChanging>)b.ObservableCollection)
             .Concat(_collectionItemPropertyChangingTriggerBindings
@@ -1946,7 +1909,7 @@ public static class TriggerBinder
             .SelectMany(e => e)
             .Any(item => item == binding.Observable);
 
-        if (isObservablePartOfCollectionChangedTriggerBinding)
+        if (isObservableObjectPartOfCollectionChangedTriggerBinding)
             return;
 
         binding.Observable.PropertyChanging -= binding.EventHandler;
@@ -2063,6 +2026,9 @@ public static class TriggerBinder
             UnbindCollectionItemPropertyChangingBinding(binding);
     }
     #endregion
+
+    private static string GetPropertyName<TObject, TProperty>(Expression<Func<TObject, TProperty>> propertyGetterExpr) =>
+        ((MemberExpression)propertyGetterExpr.Body).Member.Name;
     #endregion
 
     #region Private data types
