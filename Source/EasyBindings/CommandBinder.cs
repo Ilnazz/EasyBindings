@@ -152,10 +152,13 @@ public static class CommandBinder
         ArgumentNullException.ThrowIfNull(commandExecutor, nameof(commandExecutor));
         ArgumentNullException.ThrowIfNull(command, nameof(command));
 
-        var bindings = _commandBindings.Where(b => b.Context == context);
+        var isBindingExist = _commandBindings.Any(b =>
+            b.Context == context &&
+            b.CommandExecutor == commandExecutor &&
+            b.Command == command);
 
-        var isExecutorBoundToCommand = bindings.Any(b => b.CommandExecutor == commandExecutor);
-        if (isExecutorBoundToCommand)
+        if (isBindingExist)
+            throw new Exception("This command is already bound to the commandExecutor in the given context.");
     }
 
     private static void UnbindInternal(CommandBinding commandBinding)
