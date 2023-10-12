@@ -140,7 +140,7 @@ public static class PropertyBinder
         TTarget target, Expression<Func<TTarget, TProperty>> targetPropertyGetterExpr,
         TSource source, Expression<Func<TSource, TProperty>> sourcePropertyGetterExpr
     )
-    where TTarget : INotifyPropertyChanged where TSource : class
+    where TTarget : INotifyPropertyChanged
     {
         BindOneWay(context, source, sourcePropertyGetterExpr, target, targetPropertyGetterExpr);
     }
@@ -165,7 +165,7 @@ public static class PropertyBinder
         TSource source, Expression<Func<TSource, TSourceProperty>> sourcePropertyGetterExpr,
         Func<TTargetProperty, TSourceProperty> converter
     )
-    where TTarget : INotifyPropertyChanged where TSource : class
+    where TTarget : INotifyPropertyChanged
     {
         BindOneWay(context, source, sourcePropertyGetterExpr, target, targetPropertyGetterExpr, converter);
     }
@@ -187,7 +187,7 @@ public static class PropertyBinder
         TTarget target, Expression<Func<TTarget, TProperty>> targetPropertyGetterExpr,
         TSource source, Expression<Func<TSource, TProperty>> sourcePropertyGetterExpr
     )
-    where TTarget : class, INotifyPropertyChanged where TSource : class, INotifyPropertyChanged
+    where TTarget : INotifyPropertyChanged where TSource : INotifyPropertyChanged
     {
         BindOneWay(context, target, targetPropertyGetterExpr, source, sourcePropertyGetterExpr);
         BindOneWay(context, source, sourcePropertyGetterExpr, target, targetPropertyGetterExpr);
@@ -215,7 +215,7 @@ public static class PropertyBinder
         Func<TTargetProperty, TSourceProperty> targetValueConverter,
         Func<TSourceProperty, TTargetProperty> sourceValueConverter
     )
-    where TTarget : class, INotifyPropertyChanged where TSource : class, INotifyPropertyChanged
+    where TTarget : INotifyPropertyChanged where TSource : INotifyPropertyChanged
     {
         BindOneWay(context, target, targetPropertyGetterExpr, source, sourcePropertyGetterExpr, sourceValueConverter);
         BindOneWay(context, source, sourcePropertyGetterExpr, target, targetPropertyGetterExpr, targetValueConverter);
@@ -231,7 +231,7 @@ public static class PropertyBinder
     /// <param name="context">The context in which the binding was made.</param>
     /// <param name="target">The object whose property was bound.</param>
     /// <param name="targetPropertyGetterExpr">An expression that identifies the property of the <paramref name="target"/> object.</param>
-    public static void UnbindFromTarget<T, TProperty>(object context, object target, Expression<Func<T, TProperty>> targetPropertyGetterExpr)
+    public static void UnbindFromTarget<T, TProperty>(object context, T target, Expression<Func<T, TProperty>> targetPropertyGetterExpr)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
         ArgumentNullException.ThrowIfNull(target, nameof(target));
@@ -269,7 +269,7 @@ public static class PropertyBinder
     /// <param name="context">The context in which the binding was made.</param>
     /// <param name="source">The object whose property was bound.</param>
     /// <param name="sourcePropertyGetterExpr">An expression that identifies the property of the <paramref name="source"/> object.</param>
-    public static void UnbindFromSource<T, TProperty>(object context, object source, Expression<Func<T, TProperty>> sourcePropertyGetterExpr)
+    public static void UnbindFromSource<T, TProperty>(object context, T source, Expression<Func<T, TProperty>> sourcePropertyGetterExpr)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
         ArgumentNullException.ThrowIfNull(source, nameof(source));
