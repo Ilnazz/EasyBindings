@@ -1662,6 +1662,9 @@ public static class TriggerBinder
     #endregion
 
     #region Private methods
+    private static string GetPropertyName<TObject, TProperty>(Expression<Func<TObject, TProperty>> propertyGetterExpr) =>
+        ((MemberExpression)propertyGetterExpr.Body).Member.Name;
+
     #region Argument checking methods
     private static void CheckPropertyChangedBindingArgs<TObservable, TProperty>
     (
@@ -1833,8 +1836,12 @@ public static class TriggerBinder
         PropertyChangedEventHandler eventHandler)
     {
         observable.PropertyChanged += eventHandler;
-        _propertyChangedTriggerBindings.Add(new PropertyChangedTriggerBinding(
-            context,observable, propertyName, trigger, eventHandler));
+        _propertyChangedTriggerBindings.Add(new PropertyChangedTriggerBinding
+        (
+            context,
+            observable, propertyName,
+            trigger, eventHandler
+        ));
     }
 
     private static void OnPropertyChangingInternal
@@ -1846,8 +1853,12 @@ public static class TriggerBinder
         PropertyChangingEventHandler eventHandler)
     {
         observable.PropertyChanging += eventHandler;
-        _propertyChangingTriggerBindings.Add(new PropertyChangingTriggerBinding(
-            context, observable, propertyName, trigger, eventHandler));
+        _propertyChangingTriggerBindings.Add(new PropertyChangingTriggerBinding
+        (
+            context,
+            observable, propertyName,
+            trigger, eventHandler
+        ));
     }
 
     private static void OnCollectionChangedInternal
@@ -1858,8 +1869,12 @@ public static class TriggerBinder
         NotifyCollectionChangedEventHandler eventHandler)
     {
         observableCollection.CollectionChanged += eventHandler;
-        _collectionChangedTriggerBindings.Add(new CollectionChangedTriggerBinding(
-            context, observableCollection, trigger, eventHandler));
+        _collectionChangedTriggerBindings.Add(new CollectionChangedTriggerBinding
+        (
+            context,
+            observableCollection, trigger,
+            eventHandler
+        ));
     }
 
     private static void OnCollectionChangedAndItemPropertyChangedInternal
@@ -1872,8 +1887,13 @@ public static class TriggerBinder
         NotifyCollectionChangedEventHandler eventHandler)
     {
         observableCollection.CollectionChanged += eventHandler;
-        _collectionChangedAndItemPropertyChangedTriggerBindings.Add(new CollectionChangedAndItemPropertyChangedTriggerBinding(
-            context, observableCollection, collectionChangedTrigger, itemPropertyName, itemPropertyChangedTrigger, eventHandler));
+        _collectionChangedAndItemPropertyChangedTriggerBindings.Add(new CollectionChangedAndItemPropertyChangedTriggerBinding
+        (
+            context,
+            observableCollection, collectionChangedTrigger,
+            itemPropertyName, itemPropertyChangedTrigger,
+            eventHandler
+        ));
     }
 
     private static void OnCollectionChangedAndItemPropertyChangingInternal
@@ -1886,8 +1906,13 @@ public static class TriggerBinder
         NotifyCollectionChangedEventHandler eventHandler)
     {
         observableCollection.CollectionChanged += eventHandler;
-        _collectionChangedAndItemPropertyChangingTriggerBindings.Add(new CollectionChangedAndItemPropertyChangingTriggerBinding(
-            context, observableCollection, collectionChangedTrigger, itemPropertyName, itemPropertyChangingTrigger, eventHandler));
+        _collectionChangedAndItemPropertyChangingTriggerBindings.Add(new CollectionChangedAndItemPropertyChangingTriggerBinding
+        (
+            context,
+            observableCollection, collectionChangedTrigger,
+            itemPropertyName, itemPropertyChangingTrigger,
+            eventHandler
+        ));
     }
 
     private static void OnCollectionItemPropertyChangedInternal
@@ -1899,8 +1924,12 @@ public static class TriggerBinder
         NotifyCollectionChangedEventHandler eventHandler)
     {
         observableCollection.CollectionChanged += eventHandler;
-        _collectionItemPropertyChangedTriggerBindings.Add(new CollectionItemPropertyChangedTriggerBinding(
-            context, observableCollection, itemPropertyName, itemPropertyChangedTrigger, eventHandler));
+        _collectionItemPropertyChangedTriggerBindings.Add(new CollectionItemPropertyChangedTriggerBinding
+        (
+            context,
+            observableCollection, itemPropertyName,
+            itemPropertyChangedTrigger, eventHandler
+        ));
     }
 
     private static void OnCollectionItemPropertyChangingInternal
@@ -1912,15 +1941,20 @@ public static class TriggerBinder
         NotifyCollectionChangedEventHandler eventHandler)
     {
         observableCollection.CollectionChanged += eventHandler;
-        _collectionItemPropertyChangingTriggerBindings.Add(new CollectionItemPropertyChangingTriggerBinding(
-            context, observableCollection, itemPropertyName, itemPropertyChangingTrigger, eventHandler));
+        _collectionItemPropertyChangingTriggerBindings.Add(new CollectionItemPropertyChangingTriggerBinding
+        (
+            context,
+            observableCollection,
+            itemPropertyName, itemPropertyChangingTrigger,
+            eventHandler
+        ));
     }
     #endregion
 
     #region Unbinding methods
     private static void UnbindPropertyChangedBinding(PropertyChangedTriggerBinding binding)
     {
-        var isObservableObjectPartOfCollectionChangedTriggerBinding =
+        var isObservableObjectPartOfCollectionChangedBinding =
             _collectionChangedAndItemPropertyChangedTriggerBindings
             .Select(b => (IEnumerable<INotifyPropertyChanged>)b.ObservableCollection)
             .Concat(_collectionItemPropertyChangedTriggerBindings
@@ -1928,7 +1962,7 @@ public static class TriggerBinder
             .SelectMany(e => e)
             .Any(item => item == binding.Observable);
 
-        if (isObservableObjectPartOfCollectionChangedTriggerBinding)
+        if (isObservableObjectPartOfCollectionChangedBinding)
             return;
         
         binding.Observable.PropertyChanged -= binding.EventHandler;
@@ -1943,7 +1977,7 @@ public static class TriggerBinder
 
     private static void UnbindPropertyChangingBinding(PropertyChangingTriggerBinding binding)
     {
-        var isObservableObjectPartOfCollectionChangedTriggerBinding =
+        var isObservableObjectPartOfCollectionChangedBinding =
             _collectionChangedAndItemPropertyChangingTriggerBindings
             .Select(b => (IEnumerable<INotifyPropertyChanging>)b.ObservableCollection)
             .Concat(_collectionItemPropertyChangingTriggerBindings
@@ -1951,7 +1985,7 @@ public static class TriggerBinder
             .SelectMany(e => e)
             .Any(item => item == binding.Observable);
 
-        if (isObservableObjectPartOfCollectionChangedTriggerBinding)
+        if (isObservableObjectPartOfCollectionChangedBinding)
             return;
 
         binding.Observable.PropertyChanging -= binding.EventHandler;
@@ -2068,9 +2102,6 @@ public static class TriggerBinder
             UnbindCollectionItemPropertyChangingBinding(binding);
     }
     #endregion
-
-    private static string GetPropertyName<TObject, TProperty>(Expression<Func<TObject, TProperty>> propertyGetterExpr) =>
-        ((MemberExpression)propertyGetterExpr.Body).Member.Name;
     #endregion
 
     #region Private data types

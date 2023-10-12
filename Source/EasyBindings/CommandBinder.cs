@@ -92,7 +92,7 @@ public static class CommandBinder
             b.Command == command);
 
         if (binding is not null)
-            UnbindInternal(binding);
+            UnbindCommandBinding(binding);
     }
 
     /// <summary>
@@ -105,12 +105,8 @@ public static class CommandBinder
         ArgumentNullException.ThrowIfNull(context, nameof(context));
         ArgumentNullException.ThrowIfNull(commandExecutor, nameof(commandExecutor));
 
-        var binding = _commandBindings.FirstOrDefault(b =>
-            b.Context == context &&
-            b.CommandExecutor == commandExecutor);
-
-        if (binding is not null)
-            UnbindInternal(binding);
+        UnbindCommandBindings(
+            _commandBindings.Where(b => b.Context == context && b.CommandExecutor == commandExecutor));
     }
 
     /// <summary>
@@ -121,14 +117,27 @@ public static class CommandBinder
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
 
-        var bindings = _commandBindings.Where(b => b.Context == context);
-        foreach (var binding in bindings)
-            UnbindInternal(binding);
+        UnbindCommandBindings(_commandBindings.Where(b => b.Context == context));
     }
     #endregion
     #endregion
 
     #region Private methods
+    private static void CheckBindingArgs(object context, object commandExecutor, object command)
+    {
+        ArgumentNullException.ThrowIfNull(context, nameof(context));
+        ArgumentNullException.ThrowIfNull(commandExecutor, nameof(commandExecutor));
+        ArgumentNullException.ThrowIfNull(command, nameof(command));
+
+        var isBindingExist = _commandBindings.Any(b =>
+            b.Context == context &&
+            b.CommandExecutor == commandExecutor &&
+            b.Command == command);
+
+        if (isBindingExist)
+            throw new Exception("This command is already bound to the command executor in this context.");
+    }
+
     private static void BindInternal
     (
         object context,
@@ -146,22 +155,13 @@ public static class CommandBinder
         ));
     }
 
-    private static void CheckBindingArgs(object context, object commandExecutor, object command)
+    private static void UnbindCommandBindings(IEnumerable<CommandBinding> bindings)
     {
-        ArgumentNullException.ThrowIfNull(context, nameof(context));
-        ArgumentNullException.ThrowIfNull(commandExecutor, nameof(commandExecutor));
-        ArgumentNullException.ThrowIfNull(command, nameof(command));
-
-        var isBindingExist = _commandBindings.Any(b =>
-            b.Context == context &&
-            b.CommandExecutor == commandExecutor &&
-            b.Command == command);
-
-        if (isBindingExist)
-            throw new Exception("This command is already bound to the commandExecutor in the given context.");
+        foreach (var binding in bindings)
+            UnbindCommandBinding(binding);
     }
 
-    private static void UnbindInternal(CommandBinding commandBinding)
+    private static void UnbindCommandBinding(CommandBinding commandBinding)
     {
         commandBinding.CommandExecutor.CommandExecutionRequested -= commandBinding.CommandExecutionRequestedEventHandler;
         commandBinding.Command.CanExecuteChanged -= commandBinding.CommanCanExecuteChangedEventHandler;
