@@ -296,20 +296,20 @@ public static class TriggerBinder
 
     #region CollectionChangedAndItemPropertyChanged
     #region First group (with collectionChangedTrigger with two parameters)
-    public static void OnCollectionChangedAndItemPropertyChanged<TItem, TItemProperty>
+    public static void OnCollectionChangedAndItemPropertyChanged<T, TProperty>
     (
         object context,
-        ObservableCollection<TItem> observableCollection,
-        Action<ObservableCollection<TItem>, NotifyCollectionChangedEventArgs> collectionChangedTrigger,
-        Expression<Func<TItem, TItemProperty>> itemPropertyGetterExpr,
-        Action<TItem, TItemProperty> itemPropertyChangedTrigger
+        ObservableCollection<T> observableCollection,
+        Action<ObservableCollection<T>, NotifyCollectionChangedEventArgs> collectionChangedTrigger,
+        Expression<Func<T, TProperty>> itemPropertyGetterExpr,
+        Action<T, TProperty> itemPropertyChangedTrigger
     )
-    where TItem : INotifyPropertyChanged
+    where T : INotifyPropertyChanged
     {
         CheckCollectionChangedAndItemPropertyChangedBindingArgs(context,
             observableCollection, collectionChangedTrigger, itemPropertyGetterExpr, itemPropertyChangedTrigger);
 
-        foreach (TItem item in observableCollection)
+        foreach (T item in observableCollection)
             OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
 
         void eventHandler(object? _, NotifyCollectionChangedEventArgs e)
@@ -320,11 +320,11 @@ public static class TriggerBinder
                 return;
 
             if (e.NewItems is not null)
-                foreach (TItem item in e.NewItems)
+                foreach (T item in e.NewItems)
                     OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
 
             if (e.OldItems is not null)
-                foreach (TItem item in e.OldItems)
+                foreach (T item in e.OldItems)
                     UnbindPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
         }
 
@@ -332,20 +332,20 @@ public static class TriggerBinder
             collectionChangedTrigger, GetPropertyName(itemPropertyGetterExpr), itemPropertyChangedTrigger, eventHandler);
     }
 
-    public static void OnCollectionChangedAndItemPropertyChanged<TItem, TItemProperty>
+    public static void OnCollectionChangedAndItemPropertyChanged<T, TProperty>
     (
         object context,
-        ObservableCollection<TItem> observableCollection,
-        Action<ObservableCollection<TItem>, NotifyCollectionChangedEventArgs> collectionChangedTrigger,
-        Expression<Func<TItem, TItemProperty>> itemPropertyGetterExpr,
-        Action<TItemProperty> itemPropertyChangedTrigger
+        ObservableCollection<T> observableCollection,
+        Action<ObservableCollection<T>, NotifyCollectionChangedEventArgs> collectionChangedTrigger,
+        Expression<Func<T, TProperty>> itemPropertyGetterExpr,
+        Action<TProperty> itemPropertyChangedTrigger
     )
-    where TItem : INotifyPropertyChanged
+    where T : INotifyPropertyChanged
     {
         CheckCollectionChangedAndItemPropertyChangedBindingArgs(context,
             observableCollection, collectionChangedTrigger, itemPropertyGetterExpr, itemPropertyChangedTrigger);
 
-        foreach (TItem item in observableCollection)
+        foreach (T item in observableCollection)
             OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
 
         void eventHandler(object? _, NotifyCollectionChangedEventArgs e)
@@ -356,11 +356,11 @@ public static class TriggerBinder
                 return;
 
             if (e.NewItems is not null)
-                foreach (TItem item in e.NewItems)
+                foreach (T item in e.NewItems)
                     OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
 
             if (e.OldItems is not null)
-                foreach (TItem item in e.OldItems)
+                foreach (T item in e.OldItems)
                     UnbindPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
         }
 
@@ -368,20 +368,20 @@ public static class TriggerBinder
             collectionChangedTrigger, GetPropertyName(itemPropertyGetterExpr), itemPropertyChangedTrigger, eventHandler);
     }
 
-    public static void OnCollectionChangedAndItemPropertyChanged<TItem, TItemProperty>
+    public static void OnCollectionChangedAndItemPropertyChanged<T, TProperty>
     (
         object context,
-        ObservableCollection<TItem> observableCollection,
-        Action<ObservableCollection<TItem>, NotifyCollectionChangedEventArgs> collectionChangedTrigger,
-        Expression<Func<TItem, TItemProperty>> itemPropertyGetterExpr,
+        ObservableCollection<T> observableCollection,
+        Action<ObservableCollection<T>, NotifyCollectionChangedEventArgs> collectionChangedTrigger,
+        Expression<Func<T, TProperty>> itemPropertyGetterExpr,
         Action itemPropertyChangedTrigger
     )
-    where TItem : INotifyPropertyChanged
+    where T : INotifyPropertyChanged
     {
         CheckCollectionChangedAndItemPropertyChangedBindingArgs(context,
             observableCollection, collectionChangedTrigger, itemPropertyGetterExpr, itemPropertyChangedTrigger);
 
-        foreach (TItem item in observableCollection)
+        foreach (T item in observableCollection)
             OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
 
         void eventHandler(object? _, NotifyCollectionChangedEventArgs e)
@@ -392,11 +392,11 @@ public static class TriggerBinder
                 return;
 
             if (e.NewItems is not null)
-                foreach (TItem item in e.NewItems)
+                foreach (T item in e.NewItems)
                     OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
 
             if (e.OldItems is not null)
-                foreach (TItem item in e.OldItems)
+                foreach (T item in e.OldItems)
                     UnbindPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
         }
 
@@ -406,20 +406,20 @@ public static class TriggerBinder
     #endregion
 
     #region Second group (with collectionChangedTrigger with one parameter)
-    public static void OnCollectionChangedAndItemPropertyChanged<TItem, TItemProperty>
+    public static void OnCollectionChangedAndItemPropertyChanged<T, TProperty>
     (
         object context,
-        ObservableCollection<TItem> observableCollection,
+        ObservableCollection<T> observableCollection,
         Action<NotifyCollectionChangedEventArgs> collectionChangedTrigger,
-        Expression<Func<TItem, TItemProperty>> itemPropertyGetterExpr,
-        Action<TItem, TItemProperty> itemPropertyChangedTrigger
+        Expression<Func<T, TProperty>> itemPropertyGetterExpr,
+        Action<T, TProperty> itemPropertyChangedTrigger
     )
-    where TItem : INotifyPropertyChanged
+    where T : INotifyPropertyChanged
     {
         CheckCollectionChangedAndItemPropertyChangedBindingArgs(context,
             observableCollection, collectionChangedTrigger, itemPropertyGetterExpr, itemPropertyChangedTrigger);
 
-        foreach (TItem item in observableCollection)
+        foreach (T item in observableCollection)
             OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
 
         void eventHandler(object? _, NotifyCollectionChangedEventArgs e)
@@ -430,11 +430,11 @@ public static class TriggerBinder
                 return;
 
             if (e.NewItems is not null)
-                foreach (TItem item in e.NewItems)
+                foreach (T item in e.NewItems)
                     OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
 
             if (e.OldItems is not null)
-                foreach (TItem item in e.OldItems)
+                foreach (T item in e.OldItems)
                     UnbindPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
         }
 
@@ -442,20 +442,20 @@ public static class TriggerBinder
             collectionChangedTrigger, GetPropertyName(itemPropertyGetterExpr), itemPropertyChangedTrigger, eventHandler);
     }
 
-    public static void OnCollectionChangedAndItemPropertyChanged<TItem, TItemProperty>
+    public static void OnCollectionChangedAndItemPropertyChanged<T, TProperty>
     (
         object context,
-        ObservableCollection<TItem> observableCollection,
+        ObservableCollection<T> observableCollection,
         Action<NotifyCollectionChangedEventArgs> collectionChangedTrigger,
-        Expression<Func<TItem, TItemProperty>> itemPropertyGetterExpr,
-        Action<TItemProperty> itemPropertyChangedTrigger
+        Expression<Func<T, TProperty>> itemPropertyGetterExpr,
+        Action<TProperty> itemPropertyChangedTrigger
     )
-    where TItem : INotifyPropertyChanged
+    where T : INotifyPropertyChanged
     {
         CheckCollectionChangedAndItemPropertyChangedBindingArgs(context,
             observableCollection, collectionChangedTrigger, itemPropertyGetterExpr, itemPropertyChangedTrigger);
 
-        foreach (TItem item in observableCollection)
+        foreach (T item in observableCollection)
             OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
 
         void eventHandler(object? _, NotifyCollectionChangedEventArgs e)
@@ -466,11 +466,11 @@ public static class TriggerBinder
                 return;
 
             if (e.NewItems is not null)
-                foreach (TItem item in e.NewItems)
+                foreach (T item in e.NewItems)
                     OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
 
             if (e.OldItems is not null)
-                foreach (TItem item in e.OldItems)
+                foreach (T item in e.OldItems)
                     UnbindPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
         }
 
@@ -478,20 +478,20 @@ public static class TriggerBinder
             collectionChangedTrigger, GetPropertyName(itemPropertyGetterExpr), itemPropertyChangedTrigger, eventHandler);
     }
 
-    public static void OnCollectionChangedAndItemPropertyChanged<TItem, TItemProperty>
+    public static void OnCollectionChangedAndItemPropertyChanged<T, TProperty>
     (
         object context,
-        ObservableCollection<TItem> observableCollection,
+        ObservableCollection<T> observableCollection,
         Action<NotifyCollectionChangedEventArgs> collectionChangedTrigger,
-        Expression<Func<TItem, TItemProperty>> itemPropertyGetterExpr,
+        Expression<Func<T, TProperty>> itemPropertyGetterExpr,
         Action itemPropertyChangedTrigger
     )
-    where TItem : INotifyPropertyChanged
+    where T : INotifyPropertyChanged
     {
         CheckCollectionChangedAndItemPropertyChangedBindingArgs(context,
             observableCollection, collectionChangedTrigger, itemPropertyGetterExpr, itemPropertyChangedTrigger);
 
-        foreach (TItem item in observableCollection)
+        foreach (T item in observableCollection)
             OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
 
         void eventHandler(object? _, NotifyCollectionChangedEventArgs e)
@@ -502,11 +502,11 @@ public static class TriggerBinder
                 return;
 
             if (e.NewItems is not null)
-                foreach (TItem item in e.NewItems)
+                foreach (T item in e.NewItems)
                     OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
 
             if (e.OldItems is not null)
-                foreach (TItem item in e.OldItems)
+                foreach (T item in e.OldItems)
                     UnbindPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
         }
 
@@ -516,20 +516,20 @@ public static class TriggerBinder
     #endregion
 
     #region Third group (with collectionChangedTrigger without parameters)
-    public static void OnCollectionChangedAndItemPropertyChanged<TItem, TItemProperty>
+    public static void OnCollectionChangedAndItemPropertyChanged<T, TProperty>
     (
         object context,
-        ObservableCollection<TItem> observableCollection,
+        ObservableCollection<T> observableCollection,
         Action collectionChangedTrigger,
-        Expression<Func<TItem, TItemProperty>> itemPropertyGetterExpr,
-        Action<TItem, TItemProperty> itemPropertyChangedTrigger
+        Expression<Func<T, TProperty>> itemPropertyGetterExpr,
+        Action<T, TProperty> itemPropertyChangedTrigger
     )
-    where TItem : INotifyPropertyChanged
+    where T : INotifyPropertyChanged
     {
         CheckCollectionChangedAndItemPropertyChangedBindingArgs(context,
             observableCollection, collectionChangedTrigger, itemPropertyGetterExpr, itemPropertyChangedTrigger);
 
-        foreach (TItem item in observableCollection)
+        foreach (T item in observableCollection)
             OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
 
         void eventHandler(object? _, NotifyCollectionChangedEventArgs e)
@@ -540,11 +540,11 @@ public static class TriggerBinder
                 return;
 
             if (e.NewItems is not null)
-                foreach (TItem item in e.NewItems)
+                foreach (T item in e.NewItems)
                     OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
 
             if (e.OldItems is not null)
-                foreach (TItem item in e.OldItems)
+                foreach (T item in e.OldItems)
                     UnbindPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
         }
 
@@ -552,20 +552,20 @@ public static class TriggerBinder
             collectionChangedTrigger, GetPropertyName(itemPropertyGetterExpr), itemPropertyChangedTrigger, eventHandler);
     }
 
-    public static void OnCollectionChangedAndItemPropertyChanged<TItem, TItemProperty>
+    public static void OnCollectionChangedAndItemPropertyChanged<T, TProperty>
     (
         object context,
-        ObservableCollection<TItem> observableCollection,
+        ObservableCollection<T> observableCollection,
         Action collectionChangedTrigger,
-        Expression<Func<TItem, TItemProperty>> itemPropertyGetterExpr,
-        Action<TItemProperty> itemPropertyChangedTrigger
+        Expression<Func<T, TProperty>> itemPropertyGetterExpr,
+        Action<TProperty> itemPropertyChangedTrigger
     )
-    where TItem : INotifyPropertyChanged
+    where T : INotifyPropertyChanged
     {
         CheckCollectionChangedAndItemPropertyChangedBindingArgs(context,
             observableCollection, collectionChangedTrigger, itemPropertyGetterExpr, itemPropertyChangedTrigger);
 
-        foreach (TItem item in observableCollection)
+        foreach (T item in observableCollection)
             OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
 
         void eventHandler(object? _, NotifyCollectionChangedEventArgs e)
@@ -576,11 +576,11 @@ public static class TriggerBinder
                 return;
 
             if (e.NewItems is not null)
-                foreach (TItem item in e.NewItems)
+                foreach (T item in e.NewItems)
                     OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
 
             if (e.OldItems is not null)
-                foreach (TItem item in e.OldItems)
+                foreach (T item in e.OldItems)
                     UnbindPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
         }
 
@@ -588,20 +588,20 @@ public static class TriggerBinder
             collectionChangedTrigger, GetPropertyName(itemPropertyGetterExpr), itemPropertyChangedTrigger, eventHandler);
     }
 
-    public static void OnCollectionChangedAndItemPropertyChanged<TItem, TItemProperty>
+    public static void OnCollectionChangedAndItemPropertyChanged<T, TProperty>
     (
         object context,
-        ObservableCollection<TItem> observableCollection,
+        ObservableCollection<T> observableCollection,
         Action collectionChangedTrigger,
-        Expression<Func<TItem, TItemProperty>> itemPropertyGetterExpr,
+        Expression<Func<T, TProperty>> itemPropertyGetterExpr,
         Action itemPropertyChangedTrigger
     )
-    where TItem : INotifyPropertyChanged
+    where T : INotifyPropertyChanged
     {
         CheckCollectionChangedAndItemPropertyChangedBindingArgs(context,
             observableCollection, collectionChangedTrigger, itemPropertyGetterExpr, itemPropertyChangedTrigger);
 
-        foreach (TItem item in observableCollection)
+        foreach (T item in observableCollection)
             OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
 
         void eventHandler(object? _, NotifyCollectionChangedEventArgs e)
@@ -612,11 +612,11 @@ public static class TriggerBinder
                 return;
 
             if (e.NewItems is not null)
-                foreach (TItem item in e.NewItems)
+                foreach (T item in e.NewItems)
                     OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
 
             if (e.OldItems is not null)
-                foreach (TItem item in e.OldItems)
+                foreach (T item in e.OldItems)
                     UnbindPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
         }
 
@@ -628,20 +628,20 @@ public static class TriggerBinder
 
     #region CollectionChangedAndItemPropertyChanging
     #region First group (with collectionChangedTrigger with two parameters)
-    public static void OnCollectionChangedAndItemPropertyChanging<TItem, TItemProperty>
+    public static void OnCollectionChangedAndItemPropertyChanging<T, TProperty>
     (
         object context,
-        ObservableCollection<TItem> observableCollection,
-        Action<ObservableCollection<TItem>, NotifyCollectionChangedEventArgs> collectionChangedTrigger,
-        Expression<Func<TItem, TItemProperty>> itemPropertyGetterExpr,
-        Action<TItem, TItemProperty> itemPropertyChangingTrigger
+        ObservableCollection<T> observableCollection,
+        Action<ObservableCollection<T>, NotifyCollectionChangedEventArgs> collectionChangedTrigger,
+        Expression<Func<T, TProperty>> itemPropertyGetterExpr,
+        Action<T, TProperty> itemPropertyChangingTrigger
     )
-    where TItem : INotifyPropertyChanging
+    where T : INotifyPropertyChanging
     {
         CheckCollectionChangedAndItemPropertyChangingBindingArgs(context,
             observableCollection, collectionChangedTrigger, itemPropertyGetterExpr, itemPropertyChangingTrigger);
 
-        foreach (TItem item in observableCollection)
+        foreach (T item in observableCollection)
             OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
 
         void eventHandler(object? _, NotifyCollectionChangedEventArgs e)
@@ -652,11 +652,11 @@ public static class TriggerBinder
                 return;
 
             if (e.NewItems is not null)
-                foreach (TItem item in e.NewItems)
+                foreach (T item in e.NewItems)
                     OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
 
             if (e.OldItems is not null)
-                foreach (TItem item in e.OldItems)
+                foreach (T item in e.OldItems)
                     OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
         }
 
@@ -664,20 +664,20 @@ public static class TriggerBinder
             collectionChangedTrigger, GetPropertyName(itemPropertyGetterExpr), itemPropertyChangingTrigger, eventHandler);
     }
 
-    public static void OnCollectionChangedAndItemPropertyChanging<TItem, TItemProperty>
+    public static void OnCollectionChangedAndItemPropertyChanging<T, TProperty>
     (
         object context,
-        ObservableCollection<TItem> observableCollection,
-        Action<ObservableCollection<TItem>, NotifyCollectionChangedEventArgs> collectionChangedTrigger,
-        Expression<Func<TItem, TItemProperty>> itemPropertyGetterExpr,
-        Action<TItemProperty> itemPropertyChangingTrigger
+        ObservableCollection<T> observableCollection,
+        Action<ObservableCollection<T>, NotifyCollectionChangedEventArgs> collectionChangedTrigger,
+        Expression<Func<T, TProperty>> itemPropertyGetterExpr,
+        Action<TProperty> itemPropertyChangingTrigger
     )
-    where TItem : INotifyPropertyChanging
+    where T : INotifyPropertyChanging
     {
         CheckCollectionChangedAndItemPropertyChangingBindingArgs(context,
             observableCollection, collectionChangedTrigger, itemPropertyGetterExpr, itemPropertyChangingTrigger);
 
-        foreach (TItem item in observableCollection)
+        foreach (T item in observableCollection)
             OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
 
         void eventHandler(object? _, NotifyCollectionChangedEventArgs e)
@@ -688,11 +688,11 @@ public static class TriggerBinder
                 return;
 
             if (e.NewItems is not null)
-                foreach (TItem item in e.NewItems)
+                foreach (T item in e.NewItems)
                     OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
 
             if (e.OldItems is not null)
-                foreach (TItem item in e.OldItems)
+                foreach (T item in e.OldItems)
                     OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
         }
 
@@ -700,20 +700,20 @@ public static class TriggerBinder
             collectionChangedTrigger, GetPropertyName(itemPropertyGetterExpr), itemPropertyChangingTrigger, eventHandler);
     }
 
-    public static void OnCollectionChangedAndItemPropertyChanging<TItem, TItemProperty>
+    public static void OnCollectionChangedAndItemPropertyChanging<T, TProperty>
     (
         object context,
-        ObservableCollection<TItem> observableCollection,
-        Action<ObservableCollection<TItem>, NotifyCollectionChangedEventArgs> collectionChangedTrigger,
-        Expression<Func<TItem, TItemProperty>> itemPropertyGetterExpr,
+        ObservableCollection<T> observableCollection,
+        Action<ObservableCollection<T>, NotifyCollectionChangedEventArgs> collectionChangedTrigger,
+        Expression<Func<T, TProperty>> itemPropertyGetterExpr,
         Action itemPropertyChangingTrigger
     )
-    where TItem : INotifyPropertyChanging
+    where T : INotifyPropertyChanging
     {
         CheckCollectionChangedAndItemPropertyChangingBindingArgs(context,
             observableCollection, collectionChangedTrigger, itemPropertyGetterExpr, itemPropertyChangingTrigger);
 
-        foreach (TItem item in observableCollection)
+        foreach (T item in observableCollection)
             OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
 
         void eventHandler(object? _, NotifyCollectionChangedEventArgs e)
@@ -724,11 +724,11 @@ public static class TriggerBinder
                 return;
 
             if (e.NewItems is not null)
-                foreach (TItem item in e.NewItems)
+                foreach (T item in e.NewItems)
                     OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
 
             if (e.OldItems is not null)
-                foreach (TItem item in e.OldItems)
+                foreach (T item in e.OldItems)
                     OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
         }
 
@@ -738,20 +738,20 @@ public static class TriggerBinder
     #endregion
 
     #region Second group (with collectionChangedTrigger with one parameter)
-    public static void OnCollectionChangedAndItemPropertyChanging<TItem, TItemProperty>
+    public static void OnCollectionChangedAndItemPropertyChanging<T, TProperty>
     (
         object context,
-        ObservableCollection<TItem> observableCollection,
+        ObservableCollection<T> observableCollection,
         Action<NotifyCollectionChangedEventArgs> collectionChangedTrigger,
-        Expression<Func<TItem, TItemProperty>> itemPropertyGetterExpr,
-        Action<TItem, TItemProperty> itemPropertyChangingTrigger
+        Expression<Func<T, TProperty>> itemPropertyGetterExpr,
+        Action<T, TProperty> itemPropertyChangingTrigger
     )
-    where TItem : INotifyPropertyChanging
+    where T : INotifyPropertyChanging
     {
         CheckCollectionChangedAndItemPropertyChangingBindingArgs(context,
             observableCollection, collectionChangedTrigger, itemPropertyGetterExpr, itemPropertyChangingTrigger);
 
-        foreach (TItem item in observableCollection)
+        foreach (T item in observableCollection)
             OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
 
         void eventHandler(object? _, NotifyCollectionChangedEventArgs e)
@@ -762,11 +762,11 @@ public static class TriggerBinder
                 return;
 
             if (e.NewItems is not null)
-                foreach (TItem item in e.NewItems)
+                foreach (T item in e.NewItems)
                     OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
 
             if (e.OldItems is not null)
-                foreach (TItem item in e.OldItems)
+                foreach (T item in e.OldItems)
                     OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
         }
 
@@ -774,20 +774,20 @@ public static class TriggerBinder
             collectionChangedTrigger, GetPropertyName(itemPropertyGetterExpr), itemPropertyChangingTrigger, eventHandler);
     }
 
-    public static void OnCollectionChangedAndItemPropertyChanging<TItem, TItemProperty>
+    public static void OnCollectionChangedAndItemPropertyChanging<T, TProperty>
     (
         object context,
-        ObservableCollection<TItem> observableCollection,
+        ObservableCollection<T> observableCollection,
         Action<NotifyCollectionChangedEventArgs> collectionChangedTrigger,
-        Expression<Func<TItem, TItemProperty>> itemPropertyGetterExpr,
-        Action<TItemProperty> itemPropertyChangingTrigger
+        Expression<Func<T, TProperty>> itemPropertyGetterExpr,
+        Action<TProperty> itemPropertyChangingTrigger
     )
-    where TItem : INotifyPropertyChanging
+    where T : INotifyPropertyChanging
     {
         CheckCollectionChangedAndItemPropertyChangingBindingArgs(context,
             observableCollection, collectionChangedTrigger, itemPropertyGetterExpr, itemPropertyChangingTrigger);
 
-        foreach (TItem item in observableCollection)
+        foreach (T item in observableCollection)
             OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
 
         void eventHandler(object? _, NotifyCollectionChangedEventArgs e)
@@ -798,11 +798,11 @@ public static class TriggerBinder
                 return;
 
             if (e.NewItems is not null)
-                foreach (TItem item in e.NewItems)
+                foreach (T item in e.NewItems)
                     OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
 
             if (e.OldItems is not null)
-                foreach (TItem item in e.OldItems)
+                foreach (T item in e.OldItems)
                     OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
         }
 
@@ -810,20 +810,20 @@ public static class TriggerBinder
             collectionChangedTrigger, GetPropertyName(itemPropertyGetterExpr), itemPropertyChangingTrigger, eventHandler);
     }
 
-    public static void OnCollectionChangedAndItemPropertyChanging<TItem, TItemProperty>
+    public static void OnCollectionChangedAndItemPropertyChanging<T, TProperty>
     (
         object context,
-        ObservableCollection<TItem> observableCollection,
+        ObservableCollection<T> observableCollection,
         Action<NotifyCollectionChangedEventArgs> collectionChangedTrigger,
-        Expression<Func<TItem, TItemProperty>> itemPropertyGetterExpr,
+        Expression<Func<T, TProperty>> itemPropertyGetterExpr,
         Action itemPropertyChangingTrigger
     )
-    where TItem : INotifyPropertyChanging
+    where T : INotifyPropertyChanging
     {
         CheckCollectionChangedAndItemPropertyChangingBindingArgs(context,
             observableCollection, collectionChangedTrigger, itemPropertyGetterExpr, itemPropertyChangingTrigger);
 
-        foreach (TItem item in observableCollection)
+        foreach (T item in observableCollection)
             OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
 
         void eventHandler(object? _, NotifyCollectionChangedEventArgs e)
@@ -834,11 +834,11 @@ public static class TriggerBinder
                 return;
 
             if (e.NewItems is not null)
-                foreach (TItem item in e.NewItems)
+                foreach (T item in e.NewItems)
                     OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
 
             if (e.OldItems is not null)
-                foreach (TItem item in e.OldItems)
+                foreach (T item in e.OldItems)
                     OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
         }
 
@@ -848,20 +848,20 @@ public static class TriggerBinder
     #endregion
 
     #region Third group (with collectionChangedTrigger without parameters)
-    public static void OnCollectionChangedAndItemPropertyChanging<TItem, TItemProperty>
+    public static void OnCollectionChangedAndItemPropertyChanging<T, TProperty>
     (
         object context,
-        ObservableCollection<TItem> observableCollection,
+        ObservableCollection<T> observableCollection,
         Action collectionChangedTrigger,
-        Expression<Func<TItem, TItemProperty>> itemPropertyGetterExpr,
-        Action<TItem, TItemProperty> itemPropertyChangingTrigger
+        Expression<Func<T, TProperty>> itemPropertyGetterExpr,
+        Action<T, TProperty> itemPropertyChangingTrigger
     )
-    where TItem : INotifyPropertyChanging
+    where T : INotifyPropertyChanging
     {
         CheckCollectionChangedAndItemPropertyChangingBindingArgs(context,
             observableCollection, collectionChangedTrigger, itemPropertyGetterExpr, itemPropertyChangingTrigger);
 
-        foreach (TItem item in observableCollection)
+        foreach (T item in observableCollection)
             OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
 
         void eventHandler(object? _, NotifyCollectionChangedEventArgs e)
@@ -872,11 +872,11 @@ public static class TriggerBinder
                 return;
 
             if (e.NewItems is not null)
-                foreach (TItem item in e.NewItems)
+                foreach (T item in e.NewItems)
                     OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
 
             if (e.OldItems is not null)
-                foreach (TItem item in e.OldItems)
+                foreach (T item in e.OldItems)
                     OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
         }
 
@@ -884,20 +884,20 @@ public static class TriggerBinder
             collectionChangedTrigger, GetPropertyName(itemPropertyGetterExpr), itemPropertyChangingTrigger, eventHandler);
     }
 
-    public static void OnCollectionChangedAndItemPropertyChanging<TItem, TItemProperty>
+    public static void OnCollectionChangedAndItemPropertyChanging<T, TProperty>
     (
         object context,
-        ObservableCollection<TItem> observableCollection,
+        ObservableCollection<T> observableCollection,
         Action collectionChangedTrigger,
-        Expression<Func<TItem, TItemProperty>> itemPropertyGetterExpr,
-        Action<TItemProperty> itemPropertyChangingTrigger
+        Expression<Func<T, TProperty>> itemPropertyGetterExpr,
+        Action<TProperty> itemPropertyChangingTrigger
     )
-    where TItem : INotifyPropertyChanging
+    where T : INotifyPropertyChanging
     {
         CheckCollectionChangedAndItemPropertyChangingBindingArgs(context,
             observableCollection, collectionChangedTrigger, itemPropertyGetterExpr, itemPropertyChangingTrigger);
 
-        foreach (TItem item in observableCollection)
+        foreach (T item in observableCollection)
             OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
 
         void eventHandler(object? _, NotifyCollectionChangedEventArgs e)
@@ -908,11 +908,11 @@ public static class TriggerBinder
                 return;
 
             if (e.NewItems is not null)
-                foreach (TItem item in e.NewItems)
+                foreach (T item in e.NewItems)
                     OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
 
             if (e.OldItems is not null)
-                foreach (TItem item in e.OldItems)
+                foreach (T item in e.OldItems)
                     OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
         }
 
@@ -920,20 +920,20 @@ public static class TriggerBinder
             collectionChangedTrigger, GetPropertyName(itemPropertyGetterExpr), itemPropertyChangingTrigger, eventHandler);
     }
 
-    public static void OnCollectionChangedAndItemPropertyChanging<TItem, TItemProperty>
+    public static void OnCollectionChangedAndItemPropertyChanging<T, TProperty>
     (
         object context,
-        ObservableCollection<TItem> observableCollection,
+        ObservableCollection<T> observableCollection,
         Action collectionChangedTrigger,
-        Expression<Func<TItem, TItemProperty>> itemPropertyGetterExpr,
+        Expression<Func<T, TProperty>> itemPropertyGetterExpr,
         Action itemPropertyChangingTrigger
     )
-    where TItem : INotifyPropertyChanging
+    where T : INotifyPropertyChanging
     {
         CheckCollectionChangedAndItemPropertyChangingBindingArgs(context,
             observableCollection, collectionChangedTrigger, itemPropertyGetterExpr, itemPropertyChangingTrigger);
 
-        foreach (TItem item in observableCollection)
+        foreach (T item in observableCollection)
             OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
 
         void eventHandler(object? _, NotifyCollectionChangedEventArgs e)
@@ -944,11 +944,11 @@ public static class TriggerBinder
                 return;
 
             if (e.NewItems is not null)
-                foreach (TItem item in e.NewItems)
+                foreach (T item in e.NewItems)
                     OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
 
             if (e.OldItems is not null)
-                foreach (TItem item in e.OldItems)
+                foreach (T item in e.OldItems)
                     OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
         }
 
@@ -959,19 +959,19 @@ public static class TriggerBinder
     #endregion
 
     #region CollectionAndItemPropertyChanged
-    public static void OnCollectionItemPropertyChanged<TItem, TItemProperty>
+    public static void OnCollectionItemPropertyChanged<T, TProperty>
     (
         object context,
-        ObservableCollection<TItem> observableCollection,
-        Expression<Func<TItem, TItemProperty>> itemPropertyGetterExpr,
-        Action<TItem, TItemProperty> itemPropertyChangedTrigger
+        ObservableCollection<T> observableCollection,
+        Expression<Func<T, TProperty>> itemPropertyGetterExpr,
+        Action<T, TProperty> itemPropertyChangedTrigger
     )
-    where TItem : INotifyPropertyChanged
+    where T : INotifyPropertyChanged
     {
         CheckCollectionItemPropertyChangedBindingArgs(context,
             observableCollection, itemPropertyGetterExpr, itemPropertyChangedTrigger);
 
-        foreach (TItem item in observableCollection)
+        foreach (T item in observableCollection)
             OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
 
         void eventHandler(object? _, NotifyCollectionChangedEventArgs e)
@@ -980,11 +980,11 @@ public static class TriggerBinder
                 return;
 
             if (e.NewItems is not null)
-                foreach (TItem item in e.NewItems)
+                foreach (T item in e.NewItems)
                     OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
 
             if (e.OldItems is not null)
-                foreach (TItem item in e.OldItems)
+                foreach (T item in e.OldItems)
                     UnbindPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
         }
 
@@ -992,19 +992,19 @@ public static class TriggerBinder
             GetPropertyName(itemPropertyGetterExpr), itemPropertyChangedTrigger, eventHandler);
     }
 
-    public static void OnCollectionItemPropertyChanged<TItem, TItemProperty>
+    public static void OnCollectionItemPropertyChanged<T, TProperty>
     (
         object context,
-        ObservableCollection<TItem> observableCollection,
-        Expression<Func<TItem, TItemProperty>> itemPropertyGetterExpr,
-        Action<TItemProperty> itemPropertyChangedTrigger
+        ObservableCollection<T> observableCollection,
+        Expression<Func<T, TProperty>> itemPropertyGetterExpr,
+        Action<TProperty> itemPropertyChangedTrigger
     )
-    where TItem : INotifyPropertyChanged
+    where T : INotifyPropertyChanged
     {
         CheckCollectionItemPropertyChangedBindingArgs(context,
             observableCollection, itemPropertyGetterExpr, itemPropertyChangedTrigger);
 
-        foreach (TItem item in observableCollection)
+        foreach (T item in observableCollection)
             OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
 
         void eventHandler(object? _, NotifyCollectionChangedEventArgs e)
@@ -1013,11 +1013,11 @@ public static class TriggerBinder
                 return;
 
             if (e.NewItems is not null)
-                foreach (TItem item in e.NewItems)
+                foreach (T item in e.NewItems)
                     OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
 
             if (e.OldItems is not null)
-                foreach (TItem item in e.OldItems)
+                foreach (T item in e.OldItems)
                     UnbindPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
         }
 
@@ -1025,19 +1025,19 @@ public static class TriggerBinder
             GetPropertyName(itemPropertyGetterExpr), itemPropertyChangedTrigger, eventHandler);
     }
 
-    public static void OnCollectionItemPropertyChanged<TItem, TItemProperty>
+    public static void OnCollectionItemPropertyChanged<T, TProperty>
     (
         object context,
-        ObservableCollection<TItem> observableCollection,
-        Expression<Func<TItem, TItemProperty>> itemPropertyGetterExpr,
+        ObservableCollection<T> observableCollection,
+        Expression<Func<T, TProperty>> itemPropertyGetterExpr,
         Action itemPropertyChangedTrigger
     )
-    where TItem : INotifyPropertyChanged
+    where T : INotifyPropertyChanged
     {
         CheckCollectionItemPropertyChangedBindingArgs(context,
             observableCollection, itemPropertyGetterExpr, itemPropertyChangedTrigger);
 
-        foreach (TItem item in observableCollection)
+        foreach (T item in observableCollection)
             OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
 
         void eventHandler(object? _, NotifyCollectionChangedEventArgs e)
@@ -1046,11 +1046,11 @@ public static class TriggerBinder
                 return;
 
             if (e.NewItems is not null)
-                foreach (TItem item in e.NewItems)
+                foreach (T item in e.NewItems)
                     OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
 
             if (e.OldItems is not null)
-                foreach (TItem item in e.OldItems)
+                foreach (T item in e.OldItems)
                     UnbindPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
         }
 
@@ -1060,19 +1060,19 @@ public static class TriggerBinder
     #endregion
 
     #region CollectionAndItemPropertyChanging
-    public static void OnCollectionItemPropertyChanging<TItem, TItemProperty>
+    public static void OnCollectionItemPropertyChanging<T, TProperty>
     (
         object context,
-        ObservableCollection<TItem> observableCollection,
-        Expression<Func<TItem, TItemProperty>> itemPropertyGetterExpr,
-        Action<TItem, TItemProperty> itemPropertyChangingTrigger
+        ObservableCollection<T> observableCollection,
+        Expression<Func<T, TProperty>> itemPropertyGetterExpr,
+        Action<T, TProperty> itemPropertyChangingTrigger
     )
-    where TItem : INotifyPropertyChanging
+    where T : INotifyPropertyChanging
     {
         CheckCollectionItemPropertyChangingBindingArgs(context,
             observableCollection, itemPropertyGetterExpr, itemPropertyChangingTrigger);
 
-        foreach (TItem item in observableCollection)
+        foreach (T item in observableCollection)
             OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
 
         void eventHandler(object? _, NotifyCollectionChangedEventArgs e)
@@ -1081,11 +1081,11 @@ public static class TriggerBinder
                 return;
 
             if (e.NewItems is not null)
-                foreach (TItem item in e.NewItems)
+                foreach (T item in e.NewItems)
                     OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
 
             if (e.OldItems is not null)
-                foreach (TItem item in e.OldItems)
+                foreach (T item in e.OldItems)
                     UnbindPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
         }
 
@@ -1093,19 +1093,19 @@ public static class TriggerBinder
             GetPropertyName(itemPropertyGetterExpr), itemPropertyChangingTrigger, eventHandler);
     }
 
-    public static void OnCollectionItemPropertyChanging<TItem, TItemProperty>
+    public static void OnCollectionItemPropertyChanging<T, TProperty>
     (
         object context,
-        ObservableCollection<TItem> observableCollection,
-        Expression<Func<TItem, TItemProperty>> itemPropertyGetterExpr,
-        Action<TItemProperty> itemPropertyChangingTrigger
+        ObservableCollection<T> observableCollection,
+        Expression<Func<T, TProperty>> itemPropertyGetterExpr,
+        Action<TProperty> itemPropertyChangingTrigger
     )
-    where TItem : INotifyPropertyChanging
+    where T : INotifyPropertyChanging
     {
         CheckCollectionItemPropertyChangingBindingArgs(context,
             observableCollection, itemPropertyGetterExpr, itemPropertyChangingTrigger);
 
-        foreach (TItem item in observableCollection)
+        foreach (T item in observableCollection)
             OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
 
         void eventHandler(object? _, NotifyCollectionChangedEventArgs e)
@@ -1114,11 +1114,11 @@ public static class TriggerBinder
                 return;
 
             if (e.NewItems is not null)
-                foreach (TItem item in e.NewItems)
+                foreach (T item in e.NewItems)
                     OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
 
             if (e.OldItems is not null)
-                foreach (TItem item in e.OldItems)
+                foreach (T item in e.OldItems)
                     UnbindPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
         }
 
@@ -1126,19 +1126,19 @@ public static class TriggerBinder
             GetPropertyName(itemPropertyGetterExpr), itemPropertyChangingTrigger, eventHandler);
     }
 
-    public static void OnCollectionItemPropertyChanging<TItem, TItemProperty>
+    public static void OnCollectionItemPropertyChanging<T, TProperty>
     (
         object context,
-        ObservableCollection<TItem> observableCollection,
-        Expression<Func<TItem, TItemProperty>> itemPropertyGetterExpr,
+        ObservableCollection<T> observableCollection,
+        Expression<Func<T, TProperty>> itemPropertyGetterExpr,
         Action itemPropertyChangingTrigger
     )
-    where TItem : INotifyPropertyChanging
+    where T : INotifyPropertyChanging
     {
         CheckCollectionItemPropertyChangingBindingArgs(context,
             observableCollection, itemPropertyGetterExpr, itemPropertyChangingTrigger);
 
-        foreach (TItem item in observableCollection)
+        foreach (T item in observableCollection)
             OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
 
         void eventHandler(object? _, NotifyCollectionChangedEventArgs e)
@@ -1147,11 +1147,11 @@ public static class TriggerBinder
                 return;
 
             if (e.NewItems is not null)
-                foreach (TItem item in e.NewItems)
+                foreach (T item in e.NewItems)
                     OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
 
             if (e.OldItems is not null)
-                foreach (TItem item in e.OldItems)
+                foreach (T item in e.OldItems)
                     UnbindPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
         }
 
@@ -1166,20 +1166,20 @@ public static class TriggerBinder
     /// <summary>
     /// Unbinds a given trigger from <paramref name="observable"/> object's property in a given context.
     /// </summary>
-    /// <typeparam name="TObservable">Type of the observable object.</typeparam>
+    /// <typeparam name="T">Type of the observable object.</typeparam>
     /// <typeparam name="TProperty">Type of the <paramref name="observable"/> object's property.</typeparam>
     /// <param name="context">The context in which the binding was made.</param>
     /// <param name="observable">Observable object.</param>
     /// <param name="observablePropertyGetterExpr">An expression representing the getter of the observable property.</param>
     /// <param name="trigger">The trigger which was bound.</param>
-    public static void UnbindPropertyChanged<TObservable, TProperty>
+    public static void UnbindPropertyChanged<T, TProperty>
     (
         object context,
-        TObservable observable,
-        Expression<Func<TObservable, TProperty>> observablePropertyGetterExpr,
+        T observable,
+        Expression<Func<T, TProperty>> observablePropertyGetterExpr,
         object trigger
     )
-    where TObservable : INotifyPropertyChanged
+    where T : INotifyPropertyChanged
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
         ArgumentNullException.ThrowIfNull(observable, nameof(observable));
@@ -1198,18 +1198,18 @@ public static class TriggerBinder
     /// <summary>
     /// Unbinds all triggers from <paramref name="observable"/> object's property in a given context.
     /// </summary>
-    /// <typeparam name="TObservable">Type of the observable object.</typeparam>
+    /// <typeparam name="T">Type of the observable object.</typeparam>
     /// <typeparam name="TProperty">Type of the <paramref name="observable"/> object's property.</typeparam>
     /// <param name="context">The context in which the binding was made.</param>
     /// <param name="observable">Observable object.</param>
     /// <param name="observablePropertyGetterExpr">An expression representing the getter of the observable property.</param>
-    public static void UnbindPropertyChanged<TObservable, TProperty>
+    public static void UnbindPropertyChanged<T, TProperty>
     (
         object context,
-        TObservable observable,
-        Expression<Func<TObservable, TProperty>> observablePropertyGetterExpr
+        T observable,
+        Expression<Func<T, TProperty>> observablePropertyGetterExpr
     )
-    where TObservable : INotifyPropertyChanged
+    where T : INotifyPropertyChanged
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
         ArgumentNullException.ThrowIfNull(observable, nameof(observable));
@@ -1253,14 +1253,14 @@ public static class TriggerBinder
     #endregion
 
     #region PropertyChanging
-    public static void UnbindPropertyChanging<TObservable, TProperty>
+    public static void UnbindPropertyChanging<T, TProperty>
     (
         object context,
-        TObservable observable,
-        Expression<Func<TObservable, TProperty>> observablePropertyGetterExpr,
+        T observable,
+        Expression<Func<T, TProperty>> observablePropertyGetterExpr,
         object trigger
     )
-    where TObservable : INotifyPropertyChanging
+    where T : INotifyPropertyChanging
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
         ArgumentNullException.ThrowIfNull(observable, nameof(observable));
@@ -1276,13 +1276,13 @@ public static class TriggerBinder
                         b.Trigger == trigger));
     }
 
-    public static void UnbindPropertyChanging<TObservable, TProperty>
+    public static void UnbindPropertyChanging<T, TProperty>
     (
         object context,
-        TObservable observable,
-        Expression<Func<TObservable, TProperty>> observablePropertyGetterExpr
+        T observable,
+        Expression<Func<T, TProperty>> observablePropertyGetterExpr
     )
-    where TObservable : INotifyPropertyChanging
+    where T : INotifyPropertyChanging
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
         ArgumentNullException.ThrowIfNull(observable, nameof(observable));
@@ -1353,12 +1353,12 @@ public static class TriggerBinder
     #endregion
 
     #region CollectionChangedAndItemPropertyChanged
-    public static void UnbindCollectionChangedAndItemPropertyChanged<TItem, TItemProperty>
+    public static void UnbindCollectionChangedAndItemPropertyChanged<T, TProperty>
     (
         object context,
         INotifyCollectionChanged observableCollection,
         object collectionChangedTrigger,
-        Expression<Func<TItem, TItemProperty>> itemPropertyGetterExpr,
+        Expression<Func<T, TProperty>> itemPropertyGetterExpr,
         object itemPropertyChangedTrigger)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
@@ -1377,12 +1377,12 @@ public static class TriggerBinder
                             b.ItemPropertyChangedTrigger == itemPropertyChangedTrigger));
     }
 
-    public static void UnbindCollectionChangedAndItemPropertyChanged<TItem, TItemProperty>
+    public static void UnbindCollectionChangedAndItemPropertyChanged<T, TProperty>
     (
         object context,
         INotifyCollectionChanged observableCollection,
         object collectionChangedTrigger,
-        Expression<Func<TItem, TItemProperty>> itemPropertyGetterExpr)
+        Expression<Func<T, TProperty>> itemPropertyGetterExpr)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
         ArgumentNullException.ThrowIfNull(observableCollection, nameof(observableCollection));
@@ -1438,12 +1438,12 @@ public static class TriggerBinder
     #endregion
 
     #region CollectionChangedAndItemPropertyChanging
-    public static void UnbindCollectionChangedAndItemPropertyChanging<TItem, TItemProperty>
+    public static void UnbindCollectionChangedAndItemPropertyChanging<T, TProperty>
     (
         object context,
         INotifyCollectionChanged observableCollection,
         object collectionChangedTrigger,
-        Expression<Func<TItem, TItemProperty>> itemPropertyGetterExpr,
+        Expression<Func<T, TProperty>> itemPropertyGetterExpr,
         object itemPropertyChangingTrigger)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
@@ -1462,12 +1462,12 @@ public static class TriggerBinder
                          tb.ItemPropertyChangingTrigger == itemPropertyChangingTrigger));
     }
 
-    public static void UnbindCollectionChangedAndItemPropertyChanging<TItem, TItemProperty>
+    public static void UnbindCollectionChangedAndItemPropertyChanging<T, TProperty>
     (
         object context,
         INotifyCollectionChanged observableCollection,
         object collectionChangedTrigger,
-        Expression<Func<TItem, TItemProperty>> itemPropertyGetterExpr)
+        Expression<Func<T, TProperty>> itemPropertyGetterExpr)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
         ArgumentNullException.ThrowIfNull(observableCollection, nameof(observableCollection));
@@ -1523,11 +1523,11 @@ public static class TriggerBinder
     #endregion
 
     #region CollectionItemPropertyChanged
-    public static void UnbindCollectionItemPropertyChanged<TItem, TItemProperty>
+    public static void UnbindCollectionItemPropertyChanged<T, TProperty>
     (
         object context,
         INotifyCollectionChanged observableCollection,
-        Expression<Func<TItem, TItemProperty>> itemPropertyGetterExpr,
+        Expression<Func<T, TProperty>> itemPropertyGetterExpr,
         object itemPropertyChangedTrigger)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
@@ -1544,11 +1544,11 @@ public static class TriggerBinder
                          tb.ItemPropertyChangedTrigger == itemPropertyChangedTrigger));
     }
 
-    public static void UnbindCollectionItemPropertyChanged<TItem, TItemProperty>
+    public static void UnbindCollectionItemPropertyChanged<T, TProperty>
     (
         object context,
         INotifyCollectionChanged observableCollection,
-        Expression<Func<TItem, TItemProperty>> itemPropertyGetterExpr)
+        Expression<Func<T, TProperty>> itemPropertyGetterExpr)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
         ArgumentNullException.ThrowIfNull(observableCollection, nameof(observableCollection));
@@ -1585,11 +1585,11 @@ public static class TriggerBinder
     #endregion
 
     #region CollectionItemPropertyChanging
-    public static void UnbindCollectionItemPropertyChanging<TItem, TItemProperty>
+    public static void UnbindCollectionItemPropertyChanging<T, TProperty>
     (
         object context,
         INotifyCollectionChanged observableCollection,
-        Expression<Func<TItem, TItemProperty>> itemPropertyGetterExpr,
+        Expression<Func<T, TProperty>> itemPropertyGetterExpr,
         object itemPropertyChangingTrigger)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
@@ -1606,11 +1606,11 @@ public static class TriggerBinder
                          tb.ItemPropertyChangingTrigger == itemPropertyChangingTrigger));
     }
 
-    public static void UnbindCollectionItemPropertyChanging<TItem, TItemProperty>
+    public static void UnbindCollectionItemPropertyChanging<T, TProperty>
     (
         object context,
         INotifyCollectionChanged observableCollection,
-        Expression<Func<TItem, TItemProperty>> itemPropertyGetterExpr)
+        Expression<Func<T, TProperty>> itemPropertyGetterExpr)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
         ArgumentNullException.ThrowIfNull(observableCollection, nameof(observableCollection));
@@ -1662,15 +1662,15 @@ public static class TriggerBinder
     #endregion
 
     #region Private methods
-    private static string GetPropertyName<TObject, TProperty>(Expression<Func<TObject, TProperty>> propertyGetterExpr) =>
+    private static string GetPropertyName<T, TProperty>(Expression<Func<T, TProperty>> propertyGetterExpr) =>
         ((MemberExpression)propertyGetterExpr.Body).Member.Name;
 
     #region Argument checking methods
-    private static void CheckPropertyChangedBindingArgs<TObservable, TProperty>
+    private static void CheckPropertyChangedBindingArgs<T, TProperty>
     (
         object context,
         object observable,
-        Expression<Func<TObservable, TProperty>> propertyGetterExpr,
+        Expression<Func<T, TProperty>> propertyGetterExpr,
         object trigger)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
@@ -1689,11 +1689,11 @@ public static class TriggerBinder
             throw new Exception("This trigger is already bound to the property of the observable object in this context.");
     }
 
-    private static void CheckPropertyChangingBindingArgs<TObservable, TProperty>
+    private static void CheckPropertyChangingBindingArgs<T, TProperty>
     (
         object context,
         object observable,
-        Expression<Func<TObservable, TProperty>> propertyGetterExpr,
+        Expression<Func<T, TProperty>> propertyGetterExpr,
         object trigger)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
@@ -1731,12 +1731,12 @@ public static class TriggerBinder
             throw new Exception("This trigger is already bound to the observable collection in this context.");
     }
 
-    private static void CheckCollectionChangedAndItemPropertyChangedBindingArgs<TItem, TItemProperty>
+    private static void CheckCollectionChangedAndItemPropertyChangedBindingArgs<T, TProperty>
     (
         object context,
         object observableCollection,
         object collectionChangedTrigger,
-        Expression<Func<TItem, TItemProperty>> itemPropertyGetterExpr,
+        Expression<Func<T, TProperty>> itemPropertyGetterExpr,
         object itemPropertyChangedTrigger)
     {
         CheckCollectionChangedBindingArgs(context, observableCollection, collectionChangedTrigger);
@@ -1755,12 +1755,12 @@ public static class TriggerBinder
             throw new Exception("This trigger is already bound to the property of an item of the observable collection in this context.");
     }
 
-    private static void CheckCollectionChangedAndItemPropertyChangingBindingArgs<TItem, TItemProperty>
+    private static void CheckCollectionChangedAndItemPropertyChangingBindingArgs<T, TProperty>
     (
         object context,
         object observableCollection,
         object collectionChangedTrigger,
-        Expression<Func<TItem, TItemProperty>> itemPropertyGetterExpr,
+        Expression<Func<T, TProperty>> itemPropertyGetterExpr,
         object itemPropertyChangingTrigger)
     {
         CheckCollectionChangedBindingArgs(context, observableCollection, collectionChangedTrigger);
@@ -1779,11 +1779,11 @@ public static class TriggerBinder
             throw new Exception("This trigger is already bound to the property of an item of the observable collection in this context.");
     }
 
-    private static void CheckCollectionItemPropertyChangedBindingArgs<TItem, TItemProperty>
+    private static void CheckCollectionItemPropertyChangedBindingArgs<T, TProperty>
     (
         object context,
         object observableCollection,
-        Expression<Func<TItem, TItemProperty>> itemPropertyGetterExpr,
+        Expression<Func<T, TProperty>> itemPropertyGetterExpr,
         object itemPropertyChangedTrigger)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
@@ -1802,11 +1802,11 @@ public static class TriggerBinder
             throw new Exception("This trigger is already bound to the property of an item of the observable collection in this context.");
     }
 
-    private static void CheckCollectionItemPropertyChangingBindingArgs<TItem, TItemProperty>
+    private static void CheckCollectionItemPropertyChangingBindingArgs<T, TProperty>
     (
         object context,
         object observableCollection,
-        Expression<Func<TItem, TItemProperty>> itemPropertyGetterExpr,
+        Expression<Func<T, TProperty>> itemPropertyGetterExpr,
         object itemPropertyChangedTrigger)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
@@ -1880,7 +1880,7 @@ public static class TriggerBinder
     private static void OnCollectionChangedAndItemPropertyChangedInternal
     (
         object context,
-        INotifyCollectionChanged observableCollection,
+        dynamic observableCollection,
         object collectionChangedTrigger,
         string itemPropertyName,
         object itemPropertyChangedTrigger,
