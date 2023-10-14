@@ -41,7 +41,7 @@ public static class TriggerBinder
     #region Binding methods
     #region PropertyChanged
     /// <summary>
-    /// Binds a trigger to changes of a given property in the <paramref name="observable"/> object.
+    /// Binds a <paramref name="trigger"/> to changes of a given property in the <paramref name="observable"/> object.
     /// </summary>
     /// <typeparam name="TObservable">The type of the observable object.</typeparam>
     /// <typeparam name="TProperty">The type of the <paramref name="observable"/> object's property.</typeparam>
@@ -72,7 +72,7 @@ public static class TriggerBinder
     }
 
     /// <summary>
-    /// Binds a trigger to changes of a given property in the <paramref name="observable"/> object.
+    /// Binds a <paramref name="trigger"/> to changes of a given property in the <paramref name="observable"/> object.
     /// </summary>
     /// <typeparam name="TObservable">The type of the observable object.</typeparam>
     /// <typeparam name="TProperty">The type of the <paramref name="observable"/> object's property.</typeparam>
@@ -103,7 +103,7 @@ public static class TriggerBinder
     }
 
     /// <summary>
-    /// Binds a trigger to changes of a given property in the <paramref name="observable"/> object.
+    /// Binds a <paramref name="trigger"/> to changes of a given property in the <paramref name="observable"/> object.
     /// </summary>
     /// <typeparam name="TObservable">The type of the observable object.</typeparam>
     /// <typeparam name="TProperty">The type of the <paramref name="observable"/> object's property.</typeparam>
@@ -136,7 +136,7 @@ public static class TriggerBinder
 
     #region PropertyChanging
     /// <summary>
-    /// Binds a trigger to changes of a given property in the <paramref name="observable"/> object.
+    /// Binds a <paramref name="trigger"/> to changes of a given property in the <paramref name="observable"/> object.
     /// </summary>
     /// <typeparam name="TObservable">The type of the observable object.</typeparam>
     /// <typeparam name="TProperty">The type of the <paramref name="observable"/> object's property.</typeparam>
@@ -167,7 +167,7 @@ public static class TriggerBinder
     }
 
     /// <summary>
-    /// Binds a trigger to changes of a given property in the <paramref name="observable"/> object.
+    /// Binds a <paramref name="trigger"/> to changes of a given property in the <paramref name="observable"/> object.
     /// </summary>
     /// <typeparam name="TObservable">The type of the observable object.</typeparam>
     /// <typeparam name="TProperty">The type of the <paramref name="observable"/> object's property.</typeparam>
@@ -198,7 +198,7 @@ public static class TriggerBinder
     }
 
     /// <summary>
-    /// Binds a trigger to changes of a given property in the <paramref name="observable"/> object.
+    /// Binds a <paramref name="trigger"/> to changes of a given property in the <paramref name="observable"/> object.
     /// </summary>
     /// <typeparam name="TObservable">The type of the observable object.</typeparam>
     /// <typeparam name="TProperty">The type of the <paramref name="observable"/> object's property.</typeparam>
@@ -231,7 +231,7 @@ public static class TriggerBinder
 
     #region CollectionChanged
     /// <summary>
-    /// Binds a trigger to changes in the <paramref name="observableCollection"/> object.
+    /// Binds a <paramref name="trigger"/> to changes in the <paramref name="observableCollection"/> object.
     /// </summary>
     /// <typeparam name="TObservableCollection">The type of the observable object.</typeparam>
     /// <param name="context">The context in which the binding is being made.</param>
@@ -254,7 +254,7 @@ public static class TriggerBinder
     }
 
     /// <summary>
-    /// Binds a trigger to changes in the <paramref name="observableCollection"/> object.
+    /// Binds a <paramref name="trigger"/> to changes in the <paramref name="observableCollection"/> object.
     /// </summary>
     /// <param name="context">The context in which the binding is being made.</param>
     /// <param name="observableCollection">The observable collection object.</param>
@@ -274,7 +274,7 @@ public static class TriggerBinder
     }
 
     /// <summary>
-    /// Binds a trigger to changes in the <paramref name="observableCollection"/> object.
+    /// Binds a <paramref name="trigger"/> to changes in the <paramref name="observableCollection"/> object.
     /// </summary>
     /// <param name="context">The context in which the binding is being made.</param>
     /// <param name="observableCollection">The observable collection object.</param>
@@ -296,6 +296,23 @@ public static class TriggerBinder
 
     #region CollectionChangedAndItemPropertyChanged
     #region First group (with collectionChangedTrigger with two parameters)
+    /// <summary>
+    /// This method performs the following operations:
+    /// - Binds a <paramref name="collectionChangedTrigger"/> to changes in the <paramref name="observableCollection"/> object.
+    /// - Binds a <paramref name="itemPropertyChangedTrigger"/> to property changed events of every collection item.
+    /// - For items that are added to the collection, new trigger bindings are created.
+    /// - For items that are removed from the collection, bindings are removed.
+    /// </summary>
+    /// <typeparam name="T">The type of items in the collection.</typeparam>
+    /// <typeparam name="TProperty">The type of the item property.</typeparam>
+    /// <param name="context">The context object associated with the event.</param>
+    /// <param name="observableCollection">The observable collection.</param>
+    /// <param name="collectionChangedTrigger">The method to trigger the collection changed event.</param>
+    /// <param name="itemPropertyGetterExpr">The expression used to get the item property.</param>
+    /// <param name="itemPropertyChangedTrigger">The trigger to be executed when the property changes.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="context"/>,
+    /// <paramref name="observableCollection"/>, <paramref name="collectionChangedTrigger"/>,
+    /// <paramref name="itemPropertyGetterExpr"/> or <paramref name="itemPropertyChangedTrigger"/> is null.</exception>
     public static void OnCollectionChangedAndItemPropertyChanged<T, TProperty>
     (
         object context,
@@ -332,6 +349,23 @@ public static class TriggerBinder
             collectionChangedTrigger, GetPropertyName(itemPropertyGetterExpr), itemPropertyChangedTrigger, eventHandler);
     }
 
+    /// <summary>
+    /// This method performs the following operations:
+    /// - Binds a <paramref name="collectionChangedTrigger"/> to changes in the <paramref name="observableCollection"/> object.
+    /// - Binds a <paramref name="itemPropertyChangedTrigger"/> to property changed events of every collection item.
+    /// - For items that are added to the collection, new trigger bindings are created.
+    /// - For items that are removed from the collection, bindings are removed.
+    /// </summary>
+    /// <typeparam name="T">The type of items in the collection.</typeparam>
+    /// <typeparam name="TProperty">The type of the item property.</typeparam>
+    /// <param name="context">The context object associated with the event.</param>
+    /// <param name="observableCollection">The observable collection.</param>
+    /// <param name="collectionChangedTrigger">The method to trigger the collection changed event.</param>
+    /// <param name="itemPropertyGetterExpr">The expression used to get the item property.</param>
+    /// <param name="itemPropertyChangedTrigger">The trigger to be executed when the property changes.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="context"/>,
+    /// <paramref name="observableCollection"/>, <paramref name="collectionChangedTrigger"/>,
+    /// <paramref name="itemPropertyGetterExpr"/> or <paramref name="itemPropertyChangedTrigger"/> is null.</exception>
     public static void OnCollectionChangedAndItemPropertyChanged<T, TProperty>
     (
         object context,
@@ -368,6 +402,23 @@ public static class TriggerBinder
             collectionChangedTrigger, GetPropertyName(itemPropertyGetterExpr), itemPropertyChangedTrigger, eventHandler);
     }
 
+    /// <summary>
+    /// This method performs the following operations:
+    /// - Binds a <paramref name="collectionChangedTrigger"/> to changes in the <paramref name="observableCollection"/> object.
+    /// - Binds a <paramref name="itemPropertyChangedTrigger"/> to property changed events of every collection item.
+    /// - For items that are added to the collection, new trigger bindings are created.
+    /// - For items that are removed from the collection, bindings are removed.
+    /// </summary>
+    /// <typeparam name="T">The type of items in the collection.</typeparam>
+    /// <typeparam name="TProperty">The type of the item property.</typeparam>
+    /// <param name="context">The context object associated with the event.</param>
+    /// <param name="observableCollection">The observable collection.</param>
+    /// <param name="collectionChangedTrigger">The method to trigger the collection changed event.</param>
+    /// <param name="itemPropertyGetterExpr">The expression used to get the item property.</param>
+    /// <param name="itemPropertyChangedTrigger">The trigger to be executed when the property changes.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="context"/>,
+    /// <paramref name="observableCollection"/>, <paramref name="collectionChangedTrigger"/>,
+    /// <paramref name="itemPropertyGetterExpr"/> or <paramref name="itemPropertyChangedTrigger"/> is null.</exception>
     public static void OnCollectionChangedAndItemPropertyChanged<T, TProperty>
     (
         object context,
@@ -406,6 +457,23 @@ public static class TriggerBinder
     #endregion
 
     #region Second group (with collectionChangedTrigger with one parameter)
+    /// <summary>
+    /// This method performs the following operations:
+    /// - Binds a <paramref name="collectionChangedTrigger"/> to changes in the <paramref name="observableCollection"/> object.
+    /// - Binds a <paramref name="itemPropertyChangedTrigger"/> to property changed events of every collection item.
+    /// - For items that are added to the collection, new trigger bindings are created.
+    /// - For items that are removed from the collection, bindings are removed.
+    /// </summary>
+    /// <typeparam name="T">The type of items in the collection.</typeparam>
+    /// <typeparam name="TProperty">The type of the item property.</typeparam>
+    /// <param name="context">The context object associated with the event.</param>
+    /// <param name="observableCollection">The observable collection.</param>
+    /// <param name="collectionChangedTrigger">The method to trigger the collection changed event.</param>
+    /// <param name="itemPropertyGetterExpr">The expression used to get the item property.</param>
+    /// <param name="itemPropertyChangedTrigger">The trigger to be executed when the property changes.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="context"/>,
+    /// <paramref name="observableCollection"/>, <paramref name="collectionChangedTrigger"/>,
+    /// <paramref name="itemPropertyGetterExpr"/> or <paramref name="itemPropertyChangedTrigger"/> is null.</exception>
     public static void OnCollectionChangedAndItemPropertyChanged<T, TProperty>
     (
         object context,
@@ -442,6 +510,23 @@ public static class TriggerBinder
             collectionChangedTrigger, GetPropertyName(itemPropertyGetterExpr), itemPropertyChangedTrigger, eventHandler);
     }
 
+    /// <summary>
+    /// This method performs the following operations:
+    /// - Binds a <paramref name="collectionChangedTrigger"/> to changes in the <paramref name="observableCollection"/> object.
+    /// - Binds a <paramref name="itemPropertyChangedTrigger"/> to property changed events of every collection item.
+    /// - For items that are added to the collection, new trigger bindings are created.
+    /// - For items that are removed from the collection, bindings are removed.
+    /// </summary>
+    /// <typeparam name="T">The type of items in the collection.</typeparam>
+    /// <typeparam name="TProperty">The type of the item property.</typeparam>
+    /// <param name="context">The context object associated with the event.</param>
+    /// <param name="observableCollection">The observable collection.</param>
+    /// <param name="collectionChangedTrigger">The method to trigger the collection changed event.</param>
+    /// <param name="itemPropertyGetterExpr">The expression used to get the item property.</param>
+    /// <param name="itemPropertyChangedTrigger">The trigger to be executed when the property changes.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="context"/>,
+    /// <paramref name="observableCollection"/>, <paramref name="collectionChangedTrigger"/>,
+    /// <paramref name="itemPropertyGetterExpr"/> or <paramref name="itemPropertyChangedTrigger"/> is null.</exception>
     public static void OnCollectionChangedAndItemPropertyChanged<T, TProperty>
     (
         object context,
@@ -478,6 +563,23 @@ public static class TriggerBinder
             collectionChangedTrigger, GetPropertyName(itemPropertyGetterExpr), itemPropertyChangedTrigger, eventHandler);
     }
 
+    /// <summary>
+    /// This method performs the following operations:
+    /// - Binds a <paramref name="collectionChangedTrigger"/> to changes in the <paramref name="observableCollection"/> object.
+    /// - Binds a <paramref name="itemPropertyChangedTrigger"/> to property changed events of every collection item.
+    /// - For items that are added to the collection, new trigger bindings are created.
+    /// - For items that are removed from the collection, bindings are removed.
+    /// </summary>
+    /// <typeparam name="T">The type of items in the collection.</typeparam>
+    /// <typeparam name="TProperty">The type of the item property.</typeparam>
+    /// <param name="context">The context object associated with the event.</param>
+    /// <param name="observableCollection">The observable collection.</param>
+    /// <param name="collectionChangedTrigger">The method to trigger the collection changed event.</param>
+    /// <param name="itemPropertyGetterExpr">The expression used to get the item property.</param>
+    /// <param name="itemPropertyChangedTrigger">The trigger to be executed when the property changes.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="context"/>,
+    /// <paramref name="observableCollection"/>, <paramref name="collectionChangedTrigger"/>,
+    /// <paramref name="itemPropertyGetterExpr"/> or <paramref name="itemPropertyChangedTrigger"/> is null.</exception>
     public static void OnCollectionChangedAndItemPropertyChanged<T, TProperty>
     (
         object context,
@@ -516,6 +618,23 @@ public static class TriggerBinder
     #endregion
 
     #region Third group (with collectionChangedTrigger without parameters)
+    /// <summary>
+    /// This method performs the following operations:
+    /// - Binds a <paramref name="collectionChangedTrigger"/> to changes in the <paramref name="observableCollection"/> object.
+    /// - Binds a <paramref name="itemPropertyChangedTrigger"/> to property changed events of every collection item.
+    /// - For items that are added to the collection, new trigger bindings are created.
+    /// - For items that are removed from the collection, bindings are removed.
+    /// </summary>
+    /// <typeparam name="T">The type of items in the collection.</typeparam>
+    /// <typeparam name="TProperty">The type of the item property.</typeparam>
+    /// <param name="context">The context object associated with the event.</param>
+    /// <param name="observableCollection">The observable collection.</param>
+    /// <param name="collectionChangedTrigger">The method to trigger the collection changed event.</param>
+    /// <param name="itemPropertyGetterExpr">The expression used to get the item property.</param>
+    /// <param name="itemPropertyChangedTrigger">The trigger to be executed when the property changes.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="context"/>,
+    /// <paramref name="observableCollection"/>, <paramref name="collectionChangedTrigger"/>,
+    /// <paramref name="itemPropertyGetterExpr"/> or <paramref name="itemPropertyChangedTrigger"/> is null.</exception>
     public static void OnCollectionChangedAndItemPropertyChanged<T, TProperty>
     (
         object context,
@@ -552,6 +671,23 @@ public static class TriggerBinder
             collectionChangedTrigger, GetPropertyName(itemPropertyGetterExpr), itemPropertyChangedTrigger, eventHandler);
     }
 
+    /// <summary>
+    /// This method performs the following operations:
+    /// - Binds a <paramref name="collectionChangedTrigger"/> to changes in the <paramref name="observableCollection"/> object.
+    /// - Binds a <paramref name="itemPropertyChangedTrigger"/> to property changed events of every collection item.
+    /// - For items that are added to the collection, new trigger bindings are created.
+    /// - For items that are removed from the collection, bindings are removed.
+    /// </summary>
+    /// <typeparam name="T">The type of items in the collection.</typeparam>
+    /// <typeparam name="TProperty">The type of the item property.</typeparam>
+    /// <param name="context">The context object associated with the event.</param>
+    /// <param name="observableCollection">The observable collection.</param>
+    /// <param name="collectionChangedTrigger">The method to trigger the collection changed event.</param>
+    /// <param name="itemPropertyGetterExpr">The expression used to get the item property.</param>
+    /// <param name="itemPropertyChangedTrigger">The trigger to be executed when the property changes.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="context"/>,
+    /// <paramref name="observableCollection"/>, <paramref name="collectionChangedTrigger"/>,
+    /// <paramref name="itemPropertyGetterExpr"/> or <paramref name="itemPropertyChangedTrigger"/> is null.</exception>
     public static void OnCollectionChangedAndItemPropertyChanged<T, TProperty>
     (
         object context,
@@ -588,6 +724,23 @@ public static class TriggerBinder
             collectionChangedTrigger, GetPropertyName(itemPropertyGetterExpr), itemPropertyChangedTrigger, eventHandler);
     }
 
+    /// <summary>
+    /// This method performs the following operations:
+    /// - Binds a <paramref name="collectionChangedTrigger"/> to changes in the <paramref name="observableCollection"/> object.
+    /// - Binds a <paramref name="itemPropertyChangedTrigger"/> to property changed events of every collection item.
+    /// - For items that are added to the collection, new trigger bindings are created.
+    /// - For items that are removed from the collection, bindings are removed.
+    /// </summary>
+    /// <typeparam name="T">The type of items in the collection.</typeparam>
+    /// <typeparam name="TProperty">The type of the item property.</typeparam>
+    /// <param name="context">The context object associated with the event.</param>
+    /// <param name="observableCollection">The observable collection.</param>
+    /// <param name="collectionChangedTrigger">The method to trigger the collection changed event.</param>
+    /// <param name="itemPropertyGetterExpr">The expression used to get the item property.</param>
+    /// <param name="itemPropertyChangedTrigger">The trigger to be executed when the property changes.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="context"/>,
+    /// <paramref name="observableCollection"/>, <paramref name="collectionChangedTrigger"/>,
+    /// <paramref name="itemPropertyGetterExpr"/> or <paramref name="itemPropertyChangedTrigger"/> is null.</exception>
     public static void OnCollectionChangedAndItemPropertyChanged<T, TProperty>
     (
         object context,
@@ -628,6 +781,23 @@ public static class TriggerBinder
 
     #region CollectionChangedAndItemPropertyChanging
     #region First group (with collectionChangedTrigger with two parameters)
+    /// <summary>
+    /// This method performs the following operations:
+    /// - Binds a <paramref name="collectionChangedTrigger"/> to changes in the <paramref name="observableCollection"/> object.
+    /// - Binds a <paramref name="itemPropertyChangingTrigger"/> to property changing events of every collection item.
+    /// - For items that are added to the collection, new trigger bindings are created.
+    /// - For items that are removed from the collection, bindings are removed.
+    /// </summary>
+    /// <typeparam name="T">The type of items in the collection.</typeparam>
+    /// <typeparam name="TProperty">The type of the item property.</typeparam>
+    /// <param name="context">The context object associated with the event.</param>
+    /// <param name="observableCollection">The observable collection.</param>
+    /// <param name="collectionChangedTrigger">The method to trigger the collection changed event.</param>
+    /// <param name="itemPropertyGetterExpr">The expression used to get the item property.</param>
+    /// <param name="itemPropertyChangingTrigger">The trigger to be executed when the property changing event will occur.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="context"/>,
+    /// <paramref name="observableCollection"/>, <paramref name="collectionChangedTrigger"/>,
+    /// <paramref name="itemPropertyGetterExpr"/> or <paramref name="itemPropertyChangingTrigger"/> is null.</exception>
     public static void OnCollectionChangedAndItemPropertyChanging<T, TProperty>
     (
         object context,
@@ -664,6 +834,23 @@ public static class TriggerBinder
             collectionChangedTrigger, GetPropertyName(itemPropertyGetterExpr), itemPropertyChangingTrigger, eventHandler);
     }
 
+    /// <summary>
+    /// This method performs the following operations:
+    /// - Binds a <paramref name="collectionChangedTrigger"/> to changes in the <paramref name="observableCollection"/> object.
+    /// - Binds a <paramref name="itemPropertyChangingTrigger"/> to property changing events of every collection item.
+    /// - For items that are added to the collection, new trigger bindings are created.
+    /// - For items that are removed from the collection, bindings are removed.
+    /// </summary>
+    /// <typeparam name="T">The type of items in the collection.</typeparam>
+    /// <typeparam name="TProperty">The type of the item property.</typeparam>
+    /// <param name="context">The context object associated with the event.</param>
+    /// <param name="observableCollection">The observable collection.</param>
+    /// <param name="collectionChangedTrigger">The method to trigger the collection changed event.</param>
+    /// <param name="itemPropertyGetterExpr">The expression used to get the item property.</param>
+    /// <param name="itemPropertyChangingTrigger">The trigger to be executed when the property changing event will occur.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="context"/>,
+    /// <paramref name="observableCollection"/>, <paramref name="collectionChangedTrigger"/>,
+    /// <paramref name="itemPropertyGetterExpr"/> or <paramref name="itemPropertyChangingTrigger"/> is null.</exception>
     public static void OnCollectionChangedAndItemPropertyChanging<T, TProperty>
     (
         object context,
@@ -700,6 +887,23 @@ public static class TriggerBinder
             collectionChangedTrigger, GetPropertyName(itemPropertyGetterExpr), itemPropertyChangingTrigger, eventHandler);
     }
 
+    /// <summary>
+    /// This method performs the following operations:
+    /// - Binds a <paramref name="collectionChangedTrigger"/> to changes in the <paramref name="observableCollection"/> object.
+    /// - Binds a <paramref name="itemPropertyChangingTrigger"/> to property changing events of every collection item.
+    /// - For items that are added to the collection, new trigger bindings are created.
+    /// - For items that are removed from the collection, bindings are removed.
+    /// </summary>
+    /// <typeparam name="T">The type of items in the collection.</typeparam>
+    /// <typeparam name="TProperty">The type of the item property.</typeparam>
+    /// <param name="context">The context object associated with the event.</param>
+    /// <param name="observableCollection">The observable collection.</param>
+    /// <param name="collectionChangedTrigger">The method to trigger the collection changed event.</param>
+    /// <param name="itemPropertyGetterExpr">The expression used to get the item property.</param>
+    /// <param name="itemPropertyChangingTrigger">The trigger to be executed when the property changing event will occur.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="context"/>,
+    /// <paramref name="observableCollection"/>, <paramref name="collectionChangedTrigger"/>,
+    /// <paramref name="itemPropertyGetterExpr"/> or <paramref name="itemPropertyChangingTrigger"/> is null.</exception>
     public static void OnCollectionChangedAndItemPropertyChanging<T, TProperty>
     (
         object context,
@@ -738,6 +942,23 @@ public static class TriggerBinder
     #endregion
 
     #region Second group (with collectionChangedTrigger with one parameter)
+    /// <summary>
+    /// This method performs the following operations:
+    /// - Binds a <paramref name="collectionChangedTrigger"/> to changes in the <paramref name="observableCollection"/> object.
+    /// - Binds a <paramref name="itemPropertyChangingTrigger"/> to property changing events of every collection item.
+    /// - For items that are added to the collection, new trigger bindings are created.
+    /// - For items that are removed from the collection, bindings are removed.
+    /// </summary>
+    /// <typeparam name="T">The type of items in the collection.</typeparam>
+    /// <typeparam name="TProperty">The type of the item property.</typeparam>
+    /// <param name="context">The context object associated with the event.</param>
+    /// <param name="observableCollection">The observable collection.</param>
+    /// <param name="collectionChangedTrigger">The method to trigger the collection changed event.</param>
+    /// <param name="itemPropertyGetterExpr">The expression used to get the item property.</param>
+    /// <param name="itemPropertyChangingTrigger">The trigger to be executed when the property changing event will occur.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="context"/>,
+    /// <paramref name="observableCollection"/>, <paramref name="collectionChangedTrigger"/>,
+    /// <paramref name="itemPropertyGetterExpr"/> or <paramref name="itemPropertyChangingTrigger"/> is null.</exception>
     public static void OnCollectionChangedAndItemPropertyChanging<T, TProperty>
     (
         object context,
@@ -774,6 +995,23 @@ public static class TriggerBinder
             collectionChangedTrigger, GetPropertyName(itemPropertyGetterExpr), itemPropertyChangingTrigger, eventHandler);
     }
 
+    /// <summary>
+    /// This method performs the following operations:
+    /// - Binds a <paramref name="collectionChangedTrigger"/> to changes in the <paramref name="observableCollection"/> object.
+    /// - Binds a <paramref name="itemPropertyChangingTrigger"/> to property changing events of every collection item.
+    /// - For items that are added to the collection, new trigger bindings are created.
+    /// - For items that are removed from the collection, bindings are removed.
+    /// </summary>
+    /// <typeparam name="T">The type of items in the collection.</typeparam>
+    /// <typeparam name="TProperty">The type of the item property.</typeparam>
+    /// <param name="context">The context object associated with the event.</param>
+    /// <param name="observableCollection">The observable collection.</param>
+    /// <param name="collectionChangedTrigger">The method to trigger the collection changed event.</param>
+    /// <param name="itemPropertyGetterExpr">The expression used to get the item property.</param>
+    /// <param name="itemPropertyChangingTrigger">The trigger to be executed when the property changing event will occur.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="context"/>,
+    /// <paramref name="observableCollection"/>, <paramref name="collectionChangedTrigger"/>,
+    /// <paramref name="itemPropertyGetterExpr"/> or <paramref name="itemPropertyChangingTrigger"/> is null.</exception>
     public static void OnCollectionChangedAndItemPropertyChanging<T, TProperty>
     (
         object context,
@@ -810,6 +1048,23 @@ public static class TriggerBinder
             collectionChangedTrigger, GetPropertyName(itemPropertyGetterExpr), itemPropertyChangingTrigger, eventHandler);
     }
 
+    /// <summary>
+    /// This method performs the following operations:
+    /// - Binds a <paramref name="collectionChangedTrigger"/> to changes in the <paramref name="observableCollection"/> object.
+    /// - Binds a <paramref name="itemPropertyChangingTrigger"/> to property changing events of every collection item.
+    /// - For items that are added to the collection, new trigger bindings are created.
+    /// - For items that are removed from the collection, bindings are removed.
+    /// </summary>
+    /// <typeparam name="T">The type of items in the collection.</typeparam>
+    /// <typeparam name="TProperty">The type of the item property.</typeparam>
+    /// <param name="context">The context object associated with the event.</param>
+    /// <param name="observableCollection">The observable collection.</param>
+    /// <param name="collectionChangedTrigger">The method to trigger the collection changed event.</param>
+    /// <param name="itemPropertyGetterExpr">The expression used to get the item property.</param>
+    /// <param name="itemPropertyChangingTrigger">The trigger to be executed when the property changing event will occur.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="context"/>,
+    /// <paramref name="observableCollection"/>, <paramref name="collectionChangedTrigger"/>,
+    /// <paramref name="itemPropertyGetterExpr"/> or <paramref name="itemPropertyChangingTrigger"/> is null.</exception>
     public static void OnCollectionChangedAndItemPropertyChanging<T, TProperty>
     (
         object context,
@@ -848,6 +1103,23 @@ public static class TriggerBinder
     #endregion
 
     #region Third group (with collectionChangedTrigger without parameters)
+    /// <summary>
+    /// This method performs the following operations:
+    /// - Binds a <paramref name="collectionChangedTrigger"/> to changes in the <paramref name="observableCollection"/> object.
+    /// - Binds a <paramref name="itemPropertyChangingTrigger"/> to property changing events of every collection item.
+    /// - For items that are added to the collection, new trigger bindings are created.
+    /// - For items that are removed from the collection, bindings are removed.
+    /// </summary>
+    /// <typeparam name="T">The type of items in the collection.</typeparam>
+    /// <typeparam name="TProperty">The type of the item property.</typeparam>
+    /// <param name="context">The context object associated with the event.</param>
+    /// <param name="observableCollection">The observable collection.</param>
+    /// <param name="collectionChangedTrigger">The method to trigger the collection changed event.</param>
+    /// <param name="itemPropertyGetterExpr">The expression used to get the item property.</param>
+    /// <param name="itemPropertyChangingTrigger">The trigger to be executed when the property changing event will occur.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="context"/>,
+    /// <paramref name="observableCollection"/>, <paramref name="collectionChangedTrigger"/>,
+    /// <paramref name="itemPropertyGetterExpr"/> or <paramref name="itemPropertyChangingTrigger"/> is null.</exception>
     public static void OnCollectionChangedAndItemPropertyChanging<T, TProperty>
     (
         object context,
@@ -884,6 +1156,23 @@ public static class TriggerBinder
             collectionChangedTrigger, GetPropertyName(itemPropertyGetterExpr), itemPropertyChangingTrigger, eventHandler);
     }
 
+    /// <summary>
+    /// This method performs the following operations:
+    /// - Binds a <paramref name="collectionChangedTrigger"/> to changes in the <paramref name="observableCollection"/> object.
+    /// - Binds a <paramref name="itemPropertyChangingTrigger"/> to property changing events of every collection item.
+    /// - For items that are added to the collection, new trigger bindings are created.
+    /// - For items that are removed from the collection, bindings are removed.
+    /// </summary>
+    /// <typeparam name="T">The type of items in the collection.</typeparam>
+    /// <typeparam name="TProperty">The type of the item property.</typeparam>
+    /// <param name="context">The context object associated with the event.</param>
+    /// <param name="observableCollection">The observable collection.</param>
+    /// <param name="collectionChangedTrigger">The method to trigger the collection changed event.</param>
+    /// <param name="itemPropertyGetterExpr">The expression used to get the item property.</param>
+    /// <param name="itemPropertyChangingTrigger">The trigger to be executed when the property changing event will occur.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="context"/>,
+    /// <paramref name="observableCollection"/>, <paramref name="collectionChangedTrigger"/>,
+    /// <paramref name="itemPropertyGetterExpr"/> or <paramref name="itemPropertyChangingTrigger"/> is null.</exception>
     public static void OnCollectionChangedAndItemPropertyChanging<T, TProperty>
     (
         object context,
@@ -920,6 +1209,23 @@ public static class TriggerBinder
             collectionChangedTrigger, GetPropertyName(itemPropertyGetterExpr), itemPropertyChangingTrigger, eventHandler);
     }
 
+    /// <summary>
+    /// This method performs the following operations:
+    /// - Binds a <paramref name="collectionChangedTrigger"/> to changes in the <paramref name="observableCollection"/> object.
+    /// - Binds a <paramref name="itemPropertyChangingTrigger"/> to property changing events of every collection item.
+    /// - For items that are added to the collection, new trigger bindings are created.
+    /// - For items that are removed from the collection, bindings are removed.
+    /// </summary>
+    /// <typeparam name="T">The type of items in the collection.</typeparam>
+    /// <typeparam name="TProperty">The type of the item property.</typeparam>
+    /// <param name="context">The context object associated with the event.</param>
+    /// <param name="observableCollection">The observable collection.</param>
+    /// <param name="collectionChangedTrigger">The method to trigger the collection changed event.</param>
+    /// <param name="itemPropertyGetterExpr">The expression used to get the item property.</param>
+    /// <param name="itemPropertyChangingTrigger">The trigger to be executed when the property changing event will occur.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="context"/>,
+    /// <paramref name="observableCollection"/>, <paramref name="collectionChangedTrigger"/>,
+    /// <paramref name="itemPropertyGetterExpr"/> or <paramref name="itemPropertyChangingTrigger"/> is null.</exception>
     public static void OnCollectionChangedAndItemPropertyChanging<T, TProperty>
     (
         object context,
@@ -959,6 +1265,21 @@ public static class TriggerBinder
     #endregion
 
     #region CollectionAndItemPropertyChanged
+    /// <summary>
+    /// This method performs the following operations:
+    /// - Binds a <paramref name="itemPropertyChangedTrigger"/> to property changing events of every collection item.
+    /// - For items that are added to the collection, new trigger bindings are created.
+    /// - For items that are removed from the collection, bindings are removed.
+    /// </summary>
+    /// <typeparam name="T">The type of items in the collection.</typeparam>
+    /// <typeparam name="TProperty">The type of the item property.</typeparam>
+    /// <param name="context">The context object associated with the event.</param>
+    /// <param name="observableCollection">The observable collection.</param>
+    /// <param name="itemPropertyGetterExpr">The expression used to get the item property.</param>
+    /// <param name="itemPropertyChangedTrigger">The trigger to be executed when the property changes</param>
+    /// <exception cref="ArgumentNullException"><paramref name="context"/>,
+    /// <paramref name="observableCollection"/>, <paramref name="itemPropertyGetterExpr"/>
+    /// or <paramref name="itemPropertyChangedTrigger"/> is null.</exception>
     public static void OnCollectionItemPropertyChanged<T, TProperty>
     (
         object context,
@@ -992,6 +1313,21 @@ public static class TriggerBinder
             GetPropertyName(itemPropertyGetterExpr), itemPropertyChangedTrigger, eventHandler);
     }
 
+    /// <summary>
+    /// This method performs the following operations:
+    /// - Binds a <paramref name="itemPropertyChangedTrigger"/> to property changing events of every collection item.
+    /// - For items that are added to the collection, new trigger bindings are created.
+    /// - For items that are removed from the collection, bindings are removed.
+    /// </summary>
+    /// <typeparam name="T">The type of items in the collection.</typeparam>
+    /// <typeparam name="TProperty">The type of the item property.</typeparam>
+    /// <param name="context">The context object associated with the event.</param>
+    /// <param name="observableCollection">The observable collection.</param>
+    /// <param name="itemPropertyGetterExpr">The expression used to get the item property.</param>
+    /// <param name="itemPropertyChangedTrigger">The trigger to be executed when the property changes</param>
+    /// <exception cref="ArgumentNullException"><paramref name="context"/>,
+    /// <paramref name="observableCollection"/>, <paramref name="itemPropertyGetterExpr"/>
+    /// or <paramref name="itemPropertyChangedTrigger"/> is null.</exception>
     public static void OnCollectionItemPropertyChanged<T, TProperty>
     (
         object context,
@@ -1025,6 +1361,21 @@ public static class TriggerBinder
             GetPropertyName(itemPropertyGetterExpr), itemPropertyChangedTrigger, eventHandler);
     }
 
+    /// <summary>
+    /// This method performs the following operations:
+    /// - Binds a <paramref name="itemPropertyChangedTrigger"/> to property changing events of every collection item.
+    /// - For items that are added to the collection, new trigger bindings are created.
+    /// - For items that are removed from the collection, bindings are removed.
+    /// </summary>
+    /// <typeparam name="T">The type of items in the collection.</typeparam>
+    /// <typeparam name="TProperty">The type of the item property.</typeparam>
+    /// <param name="context">The context object associated with the event.</param>
+    /// <param name="observableCollection">The observable collection.</param>
+    /// <param name="itemPropertyGetterExpr">The expression used to get the item property.</param>
+    /// <param name="itemPropertyChangedTrigger">The trigger to be executed when the property changes</param>
+    /// <exception cref="ArgumentNullException"><paramref name="context"/>,
+    /// <paramref name="observableCollection"/>, <paramref name="itemPropertyGetterExpr"/>
+    /// or <paramref name="itemPropertyChangedTrigger"/> is null.</exception>
     public static void OnCollectionItemPropertyChanged<T, TProperty>
     (
         object context,
@@ -1060,6 +1411,21 @@ public static class TriggerBinder
     #endregion
 
     #region CollectionAndItemPropertyChanging
+    /// <summary>
+    /// This method performs the following operations:
+    /// - Binds a <paramref name="itemPropertyChangingTrigger"/> to property changing events of every collection item.
+    /// - For items that are added to the collection, new trigger bindings are created.
+    /// - For items that are removed from the collection, bindings are removed.
+    /// </summary>
+    /// <typeparam name="T">The type of items in the collection.</typeparam>
+    /// <typeparam name="TProperty">The type of the item property.</typeparam>
+    /// <param name="context">The context object associated with the event.</param>
+    /// <param name="observableCollection">The observable collection.</param>
+    /// <param name="itemPropertyGetterExpr">The expression used to get the item property.</param>
+    /// <param name="itemPropertyChangingTrigger">The trigger to be executed when the property changing event occurs.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="context"/>,
+    /// <paramref name="observableCollection"/>, <paramref name="itemPropertyGetterExpr"/>
+    /// or <paramref name="itemPropertyChangingTrigger"/> is null.</exception>
     public static void OnCollectionItemPropertyChanging<T, TProperty>
     (
         object context,
@@ -1093,6 +1459,21 @@ public static class TriggerBinder
             GetPropertyName(itemPropertyGetterExpr), itemPropertyChangingTrigger, eventHandler);
     }
 
+    /// <summary>
+    /// This method performs the following operations:
+    /// - Binds a <paramref name="itemPropertyChangingTrigger"/> to property changing events of every collection item.
+    /// - For items that are added to the collection, new trigger bindings are created.
+    /// - For items that are removed from the collection, bindings are removed.
+    /// </summary>
+    /// <typeparam name="T">The type of items in the collection.</typeparam>
+    /// <typeparam name="TProperty">The type of the item property.</typeparam>
+    /// <param name="context">The context object associated with the event.</param>
+    /// <param name="observableCollection">The observable collection.</param>
+    /// <param name="itemPropertyGetterExpr">The expression used to get the item property.</param>
+    /// <param name="itemPropertyChangingTrigger">The trigger to be executed when the property changing event occurs.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="context"/>,
+    /// <paramref name="observableCollection"/>, <paramref name="itemPropertyGetterExpr"/>
+    /// or <paramref name="itemPropertyChangingTrigger"/> is null.</exception>
     public static void OnCollectionItemPropertyChanging<T, TProperty>
     (
         object context,
@@ -1126,6 +1507,21 @@ public static class TriggerBinder
             GetPropertyName(itemPropertyGetterExpr), itemPropertyChangingTrigger, eventHandler);
     }
 
+    /// <summary>
+    /// This method performs the following operations:
+    /// - Binds a <paramref name="itemPropertyChangingTrigger"/> to property changing events of every collection item.
+    /// - For items that are added to the collection, new trigger bindings are created.
+    /// - For items that are removed from the collection, bindings are removed.
+    /// </summary>
+    /// <typeparam name="T">The type of items in the collection.</typeparam>
+    /// <typeparam name="TProperty">The type of the item property.</typeparam>
+    /// <param name="context">The context object associated with the event.</param>
+    /// <param name="observableCollection">The observable collection.</param>
+    /// <param name="itemPropertyGetterExpr">The expression used to get the item property.</param>
+    /// <param name="itemPropertyChangingTrigger">The trigger to be executed when the property changing event occurs.</param>
+    /// <exception cref="ArgumentNullException"><paramref name="context"/>,
+    /// <paramref name="observableCollection"/>, <paramref name="itemPropertyGetterExpr"/>
+    /// or <paramref name="itemPropertyChangingTrigger"/> is null.</exception>
     public static void OnCollectionItemPropertyChanging<T, TProperty>
     (
         object context,
@@ -1164,7 +1560,7 @@ public static class TriggerBinder
     #region Unbinding methods
     #region PropertyChanged
     /// <summary>
-    /// Unbinds a given trigger from <paramref name="observable"/> object's property in a given context.
+    /// Unbinds a <paramref name="trigger"/> from <paramref name="observable"/> object's property in a given context.
     /// </summary>
     /// <typeparam name="T">Type of the observable object.</typeparam>
     /// <typeparam name="TProperty">Type of the <paramref name="observable"/> object's property.</typeparam>
@@ -1253,6 +1649,15 @@ public static class TriggerBinder
     #endregion
 
     #region PropertyChanging
+    /// <summary>
+    /// Unbinds a <paramref name="trigger"/> from <paramref name="observable"/> object's property in a given context.
+    /// </summary>
+    /// <typeparam name="T">Type of the observable object.</typeparam>
+    /// <typeparam name="TProperty">Type of the <paramref name="observable"/> object's property.</typeparam>
+    /// <param name="context">The context in which the binding was made.</param>
+    /// <param name="observable">Observable object.</param>
+    /// <param name="observablePropertyGetterExpr">An expression representing the getter of the observable property.</param>
+    /// <param name="trigger">The trigger which was bound.</param>
     public static void UnbindPropertyChanging<T, TProperty>
     (
         object context,
@@ -1276,6 +1681,14 @@ public static class TriggerBinder
                         b.Trigger == trigger));
     }
 
+    /// <summary>
+    /// Unbinds all triggers from <paramref name="observable"/> object's property in a given context.
+    /// </summary>
+    /// <typeparam name="T">Type of the observable object.</typeparam>
+    /// <typeparam name="TProperty">Type of the <paramref name="observable"/> object's property.</typeparam>
+    /// <param name="context">The context in which the binding was made.</param>
+    /// <param name="observable">Observable object.</param>
+    /// <param name="observablePropertyGetterExpr">An expression representing the getter of the observable property.</param>
     public static void UnbindPropertyChanging<T, TProperty>
     (
         object context,
@@ -1296,6 +1709,11 @@ public static class TriggerBinder
                         b.PropertyName == propertyName));
     }
 
+    /// <summary>
+    /// Unbinds all triggers from <paramref name="observable"/> object in a given context.
+    /// </summary>
+    /// <param name="context">The context in which the binding was made.</param>
+    /// <param name="observable">Observable object.</param>
     public static void UnbindPropertyChanging
     (
         object context,
@@ -1308,6 +1726,10 @@ public static class TriggerBinder
             _propertyChangingTriggerBindings.Where(b => b.Context == context && b.Observable == observable));
     }
 
+    /// <summary>
+    /// Unbinds all triggers from all observable objects in a given context.
+    /// </summary>
+    /// <param name="context">The context in which the binding was made.</param>
     public static void UnbindPropertyChanging(object context)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
@@ -1317,6 +1739,12 @@ public static class TriggerBinder
     #endregion
 
     #region CollectionChanged
+    /// <summary>
+    /// Unbinds a <paramref name="trigger"/> from <paramref name="observableCollection"/> in a given context.
+    /// </summary>
+    /// <param name="context">The context in which the binding was made.</param>
+    /// <param name="observableCollection">Observable collection.</param>
+    /// <param name="trigger">The trigger which was bound.</param>
     public static void UnbindCollectionChanged
     (
         object context,
@@ -1334,6 +1762,11 @@ public static class TriggerBinder
                         b.Trigger == trigger));
     }
 
+    /// <summary>
+    /// Unbinds all triggers from <paramref name="observableCollection"/> in a given context.
+    /// </summary>
+    /// <param name="context">The context in which the binding was made.</param>
+    /// <param name="observableCollection">Observable collection.</param>
     public static void UnbindCollectionChanged(object context, INotifyCollectionChanged observableCollection)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
@@ -1344,6 +1777,10 @@ public static class TriggerBinder
             .Where(b => b.Context == context && b.ObservableCollection == observableCollection));
     }
 
+    /// <summary>
+    /// Unbinds all triggers from all observable collections in a given context.
+    /// </summary>
+    /// <param name="context">The context in which the binding was made.</param>
     public static void UnbindCollectionChanged(object context)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
@@ -1353,6 +1790,17 @@ public static class TriggerBinder
     #endregion
 
     #region CollectionChangedAndItemPropertyChanged
+    /// <summary>
+    /// In a given context unbinds <paramref name="collectionChangedTrigger"/> from <paramref name="observableCollection"/>
+    /// and unbinds <paramref name="itemPropertyChangedTrigger"/> from collection items property.
+    /// </summary>
+    /// <typeparam name="T">Type of the item of the observable collection.</typeparam>
+    /// <typeparam name="TProperty">Type of the observable object's item property.</typeparam>
+    /// <param name="context">The context in which the binding was made.</param>
+    /// <param name="observableCollection">Observable collection.</param>
+    /// <param name="collectionChangedTrigger">The trigger which was bound to observable collection.</param>
+    /// <param name="itemPropertyGetterExpr">An expression representing the getter of the item property.</param>
+    /// <param name="itemPropertyChangedTrigger">The trigger which was bound to the observable collection items.</param>
     public static void UnbindCollectionChangedAndItemPropertyChanged<T, TProperty>
     (
         object context,
@@ -1377,6 +1825,16 @@ public static class TriggerBinder
                             b.ItemPropertyChangedTrigger == itemPropertyChangedTrigger));
     }
 
+    /// <summary>
+    /// In a given context unbinds <paramref name="collectionChangedTrigger"/> from <paramref name="observableCollection"/>
+    /// and unbinds all triggers from collection items properties.
+    /// </summary>
+    /// <typeparam name="T">Type of the item of the observable collection.</typeparam>
+    /// <typeparam name="TProperty">Type of the observable object's item property.</typeparam>
+    /// <param name="context">The context in which the binding was made.</param>
+    /// <param name="observableCollection">Observable collection.</param>
+    /// <param name="collectionChangedTrigger">The trigger which was bound to observable collection.</param>
+    /// <param name="itemPropertyGetterExpr">An expression representing the getter of the item property.</param>
     public static void UnbindCollectionChangedAndItemPropertyChanged<T, TProperty>
     (
         object context,
@@ -1398,6 +1856,13 @@ public static class TriggerBinder
                             b.ItemPropertyName == itemPropertyName));
     }
 
+    /// <summary>
+    /// In a given context unbinds <paramref name="collectionChangedTrigger"/> from <paramref name="observableCollection"/>
+    /// and unbinds all triggers from all collection items properties.
+    /// </summary>
+    /// <param name="context">The context in which the binding was made.</param>
+    /// <param name="observableCollection">Observable collection.</param>
+    /// <param name="collectionChangedTrigger">The trigger which was bound to observable collection.</param>
     public static void UnbindCollectionChangedAndItemPropertyChanged
     (
         object context,
@@ -1415,6 +1880,12 @@ public static class TriggerBinder
                             b.CollectionChangedTrigger == collectionChangedTrigger));
     }
 
+    /// <summary>
+    /// In a given context unbinds all triggers from <paramref name="observableCollection"/>
+    /// and unbinds all triggers from all items properties.
+    /// </summary>
+    /// <param name="context">The context in which the binding was made.</param>
+    /// <param name="observableCollection">Observable collection.</param>
     public static void UnbindCollectionChangedAndItemPropertyChanged
     (
         object context,
@@ -1428,6 +1899,11 @@ public static class TriggerBinder
                 .Where(b => b.Context == context && b.ObservableCollection == observableCollection));
     }
 
+    /// <summary>
+    /// In a given context unbinds all triggers from all observable collections
+    /// and unbinds all triggers from all collections items properties.
+    /// </summary>
+    /// <param name="context">The context in which the binding was made.</param>
     public static void UnbindCollectionChangedAndItemPropertyChanged(object context)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
@@ -1438,6 +1914,17 @@ public static class TriggerBinder
     #endregion
 
     #region CollectionChangedAndItemPropertyChanging
+    /// <summary>
+    /// In a given context unbinds <paramref name="collectionChangedTrigger"/> from <paramref name="observableCollection"/>
+    /// and unbinds <paramref name="itemPropertyChangingTrigger"/> from collection items property.
+    /// </summary>
+    /// <typeparam name="T">Type of the item of the observable collection.</typeparam>
+    /// <typeparam name="TProperty">Type of the observable object's item property.</typeparam>
+    /// <param name="context">The context in which the binding was made.</param>
+    /// <param name="observableCollection">Observable collection.</param>
+    /// <param name="collectionChangedTrigger">The trigger which was bound to observable collection.</param>
+    /// <param name="itemPropertyGetterExpr">An expression representing the getter of the item property.</param>
+    /// <param name="itemPropertyChangingTrigger">The trigger which was bound to the observable collection items.</param>
     public static void UnbindCollectionChangedAndItemPropertyChanging<T, TProperty>
     (
         object context,
@@ -1462,6 +1949,16 @@ public static class TriggerBinder
                          tb.ItemPropertyChangingTrigger == itemPropertyChangingTrigger));
     }
 
+    /// <summary>
+    /// In a given context unbinds <paramref name="collectionChangedTrigger"/> from <paramref name="observableCollection"/>
+    /// and unbinds all triggers from collection items property.
+    /// </summary>
+    /// <typeparam name="T">Type of the item of the observable collection.</typeparam>
+    /// <typeparam name="TProperty">Type of the observable object's item property.</typeparam>
+    /// <param name="context">The context in which the binding was made.</param>
+    /// <param name="observableCollection">Observable collection.</param>
+    /// <param name="collectionChangedTrigger">The trigger which was bound to observable collection.</param>
+    /// <param name="itemPropertyGetterExpr">An expression representing the getter of the item property.</param>
     public static void UnbindCollectionChangedAndItemPropertyChanging<T, TProperty>
     (
         object context,
@@ -1483,6 +1980,13 @@ public static class TriggerBinder
                          tb.ItemPropertyName == itemPropertyName));
     }
 
+    /// <summary>
+    /// In a given context unbinds <paramref name="collectionChangedTrigger"/> from <paramref name="observableCollection"/>
+    /// and unbinds all triggers from all collection items properties.
+    /// </summary>
+    /// <param name="context">The context in which the binding was made.</param>
+    /// <param name="observableCollection">Observable collection.</param>
+    /// <param name="collectionChangedTrigger">The trigger which was bound to observable collection.</param>
     public static void UnbindCollectionChangedAndItemPropertyChanging
     (
         object context,
@@ -1500,6 +2004,12 @@ public static class TriggerBinder
                          tb.CollectionChangedTrigger == collectionChangedTrigger));
     }
 
+    /// <summary>
+    /// In a given context unbinds all triggers from <paramref name="observableCollection"/>
+    /// and unbinds all triggers from all collection items properties.
+    /// </summary>
+    /// <param name="context">The context in which the binding was made.</param>
+    /// <param name="observableCollection">Observable collection.</param>
     public static void UnbindCollectionChangedAndItemPropertyChanging
     (
         object context,
@@ -1513,6 +2023,11 @@ public static class TriggerBinder
             .Where(tb => tb.Context == context && tb.ObservableCollection == observableCollection));
     }
 
+    /// <summary>
+    /// In a given context unbinds all triggers from all observable collections
+    /// and unbinds all triggers from all collections items properties.
+    /// </summary>
+    /// <param name="context">The context in which the binding was made.</param>
     public static void UnbindCollectionChangedAndItemPropertyChanging(object context)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
@@ -1523,6 +2038,15 @@ public static class TriggerBinder
     #endregion
 
     #region CollectionItemPropertyChanged
+    /// <summary>
+    /// In a given context unbinds <paramref name="itemPropertyChangedTrigger"/> from collection items property.
+    /// </summary>
+    /// <typeparam name="T">Type of the item of the observable collection.</typeparam>
+    /// <typeparam name="TProperty">Type of the observable object's item property.</typeparam>
+    /// <param name="context">The context in which the binding was made.</param>
+    /// <param name="observableCollection">Observable collection.</param>
+    /// <param name="itemPropertyGetterExpr">An expression representing the getter of the item property.</param>
+    /// <param name="itemPropertyChangedTrigger">The trigger which was bound to the observable collection items.</param>
     public static void UnbindCollectionItemPropertyChanged<T, TProperty>
     (
         object context,
@@ -1544,6 +2068,14 @@ public static class TriggerBinder
                          tb.ItemPropertyChangedTrigger == itemPropertyChangedTrigger));
     }
 
+    /// <summary>
+    /// In a given context unbinds all triggers from collection items property.
+    /// </summary>
+    /// <typeparam name="T">Type of the item of the observable collection.</typeparam>
+    /// <typeparam name="TProperty">Type of the observable object's item property.</typeparam>
+    /// <param name="context">The context in which the binding was made.</param>
+    /// <param name="observableCollection">Observable collection.</param>
+    /// <param name="itemPropertyGetterExpr">An expression representing the getter of the item property.</param>
     public static void UnbindCollectionItemPropertyChanged<T, TProperty>
     (
         object context,
@@ -1562,6 +2094,11 @@ public static class TriggerBinder
                          tb.ItemPropertyName == itemPropertyName));
     }
 
+    /// <summary>
+    /// In a given context unbinds all triggers from all collection items properties.
+    /// </summary>
+    /// <param name="context">The context in which the binding was made.</param>
+    /// <param name="observableCollection">Observable collection.</param>
     public static void UnbindCollectionItemPropertyChanged
     (
         object context,
@@ -1575,6 +2112,10 @@ public static class TriggerBinder
             .Where(tb => tb.Context == context && tb.ObservableCollection == observableCollection));
     }
 
+    /// <summary>
+    /// In a given context unbinds all triggers from all collection items properties.
+    /// </summary>
+    /// <param name="context">The context in which the binding was made.</param>
     public static void UnbindCollectionItemPropertyChanged(object context)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
@@ -1585,6 +2126,15 @@ public static class TriggerBinder
     #endregion
 
     #region CollectionItemPropertyChanging
+    /// <summary>
+    /// In a given context unbinds <paramref name="itemPropertyChangingTrigger"/> from collection items property.
+    /// </summary>
+    /// <typeparam name="T">Type of the item of the observable collection.</typeparam>
+    /// <typeparam name="TProperty">Type of the observable object's item property.</typeparam>
+    /// <param name="context">The context in which the binding was made.</param>
+    /// <param name="observableCollection">Observable collection.</param>
+    /// <param name="itemPropertyGetterExpr">An expression representing the getter of the item property.</param>
+    /// <param name="itemPropertyChangingTrigger">The trigger which was bound to the observable collection items.</param>
     public static void UnbindCollectionItemPropertyChanging<T, TProperty>
     (
         object context,
@@ -1606,6 +2156,14 @@ public static class TriggerBinder
                          tb.ItemPropertyChangingTrigger == itemPropertyChangingTrigger));
     }
 
+    /// <summary>
+    /// In a given context unbinds all triggers from collection items property.
+    /// </summary>
+    /// <typeparam name="T">Type of the item of the observable collection.</typeparam>
+    /// <typeparam name="TProperty">Type of the observable object's item property.</typeparam>
+    /// <param name="context">The context in which the binding was made.</param>
+    /// <param name="observableCollection">Observable collection.</param>
+    /// <param name="itemPropertyGetterExpr">An expression representing the getter of the item property.</param>
     public static void UnbindCollectionItemPropertyChanging<T, TProperty>
     (
         object context,
@@ -1624,6 +2182,11 @@ public static class TriggerBinder
                          tb.ItemPropertyName == itemPropertyName));
     }
 
+    /// <summary>
+    /// In a given context unbinds all triggers from all collection items properties.
+    /// </summary>
+    /// <param name="context">The context in which the binding was made.</param>
+    /// <param name="observableCollection">Observable collection.</param>
     public static void UnbindCollectionItemPropertyChanging
     (
         object context,
@@ -1637,6 +2200,10 @@ public static class TriggerBinder
             .Where(tb => tb.Context == context && tb.ObservableCollection == observableCollection));
     }
 
+    /// <summary>
+    /// In a given context unbinds all triggers from all collections items properties.
+    /// </summary>
+    /// <param name="context">The context in which the binding was made.</param>
     public static void UnbindCollectionItemPropertyChanging(object context)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
@@ -1646,6 +2213,10 @@ public static class TriggerBinder
     }
     #endregion
 
+    /// <summary>
+    /// Unbinds all possible triggers bound to objects in a given context.
+    /// </summary>
+    /// <param name="context"></param>
     public static void Unbind(object context)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));

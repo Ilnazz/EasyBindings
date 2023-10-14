@@ -17,7 +17,7 @@ public static class CommandBinder
     #region Public methods
     #region Binding methods
     /// <summary>
-    /// Binds <paramref name="command"/> to a <paramref name="commandExecutor"/> in a given context.
+    /// Binds a <paramref name="command"/> to a <paramref name="commandExecutor"/> in a given context.
     /// </summary>
     /// <param name="context">The context in which the binding is being made.</param>
     /// <param name="commandExecutor">The command executor that will execute the command.</param>
@@ -34,7 +34,7 @@ public static class CommandBinder
     }
 
     /// <summary>
-    /// Binds <paramref name="command"/> to a <paramref name="commandExecutor"/> in a given context.
+    /// Binds a <paramref name="command"/> to a <paramref name="commandExecutor"/> in a given context.
     /// </summary>
     /// <param name="context">The context in which the binding is being made.</param>
     /// <param name="commandExecutor">The command executor that will execute the command.</param>
@@ -53,7 +53,7 @@ public static class CommandBinder
     }
 
     /// <summary>
-    /// Binds <paramref name="command"/> to a <paramref name="commandExecutor"/> in a given context.
+    /// Binds a <paramref name="command"/> to a <paramref name="commandExecutor"/> in a given context.
     /// </summary>
     /// <typeparam name="T">The type of the command parameter.</typeparam>
     /// <param name="context">The context in which the binding is being made.</param>
@@ -75,7 +75,7 @@ public static class CommandBinder
 
     #region Unbinding methods
     /// <summary>
-    /// Unbinds a <see cref="ICommand"/> from <paramref name="commandExecutor"/> in a given context, if there is a binding.
+    /// Unbinds a <paramref name="command"/> from a <paramref name="commandExecutor"/> in a given context, if there is a binding.
     /// </summary>
     /// <param name="context">The context in which the binding was made.</param>
     /// <param name="commandExecutor">The command executor the command was bound to. </param>
@@ -96,7 +96,7 @@ public static class CommandBinder
     }
 
     /// <summary>
-    /// Unbinds a <see cref="ICommand"/> from <paramref name="commandExecutor"/> in a given context, if there is a binding.
+    /// Unbinds a <see cref="ICommand"/> from a <paramref name="commandExecutor"/> in a given context, if there is a binding.
     /// </summary>
     /// <param name="context">The context in which the binding was made.</param>
     /// <param name="commandExecutor">The command executor the command was bound to. </param>

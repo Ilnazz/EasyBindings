@@ -16,7 +16,7 @@ public static class PropertyBinder
     #region Public methods 
     #region Binding
     /// <summary>
-    /// Binds <paramref name="target"/> object's property to changes of <paramref name="source"/> object's property in a given context.
+    /// Binds a <paramref name="target"/> object's property to changes of a <paramref name="source"/> object's property in a given context.
     /// </summary>
     /// <typeparam name="TTarget">The type of the <paramref name="target"/> object.</typeparam>
     /// <typeparam name="TSource">The type of the <paramref name="source"/> object.</typeparam>
@@ -68,7 +68,7 @@ public static class PropertyBinder
     }
 
     /// <summary>
-    /// Binds <paramref name="target"/> object's property to changes of <paramref name="source"/> object's property in a given context.
+    /// Binds a <paramref name="target"/> object's property to changes of a <paramref name="source"/> object's property in a given context.
     /// </summary>
     /// <typeparam name="TTarget">The type of the <paramref name="target"/> object.</typeparam>
     /// <typeparam name="TSource">The type of the <paramref name="source"/> object.</typeparam>
@@ -124,7 +124,7 @@ public static class PropertyBinder
     }
 
     /// <summary>
-    /// Binds <paramref name="source"/> object's property to changes of <paramref name="target"/> object's property in a given context.
+    /// Binds a <paramref name="source"/> object's property to changes of a <paramref name="target"/> object's property in a given context.
     /// </summary>
     /// <typeparam name="TTarget">The type of the <paramref name="target"/> object.</typeparam>
     /// <typeparam name="TSource">The type of the <paramref name="source"/> object.</typeparam>
@@ -146,7 +146,7 @@ public static class PropertyBinder
     }
 
     /// <summary>
-    /// Binds <paramref name="source"/> object's property to changes of <paramref name="target"/> object's property in a given context.
+    /// Binds a <paramref name="source"/> object's property to changes of a <paramref name="target"/> object's property in a given context.
     /// </summary>
     /// <typeparam name="TTarget">The type of the <paramref name="target"/> object.</typeparam>
     /// <typeparam name="TSource">The type of the <paramref name="source"/> object.</typeparam>
@@ -171,7 +171,7 @@ public static class PropertyBinder
     }
 
     /// <summary>
-    /// Binds <paramref name="target"/> object's property to changes of <paramref name="source"/> object's property and vice versa in a given context.
+    /// Binds a <paramref name="target"/> object's property to changes of a <paramref name="source"/> object's property and vice versa in a given context.
     /// </summary>
     /// <typeparam name="TTarget">The type of the <paramref name="target"/> object.</typeparam>
     /// <typeparam name="TSource">The type of the <paramref name="source"/> object.</typeparam>
@@ -194,7 +194,7 @@ public static class PropertyBinder
     }
 
     /// <summary>
-    /// Binds <paramref name="target"/> object's property to changes of <paramref name="source"/> object's property and vice versa in a given context.
+    /// Binds a <paramref name="target"/> object's property to changes of a <paramref name="source"/> object's property and vice versa in a given context.
     /// </summary>
     /// <typeparam name="TTarget">The type of the <paramref name="target"/> object.</typeparam>
     /// <typeparam name="TSource">The type of the <paramref name="source"/> object.</typeparam>
@@ -224,7 +224,7 @@ public static class PropertyBinder
 
     #region Unbinding
     /// <summary>
-    /// Removes bindings from <paramref name="target"/> object's property.
+    /// Unbinds all bindigns from <paramref name="target"/> object's property.
     /// </summary>
     /// <typeparam name="T">The type of the <paramref name="target"/> object.</typeparam>
     /// <typeparam name="TProperty">The of the <paramref name="target"/> object's property.</typeparam>
@@ -246,7 +246,7 @@ public static class PropertyBinder
     }
 
     /// <summary>
-    /// Removes bindings from <paramref name="target"/> object.
+    /// Unbinds all property bindigns from all <paramref name="target"/> object's properties.
     /// </summary>
     /// <param name="context">The context in which the binding was made.</param>
     /// <param name="target">The object whose properties were bound.</param>
@@ -262,7 +262,7 @@ public static class PropertyBinder
     }
 
     /// <summary>
-    /// Removes bindings from <paramref name="source"/> object's property.
+    /// Unbinds all bindigns from <paramref name="source"/> object's property.
     /// </summary>
     /// <typeparam name="T">The type of the <paramref name="source"/> object.</typeparam>
     /// <typeparam name="TProperty">The of the <paramref name="source"/> object's property.</typeparam>
@@ -284,7 +284,7 @@ public static class PropertyBinder
     }
 
     /// <summary>
-    /// Removes bindings from <paramref name="source"/> object.
+    /// Unbinds all property bindigns from all <paramref name="source"/> object's properties.
     /// </summary>
     /// <param name="context">The context in which the binding was made.</param>
     /// <param name="source">The object whose properties were bound.</param>
