@@ -2,11 +2,11 @@
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyBindings", "Source\EasyBindings\EasyBindings.csproj", "{2C21D93B-CD73-429E-8494-17EC0ED08969}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyBindings", "src\EasyBindings\EasyBindings.csproj", "{2C21D93B-CD73-429E-8494-17EC0ED08969}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyBindings.Tests", "Source\EasyBindings.Tests\EasyBindings.Tests.csproj", "{9282BC4F-56BC-46C7-83B2-75CEAF7E5273}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyBindings.Tests", "src\EasyBindings.Tests\EasyBindings.Tests.csproj", "{9282BC4F-56BC-46C7-83B2-75CEAF7E5273}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyBindings.Examples", "Source\EasyBindings.Examples\EasyBindings.Examples.csproj", "{B1A2C719-6902-474C-9A29-5D83AC2DCDF1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyBindings.Examples", "src\EasyBindings.Examples\EasyBindings.Examples.csproj", "{B1A2C719-6902-474C-9A29-5D83AC2DCDF1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
