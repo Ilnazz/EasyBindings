@@ -157,7 +157,8 @@ public static class CommandBinder
 
     private static void UnbindCommandBindings(IEnumerable<CommandBinding> bindings)
     {
-        foreach (var binding in bindings)
+        var bindingsCopy = bindings.ToArray();
+        foreach (var binding in bindingsCopy)
             UnbindCommandBinding(binding);
     }
 

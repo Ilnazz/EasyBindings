@@ -356,7 +356,8 @@ public static class PropertyBinder
 
     private static void UnbindPropertyBindings(IEnumerable<PropertyBinding> bindings)
     {
-        foreach (var binding in bindings)
+        var bindingsCopy = bindings.ToArray();
+        foreach (var binding in bindingsCopy)
             UnbindPropertyBinding(binding);
     }
 

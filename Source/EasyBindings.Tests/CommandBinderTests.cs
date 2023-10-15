@@ -64,4 +64,25 @@ public class CommandBinderTests
         // Assert result was not changed => command was not executed
         Assert.AreEqual(divisionResult, 2);
     }
+
+    [TestMethod]
+    public void TestThrowsExceptionWhenBindingSameCommand()
+    {
+        var command = new RelayCommand(() => { });
+        var button = new Button();
+        var bindCommandToButtonAction = () => CommandBinder.Bind(this, button, command);
+        bindCommandToButtonAction();
+        Assert.ThrowsException<Exception>(bindCommandToButtonAction);
+    }
+
+    [TestMethod]
+    public void TestDoNotThrowsExceptionWhenBindingSameCommandAfterUnbinding()
+    {
+        var command = new RelayCommand(() => { });
+        var button = new Button();
+        var bindCommandToButtonAction = () => CommandBinder.Bind(this, button, command);
+        bindCommandToButtonAction();
+        CommandBinder.Unbind(this, button, command);
+        bindCommandToButtonAction();
+    }
 }

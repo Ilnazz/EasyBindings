@@ -156,14 +156,17 @@ public class PropertyBinderTests
     public void TestUnbindFromTargetMultiple()
     {
         var textLabel = new TextLabel();
-        var textInput = new TextInput();
+        TextInput textInput = new(),
+                  textInput2 = new();
 
         PropertyBinder.BindOneWay(this, textLabel, t => t.Text, textInput, s => s.Text);
-        PropertyBinder.BindOneWay(this, textLabel, t => t.Text, textInput, s => s.Text);
+        PropertyBinder.BindOneWay(this, textLabel, t => t.Text, textInput2, s => s.Text);
         PropertyBinder.UnbindFromTarget(this, textLabel);
 
         textInput.Text = "text";
         Assert.AreNotEqual(textLabel.Text, textInput.Text);
+        textInput2.Text = "text";
+        Assert.AreNotEqual(textLabel.Text, textInput2.Text);
     }
 
     [TestMethod]
@@ -183,14 +186,17 @@ public class PropertyBinderTests
     public void TestUnbindFromSourceMultiple()
     {
         var textLabel = new TextLabel();
-        var textInput = new TextInput();
+        TextInput textInput = new(),
+                  textInput2 = new();
 
         PropertyBinder.BindOneWay(this, textLabel, t => t.Text, textInput, s => s.Text);
-        PropertyBinder.BindOneWay(this, textLabel, t => t.Text, textInput, s => s.Text);
-        PropertyBinder.UnbindFromSource(this, textInput);
+        PropertyBinder.BindOneWay(this, textLabel, t => t.Text, textInput2, s => s.Text);
+        PropertyBinder.UnbindFromSource(this, textLabel);
 
         textInput.Text = "text";
         Assert.AreNotEqual(textLabel.Text, textInput.Text);
+        textInput2.Text = "text";
+        Assert.AreNotEqual(textLabel.Text, textInput2.Text);
     }
 
     [TestMethod]
