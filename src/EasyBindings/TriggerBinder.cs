@@ -2257,7 +2257,7 @@ public static class TriggerBinder
             b.Trigger == trigger);
 
         if (isBindingExist)
-            throw new Exception("This trigger is already bound to the property of the observable object in this context.");
+            throw new BindingException("This trigger is already bound to the property of the observable object in this context.");
     }
 
     private static void CheckPropertyChangingBindingArgs<T, TProperty>
@@ -2280,7 +2280,7 @@ public static class TriggerBinder
             b.Trigger == trigger);
 
         if (isBindingExist)
-            throw new Exception("This trigger is already bound to the property of the observable object in this context.");
+            throw new BindingException("This trigger is already bound to the property of the observable object in this context.");
     }
 
     private static void CheckCollectionChangedBindingArgs
@@ -2299,7 +2299,7 @@ public static class TriggerBinder
             b.Trigger == trigger);
 
         if (isBindingExist)
-            throw new Exception("This trigger is already bound to the observable collection in this context.");
+            throw new BindingException("This trigger is already bound to the observable collection in this context.");
     }
 
     private static void CheckCollectionChangedAndItemPropertyChangedBindingArgs<T, TProperty>
@@ -2323,7 +2323,7 @@ public static class TriggerBinder
             b.ItemPropertyChangedTrigger == itemPropertyChangedTrigger);
 
         if (isBindingExist)
-            throw new Exception("This trigger is already bound to the property of an item of the observable collection in this context.");
+            throw new BindingException("This trigger is already bound to the property of an item of the observable collection in this context.");
     }
 
     private static void CheckCollectionChangedAndItemPropertyChangingBindingArgs<T, TProperty>
@@ -2347,7 +2347,7 @@ public static class TriggerBinder
             b.ItemPropertyChangingTrigger == itemPropertyChangingTrigger);
 
         if (isBindingExist)
-            throw new Exception("This trigger is already bound to the property of an item of the observable collection in this context.");
+            throw new BindingException("This trigger is already bound to the property of an item of the observable collection in this context.");
     }
 
     private static void CheckCollectionItemPropertyChangedBindingArgs<T, TProperty>
@@ -2370,7 +2370,7 @@ public static class TriggerBinder
             b.ItemPropertyChangedTrigger == itemPropertyChangedTrigger);
 
         if (isBindingExist)
-            throw new Exception("This trigger is already bound to the property of an item of the observable collection in this context.");
+            throw new BindingException("This trigger is already bound to the property of an item of the observable collection in this context.");
     }
 
     private static void CheckCollectionItemPropertyChangingBindingArgs<T, TProperty>
@@ -2393,7 +2393,7 @@ public static class TriggerBinder
             b.ItemPropertyChangingTrigger == itemPropertyChangedTrigger);
 
         if (isBindingExist)
-            throw new Exception("This trigger is already bound to the property of an item of the observable collection in this context.");
+            throw new BindingException("This trigger is already bound to the property of an item of the observable collection in this context.");
     }
     #endregion
 
@@ -2451,7 +2451,7 @@ public static class TriggerBinder
     private static void OnCollectionChangedAndItemPropertyChangedInternal
     (
         object context,
-        dynamic observableCollection,
+        INotifyCollectionChanged observableCollection,
         object collectionChangedTrigger,
         string itemPropertyName,
         object itemPropertyChangedTrigger,

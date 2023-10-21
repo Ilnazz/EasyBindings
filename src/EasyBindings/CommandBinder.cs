@@ -135,7 +135,7 @@ public static class CommandBinder
             b.Command == command);
 
         if (isBindingExist)
-            throw new Exception("This command is already bound to the command executor in this context.");
+            throw new BindingException("This command is already bound to the command executor in this context.");
     }
 
     private static void BindInternal

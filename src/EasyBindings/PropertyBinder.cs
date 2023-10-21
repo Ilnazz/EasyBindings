@@ -59,7 +59,7 @@ public static class PropertyBinder
         _propertyBindings.Add(new PropertyBinding
         (
             context,
-            target, targetPropertyName, null,
+            target!, targetPropertyName, null,
             source, sourcePropertyName, sourcePropertyChangedEventHandler
         ));
 
@@ -115,7 +115,7 @@ public static class PropertyBinder
         _propertyBindings.Add(new PropertyBinding
         (
             context,
-            target, targetPropertyName, null,
+            target!, targetPropertyName, null,
             source, sourcePropertyName, sourcePropertyChangedEventHandler
         ));
 
@@ -239,10 +239,10 @@ public static class PropertyBinder
 
         var targetPropertyName = GetPropertyName(targetPropertyGetterExpr);
         UnbindPropertyBindings(
-            _propertyBindings.Where(pb =>
-                pb.Context == context &&
-                pb.Target == target &&
-                pb.TargetPropertyName == targetPropertyName));
+            _propertyBindings.Where(b =>
+                b.Context == context &&
+                b.Target == (object)target &&
+                b.TargetPropertyName == targetPropertyName));
     }
 
     /// <summary>
@@ -256,9 +256,7 @@ public static class PropertyBinder
         ArgumentNullException.ThrowIfNull(target, nameof(target));
 
         UnbindPropertyBindings(
-            _propertyBindings.Where(pb =>
-                pb.Context == context &&
-                pb.Target == target));
+            _propertyBindings.Where(b => b.Context == context && b.Target == target));
     }
 
     /// <summary>
@@ -277,10 +275,10 @@ public static class PropertyBinder
 
         var sourcePropertyName = GetPropertyName(sourcePropertyGetterExpr);
         UnbindPropertyBindings(
-            _propertyBindings.Where(pb =>
-                pb.Context == context &&
-                pb.Source == source &&
-                pb.SourcePropertyName == sourcePropertyName));
+            _propertyBindings.Where(b =>
+                b.Context == context &&
+                b.Source == (object)source &&
+                b.SourcePropertyName == sourcePropertyName));
     }
 
     /// <summary>
@@ -294,9 +292,7 @@ public static class PropertyBinder
         ArgumentNullException.ThrowIfNull(source, nameof(source));
 
         UnbindPropertyBindings(
-            _propertyBindings.Where(pb =>
-                pb.Context == context &&
-                pb.Source == source));
+            _propertyBindings.Where(b => b.Context == context && b.Source == source));
     }
 
     /// <summary>
@@ -305,8 +301,7 @@ public static class PropertyBinder
     /// <param name="context">The context in which the binding was made.</param>
     public static void Unbind(object context)
     {
-        UnbindPropertyBindings(
-            _propertyBindings.Where(pb => pb.Context == context));
+        UnbindPropertyBindings(_propertyBindings.Where(b => b.Context == context));
     }
     #endregion
     #endregion
@@ -342,15 +337,15 @@ public static class PropertyBinder
         string targetPropertyName = GetPropertyName(targetPropertyGetterExpr),
                sourcePropertyName = GetPropertyName(sourcePropertyGetterExpr);
 
-        var isBindingExist = _propertyBindings.Any(b =>
+        var isBindingExist =  _propertyBindings.Any(b =>
             b.Context == context &&
-            b.Target == target &&
+            b.Target == (object)target &&
             b.TargetPropertyName == targetPropertyName &&
-            b.Source == source &&
+            b.Source == (object)source &&
             b.SourcePropertyName == sourcePropertyName);
 
         if (isBindingExist)
-            throw new Exception($"The property \"{targetPropertyName}\" of the target object \"{target}\" " +
+            throw new BindingException($"The property \"{targetPropertyName}\" of the target object \"{target}\" " +
                 $"is already bound to the property \"{sourcePropertyName}\" of the source object \"{source}\".");
     }
 
@@ -376,13 +371,13 @@ public static class PropertyBinder
     {
         public object Context { get; init; }
 
-        public dynamic? Target { get; init; }
+        public object Target { get; init; }
 
         public string TargetPropertyName { get; init; }
 
         public PropertyChangedEventHandler? TargetPropertyChangedEventHandler { get; init; }
 
-        public dynamic? Source { get; init; }
+        public object Source { get; init; }
 
         public string SourcePropertyName { get; init; }
 
@@ -391,9 +386,9 @@ public static class PropertyBinder
         public PropertyBinding
         (
             object context,
-            dynamic? target, string targetPropertyName,
+            object target, string targetPropertyName,
             PropertyChangedEventHandler? targetPropertyChangedEventHandler,
-            dynamic? source, string sourcePropertyName,
+            object source, string sourcePropertyName,
             PropertyChangedEventHandler sourcePropertyChangedEventHandler)
         {
             Context = context;

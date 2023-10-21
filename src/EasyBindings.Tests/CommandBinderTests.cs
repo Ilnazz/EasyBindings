@@ -70,9 +70,9 @@ public class CommandBinderTests
     {
         var command = new RelayCommand(() => { });
         var button = new Button();
-        var bindCommandToButtonAction = () => CommandBinder.Bind(this, button, command);
+        void bindCommandToButtonAction() => CommandBinder.Bind(this, button, command);
         bindCommandToButtonAction();
-        Assert.ThrowsException<Exception>(bindCommandToButtonAction);
+        Assert.ThrowsException<BindingException>(bindCommandToButtonAction);
     }
 
     [TestMethod]
@@ -80,7 +80,7 @@ public class CommandBinderTests
     {
         var command = new RelayCommand(() => { });
         var button = new Button();
-        var bindCommandToButtonAction = () => CommandBinder.Bind(this, button, command);
+        void bindCommandToButtonAction() => CommandBinder.Bind(this, button, command);
         bindCommandToButtonAction();
         CommandBinder.Unbind(this, button, command);
         bindCommandToButtonAction();

@@ -185,18 +185,18 @@ public class PropertyBinderTests
     [TestMethod]
     public void TestUnbindFromSourceMultiple()
     {
-        var textLabel = new TextLabel();
-        TextInput textInput = new(),
-                  textInput2 = new();
+        TextLabel textLabel = new(),
+                  textLabel2 = new();
+        var textInput = new TextInput();
 
         PropertyBinder.BindOneWay(this, textLabel, t => t.Text, textInput, s => s.Text);
-        PropertyBinder.BindOneWay(this, textLabel, t => t.Text, textInput2, s => s.Text);
-        PropertyBinder.UnbindFromSource(this, textLabel);
+        PropertyBinder.BindOneWay(this, textLabel2, t => t.Text, textInput, s => s.Text);
+        PropertyBinder.UnbindFromSource(this, textInput);
 
         textInput.Text = "text";
         Assert.AreNotEqual(textLabel.Text, textInput.Text);
-        textInput2.Text = "text";
-        Assert.AreNotEqual(textLabel.Text, textInput2.Text);
+        textInput.Text = "new text";
+        Assert.AreNotEqual(textLabel2.Text, textInput.Text);
     }
 
     [TestMethod]
@@ -215,14 +215,29 @@ public class PropertyBinderTests
     [TestMethod]
     public void TestUnbindMultiple()
     {
-        var textLabel = new TextLabel();
+        TextLabel textLabel = new(),
+                  textLabel2 = new();
         var textInput = new TextInput();
 
         PropertyBinder.BindOneWay(this, textLabel, t => t.Text, textInput, s => s.Text);
-        PropertyBinder.BindOneWay(this, textLabel, t => t.Text, textInput, s => s.Text);
+        PropertyBinder.BindOneWay(this, textLabel2, t => t.Text, textInput, s => s.Text);
         PropertyBinder.Unbind(this);
 
         textInput.Text = "text";
         Assert.AreNotEqual(textLabel.Text, textInput.Text);
+        Assert.AreNotEqual(textLabel2.Text, textInput.Text);
+    }
+
+    [TestMethod]
+    public void TestThrowsExceptionWhenDoingSameBinding()
+    {
+        var textLabel = new TextLabel();
+        var textInput = new TextInput();
+
+        void doBinding() =>
+            PropertyBinder.BindOneWay(this, textLabel, t => t.Text, textInput, s => s.Text);
+
+        doBinding();
+        Assert.ThrowsException<BindingException>(doBinding);
     }
 }
