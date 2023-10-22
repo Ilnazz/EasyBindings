@@ -2542,7 +2542,8 @@ public static class TriggerBinder
 
     private static void UnbindPropertyChangedBindings(IEnumerable<PropertyChangedTriggerBinding> bindings)
     {
-        foreach (var binding in bindings)
+        var bindingsCopy = bindings.ToArray();
+        foreach (var binding in bindingsCopy)
             UnbindPropertyChangedBinding(binding);
     }
 
@@ -2565,7 +2566,8 @@ public static class TriggerBinder
 
     private static void UnbindPropertyChangingBindings(IEnumerable<PropertyChangingTriggerBinding> bindings)
     {
-        foreach (var binding in bindings)
+        var bindingsCopy = bindings.ToArray();
+        foreach (var binding in bindingsCopy)
             UnbindPropertyChangingBinding(binding);
     }
 
@@ -2577,7 +2579,8 @@ public static class TriggerBinder
 
     private static void UnbindCollectionChangedBindings(IEnumerable<CollectionChangedTriggerBinding> bindings)
     {
-        foreach (var binding in bindings)
+        var bindingsCopy = bindings.ToArray();
+        foreach (var binding in bindingsCopy)
             UnbindCollectionChangedBinding(binding);
     }
 
@@ -2600,7 +2603,8 @@ public static class TriggerBinder
     (
         IEnumerable<CollectionChangedAndItemPropertyChangedTriggerBinding> bindings)
     {
-        foreach (var binding in bindings)
+        var bindingsCopy = bindings.ToArray();
+        foreach (var binding in bindingsCopy)
             UnbindCollectionChangedAndItemPropertyChangedBinding(binding);
     }
 
@@ -2623,7 +2627,8 @@ public static class TriggerBinder
     (
         IEnumerable<CollectionChangedAndItemPropertyChangingTriggerBinding> bindings)
     {
-        foreach (var binding in bindings)
+        var bindingsCopy = bindings.ToArray();
+        foreach (var binding in bindingsCopy)
             UnbindCollectionChangedAndItemPropertyChangingBinding(binding);
     }
 
@@ -2646,7 +2651,8 @@ public static class TriggerBinder
     (
         IEnumerable<CollectionItemPropertyChangedTriggerBinding> bindings)
     {
-        foreach (var binding in bindings)
+        var bindingsCopy = bindings.ToArray();
+        foreach (var binding in bindingsCopy)
             UnbindCollectionItemPropertyChangedBinding(binding);
     }
 
@@ -2669,7 +2675,8 @@ public static class TriggerBinder
     (
         IEnumerable<CollectionItemPropertyChangingTriggerBinding> bindings)
     {
-        foreach (var binding in bindings)
+        var bindingsCopy = bindings.ToArray();
+        foreach (var binding in bindingsCopy)
             UnbindCollectionItemPropertyChangingBinding(binding);
     }
     #endregion
