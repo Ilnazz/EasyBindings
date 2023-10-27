@@ -1573,7 +1573,7 @@ public static class TriggerBinder
         object context,
         T observable,
         Expression<Func<T, TProperty>> observablePropertyGetterExpr,
-        object trigger
+        Delegate trigger
     )
     where T : INotifyPropertyChanged
     {
@@ -1663,7 +1663,7 @@ public static class TriggerBinder
         object context,
         T observable,
         Expression<Func<T, TProperty>> observablePropertyGetterExpr,
-        object trigger
+        Delegate trigger
     )
     where T : INotifyPropertyChanging
     {
@@ -1749,7 +1749,7 @@ public static class TriggerBinder
     (
         object context,
         INotifyCollectionChanged observableCollection,
-        object trigger)
+        Delegate trigger)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
         ArgumentNullException.ThrowIfNull(observableCollection, nameof(observableCollection));
@@ -1805,9 +1805,9 @@ public static class TriggerBinder
     (
         object context,
         INotifyCollectionChanged observableCollection,
-        object collectionChangedTrigger,
+        Delegate collectionChangedTrigger,
         Expression<Func<T, TProperty>> itemPropertyGetterExpr,
-        object itemPropertyChangedTrigger)
+        Delegate itemPropertyChangedTrigger)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
         ArgumentNullException.ThrowIfNull(observableCollection, nameof(observableCollection));
@@ -1839,7 +1839,7 @@ public static class TriggerBinder
     (
         object context,
         INotifyCollectionChanged observableCollection,
-        object collectionChangedTrigger,
+        Delegate collectionChangedTrigger,
         Expression<Func<T, TProperty>> itemPropertyGetterExpr)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
@@ -1867,7 +1867,7 @@ public static class TriggerBinder
     (
         object context,
         INotifyCollectionChanged observableCollection,
-        object collectionChangedTrigger)
+        Delegate collectionChangedTrigger)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
         ArgumentNullException.ThrowIfNull(observableCollection, nameof(observableCollection));
@@ -1929,9 +1929,9 @@ public static class TriggerBinder
     (
         object context,
         INotifyCollectionChanged observableCollection,
-        object collectionChangedTrigger,
+        Delegate collectionChangedTrigger,
         Expression<Func<T, TProperty>> itemPropertyGetterExpr,
-        object itemPropertyChangingTrigger)
+        Delegate itemPropertyChangingTrigger)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
         ArgumentNullException.ThrowIfNull(observableCollection, nameof(observableCollection));
@@ -1963,7 +1963,7 @@ public static class TriggerBinder
     (
         object context,
         INotifyCollectionChanged observableCollection,
-        object collectionChangedTrigger,
+        Delegate collectionChangedTrigger,
         Expression<Func<T, TProperty>> itemPropertyGetterExpr)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
@@ -1991,7 +1991,7 @@ public static class TriggerBinder
     (
         object context,
         INotifyCollectionChanged observableCollection,
-        object collectionChangedTrigger)
+        Delegate collectionChangedTrigger)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
         ArgumentNullException.ThrowIfNull(observableCollection, nameof(observableCollection));
@@ -2052,7 +2052,7 @@ public static class TriggerBinder
         object context,
         INotifyCollectionChanged observableCollection,
         Expression<Func<T, TProperty>> itemPropertyGetterExpr,
-        object itemPropertyChangedTrigger)
+        Delegate itemPropertyChangedTrigger)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
         ArgumentNullException.ThrowIfNull(observableCollection, nameof(observableCollection));
@@ -2140,7 +2140,7 @@ public static class TriggerBinder
         object context,
         INotifyCollectionChanged observableCollection,
         Expression<Func<T, TProperty>> itemPropertyGetterExpr,
-        object itemPropertyChangingTrigger)
+        Delegate itemPropertyChangingTrigger)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
         ArgumentNullException.ThrowIfNull(observableCollection, nameof(observableCollection));
@@ -2242,7 +2242,7 @@ public static class TriggerBinder
         object context,
         object observable,
         Expression<Func<T, TProperty>> propertyGetterExpr,
-        object trigger)
+        Delegate trigger)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
         ArgumentNullException.ThrowIfNull(observable, nameof(observable));
@@ -2265,7 +2265,7 @@ public static class TriggerBinder
         object context,
         object observable,
         Expression<Func<T, TProperty>> propertyGetterExpr,
-        object trigger)
+        Delegate trigger)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
         ArgumentNullException.ThrowIfNull(observable, nameof(observable));
@@ -2287,7 +2287,7 @@ public static class TriggerBinder
     (
         object context,
         object observableCollection,
-        object trigger)
+        Delegate trigger)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
         ArgumentNullException.ThrowIfNull(observableCollection, nameof(observableCollection));
@@ -2306,9 +2306,9 @@ public static class TriggerBinder
     (
         object context,
         object observableCollection,
-        object collectionChangedTrigger,
+        Delegate collectionChangedTrigger,
         Expression<Func<T, TProperty>> itemPropertyGetterExpr,
-        object itemPropertyChangedTrigger)
+        Delegate itemPropertyChangedTrigger)
     {
         CheckCollectionChangedBindingArgs(context, observableCollection, collectionChangedTrigger);
         
@@ -2330,9 +2330,9 @@ public static class TriggerBinder
     (
         object context,
         object observableCollection,
-        object collectionChangedTrigger,
+        Delegate collectionChangedTrigger,
         Expression<Func<T, TProperty>> itemPropertyGetterExpr,
-        object itemPropertyChangingTrigger)
+        Delegate itemPropertyChangingTrigger)
     {
         CheckCollectionChangedBindingArgs(context, observableCollection, collectionChangedTrigger);
 
@@ -2355,7 +2355,7 @@ public static class TriggerBinder
         object context,
         object observableCollection,
         Expression<Func<T, TProperty>> itemPropertyGetterExpr,
-        object itemPropertyChangedTrigger)
+        Delegate itemPropertyChangedTrigger)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
         ArgumentNullException.ThrowIfNull(observableCollection, nameof(observableCollection));
@@ -2378,7 +2378,7 @@ public static class TriggerBinder
         object context,
         object observableCollection,
         Expression<Func<T, TProperty>> itemPropertyGetterExpr,
-        object itemPropertyChangedTrigger)
+        Delegate itemPropertyChangedTrigger)
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
         ArgumentNullException.ThrowIfNull(observableCollection, nameof(observableCollection));
@@ -2403,7 +2403,7 @@ public static class TriggerBinder
         object context,
         INotifyPropertyChanged observable,
         string propertyName,
-        object trigger,
+        Delegate trigger,
         PropertyChangedEventHandler eventHandler)
     {
         observable.PropertyChanged += eventHandler;
@@ -2420,7 +2420,7 @@ public static class TriggerBinder
         object context,
         INotifyPropertyChanging observable,
         string propertyName,
-        object trigger,
+        Delegate trigger,
         PropertyChangingEventHandler eventHandler)
     {
         observable.PropertyChanging += eventHandler;
@@ -2436,7 +2436,7 @@ public static class TriggerBinder
     (
         object context,
         INotifyCollectionChanged observableCollection,
-        object trigger,
+        Delegate trigger,
         NotifyCollectionChangedEventHandler eventHandler)
     {
         observableCollection.CollectionChanged += eventHandler;
@@ -2452,9 +2452,9 @@ public static class TriggerBinder
     (
         object context,
         INotifyCollectionChanged observableCollection,
-        object collectionChangedTrigger,
+        Delegate collectionChangedTrigger,
         string itemPropertyName,
-        object itemPropertyChangedTrigger,
+        Delegate itemPropertyChangedTrigger,
         NotifyCollectionChangedEventHandler eventHandler)
     {
         observableCollection.CollectionChanged += eventHandler;
@@ -2471,9 +2471,9 @@ public static class TriggerBinder
     (
         object context,
         INotifyCollectionChanged observableCollection,
-        object collectionChangedTrigger,
+        Delegate collectionChangedTrigger,
         string itemPropertyName,
-        object itemPropertyChangingTrigger,
+        Delegate itemPropertyChangingTrigger,
         NotifyCollectionChangedEventHandler eventHandler)
     {
         observableCollection.CollectionChanged += eventHandler;
@@ -2491,7 +2491,7 @@ public static class TriggerBinder
         object context,
         INotifyCollectionChanged observableCollection,
         string itemPropertyName,
-        object itemPropertyChangedTrigger,
+        Delegate itemPropertyChangedTrigger,
         NotifyCollectionChangedEventHandler eventHandler)
     {
         observableCollection.CollectionChanged += eventHandler;
@@ -2508,7 +2508,7 @@ public static class TriggerBinder
         object context,
         INotifyCollectionChanged observableCollection,
         string itemPropertyName,
-        object itemPropertyChangingTrigger,
+        Delegate itemPropertyChangingTrigger,
         NotifyCollectionChangedEventHandler eventHandler)
     {
         observableCollection.CollectionChanged += eventHandler;
@@ -2691,7 +2691,7 @@ public static class TriggerBinder
 
         public string PropertyName { get; init; }
 
-        public object Trigger { get; init; }
+        public Delegate Trigger { get; init; }
 
         public PropertyChangedEventHandler EventHandler { get; init; }
 
@@ -2700,7 +2700,7 @@ public static class TriggerBinder
             object context,
             INotifyPropertyChanged observable,
             string propertyName,
-            object trigger,
+            Delegate trigger,
             PropertyChangedEventHandler eventHandler)
         {
             Context = context;
@@ -2719,7 +2719,7 @@ public static class TriggerBinder
 
         public string PropertyName { get; init; }
 
-        public object Trigger { get; init; }
+        public Delegate Trigger { get; init; }
 
         public PropertyChangingEventHandler EventHandler { get; init; }
 
@@ -2728,7 +2728,7 @@ public static class TriggerBinder
             object context,
             INotifyPropertyChanging observable,
             string propertyName,
-            object trigger,
+            Delegate trigger,
             PropertyChangingEventHandler eventHandler)
         {
             Context = context;
@@ -2747,13 +2747,13 @@ public static class TriggerBinder
 
         public NotifyCollectionChangedEventHandler EventHandler { get; init; }
 
-        public object Trigger { get; init; }
+        public Delegate Trigger { get; init; }
 
         public CollectionChangedTriggerBinding
         (
             object context,
             INotifyCollectionChanged observableCollection,
-            object trigger,
+            Delegate trigger,
             NotifyCollectionChangedEventHandler eventHandler)
         {
             Context = context;
@@ -2769,11 +2769,11 @@ public static class TriggerBinder
 
         public INotifyCollectionChanged ObservableCollection { get; init; }
 
-        public object CollectionChangedTrigger { get; init; }
+        public Delegate CollectionChangedTrigger { get; init; }
 
         public string ItemPropertyName { get; init; }
 
-        public object ItemPropertyChangedTrigger { get; init; }
+        public Delegate ItemPropertyChangedTrigger { get; init; }
 
         public NotifyCollectionChangedEventHandler EventHandler { get; init; }
 
@@ -2781,9 +2781,9 @@ public static class TriggerBinder
         (
             object context,
             INotifyCollectionChanged observableCollection,
-            object collectionChangedTrigger,
+            Delegate collectionChangedTrigger,
             string itemPropertyName,
-            object itemPropertyChangedTrigger,
+            Delegate itemPropertyChangedTrigger,
             NotifyCollectionChangedEventHandler eventHandler)
         {
             Context = context;
@@ -2801,11 +2801,11 @@ public static class TriggerBinder
 
         public INotifyCollectionChanged ObservableCollection { get; init; }
 
-        public object CollectionChangedTrigger { get; init; }
+        public Delegate CollectionChangedTrigger { get; init; }
 
         public string ItemPropertyName { get; init; }
 
-        public object ItemPropertyChangingTrigger { get; init; }
+        public Delegate ItemPropertyChangingTrigger { get; init; }
 
         public NotifyCollectionChangedEventHandler EventHandler { get; init; }
 
@@ -2813,9 +2813,9 @@ public static class TriggerBinder
         (
             object context,
             INotifyCollectionChanged observableCollection,
-            object collectionChangedTrigger,
+            Delegate collectionChangedTrigger,
             string itemPropertyName,
-            object itemPropertyChangingTrigger,
+            Delegate itemPropertyChangingTrigger,
             NotifyCollectionChangedEventHandler eventHandler)
         {
             Context = context;
@@ -2835,7 +2835,7 @@ public static class TriggerBinder
 
         public string ItemPropertyName { get; init; }
 
-        public object ItemPropertyChangedTrigger { get; init; }
+        public Delegate ItemPropertyChangedTrigger { get; init; }
 
         public NotifyCollectionChangedEventHandler EventHandler { get; init; }
 
@@ -2844,7 +2844,7 @@ public static class TriggerBinder
             object context,
             INotifyCollectionChanged observableCollection,
             string itemPropertyName,
-            object itemPropertyChangedTrigger,
+            Delegate itemPropertyChangedTrigger,
             NotifyCollectionChangedEventHandler eventHandler)
         {
             Context = context;
@@ -2863,7 +2863,7 @@ public static class TriggerBinder
 
         public string ItemPropertyName { get; init; }
 
-        public object ItemPropertyChangingTrigger { get; init; }
+        public Delegate ItemPropertyChangingTrigger { get; init; }
 
         public NotifyCollectionChangedEventHandler EventHandler { get; init; }
 
@@ -2872,7 +2872,7 @@ public static class TriggerBinder
             object context,
             INotifyCollectionChanged observableCollection,
             string itemPropertyName,
-            object itemPropertyChangedTrigger,
+            Delegate itemPropertyChangedTrigger,
             NotifyCollectionChangedEventHandler eventHandler)
         {
             Context = context;

@@ -1,4 +1,5 @@
-﻿Microsoft Visual Studio Solution File, Format Version 12.00
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
@@ -6,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyBindings", "src\EasyBin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyBindings.Tests", "src\EasyBindings.Tests\EasyBindings.Tests.csproj", "{9282BC4F-56BC-46C7-83B2-75CEAF7E5273}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyBindings.Examples", "src\EasyBindings.Examples\EasyBindings.Examples.csproj", "{B1A2C719-6902-474C-9A29-5D83AC2DCDF1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyBindings.Examples", "src\EasyBindings.Examples\EasyBindings.Examples.csproj", "{B1A2C719-6902-474C-9A29-5D83AC2DCDF1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,8 +15,8 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2C21D93B-CD73-429E-8494-17EC0ED08969}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2C21D93B-CD73-429E-8494-17EC0ED08969}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C21D93B-CD73-429E-8494-17EC0ED08969}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{2C21D93B-CD73-429E-8494-17EC0ED08969}.Debug|Any CPU.Build.0 = Release|Any CPU
 		{2C21D93B-CD73-429E-8494-17EC0ED08969}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C21D93B-CD73-429E-8494-17EC0ED08969}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9282BC4F-56BC-46C7-83B2-75CEAF7E5273}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
