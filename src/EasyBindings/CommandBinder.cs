@@ -12,7 +12,7 @@ namespace EasyBindings;
 /// </summary>
 public static class CommandBinder
 {
-    private static readonly IList<CommandBinding> _commandBindings = new List<CommandBinding>();
+    private static readonly IList<CommandBinding> _bindings = new List<CommandBinding>();
 
     #region Public methods
     #region Binding methods
@@ -86,7 +86,7 @@ public static class CommandBinder
         ArgumentNullException.ThrowIfNull(commandExecutor, nameof(commandExecutor));
         ArgumentNullException.ThrowIfNull(command, nameof(command));
 
-        var binding = _commandBindings.FirstOrDefault(b =>
+        var binding = _bindings.FirstOrDefault(b =>
             b.Context == context &&
             b.CommandExecutor == commandExecutor &&
             b.Command == command);
@@ -106,7 +106,7 @@ public static class CommandBinder
         ArgumentNullException.ThrowIfNull(commandExecutor, nameof(commandExecutor));
 
         UnbindCommandBindings(
-            _commandBindings.Where(b => b.Context == context && b.CommandExecutor == commandExecutor));
+            _bindings.Where(b => b.Context == context && b.CommandExecutor == commandExecutor));
     }
 
     /// <summary>
@@ -117,7 +117,7 @@ public static class CommandBinder
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
 
-        UnbindCommandBindings(_commandBindings.Where(b => b.Context == context));
+        UnbindCommandBindings(_bindings.Where(b => b.Context == context));
     }
     #endregion
     #endregion
@@ -129,7 +129,7 @@ public static class CommandBinder
         ArgumentNullException.ThrowIfNull(commandExecutor, nameof(commandExecutor));
         ArgumentNullException.ThrowIfNull(command, nameof(command));
 
-        var isBindingExist = _commandBindings.Any(b =>
+        var isBindingExist = _bindings.Any(b =>
             b.Context == context &&
             b.CommandExecutor == commandExecutor &&
             b.Command == command);
@@ -147,7 +147,7 @@ public static class CommandBinder
         commandExecutor.CommandExecutionRequested += commandExecutionRequestedEventHandler;
         command.CanExecuteChanged += commandCanExecuteChangedEventHandler;
 
-        _commandBindings.Add(new CommandBinding
+        _bindings.Add(new CommandBinding
         (
             context,
             commandExecutor, commandExecutionRequestedEventHandler,
@@ -166,7 +166,7 @@ public static class CommandBinder
     {
         commandBinding.CommandExecutor.CommandExecutionRequested -= commandBinding.CommandExecutionRequestedEventHandler;
         commandBinding.Command.CanExecuteChanged -= commandBinding.CommanCanExecuteChangedEventHandler;
-        _commandBindings.Remove(commandBinding);
+        _bindings.Remove(commandBinding);
     }
     #endregion
 

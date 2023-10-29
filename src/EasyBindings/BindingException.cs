@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace EasyBindings;
 
 /// <summary>
-/// The exception that is thrown when 
+/// The exception that is thrown when TODO: ...
 /// </summary>
 [Serializable]
 public class BindingException : Exception

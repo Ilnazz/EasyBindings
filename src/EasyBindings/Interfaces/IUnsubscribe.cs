@@ -1,7 +1,7 @@
 ﻿namespace EasyBindings.Interfaces;
 
 /// <summary>
-/// Provides a mechanism for unsubscribe object from all events.
+/// Provides a mechanism for unsubscribe object from all events it is subscribed to.
 /// </summary>
 public interface IUnsubscribe
 {

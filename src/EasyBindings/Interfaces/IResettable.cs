@@ -3,12 +3,12 @@
 namespace EasyBindings.Interfaces;
 
 /// <summary>
-/// Notifies clients that a state has changed.
+/// Notifies clients that a state has resetted.
 /// </summary>
-public interface IChangeable : INotifyPropertyChanged
+public interface IResettable : INotifyPropertyChanged
 {
     /// <summary>
     /// The property that will be passed to the <see cref='PropertyChangedEventArgs'/> constructor.
     /// </summary>
-    object? State { get; }
+    public object? Resetted { get; }
 }
