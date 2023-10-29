@@ -3,7 +3,7 @@ using EasyBindings.Interfaces;
 
 namespace EasyBindings.Examples;
 
-partial class Person : ObservableObject, IChangeable
+partial class Person : ObservableObject, INotifyStateChanged
 {
     public object? State { get; }
 
