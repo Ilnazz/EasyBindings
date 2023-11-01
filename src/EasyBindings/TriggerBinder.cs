@@ -333,16 +333,29 @@ public static class TriggerBinder
         {
             collectionChangedTrigger(observableCollection, e);
 
-            if (e.Action == NotifyCollectionChangedAction.Move)
-                return;
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Move:
+                    break;
 
-            if (e.NewItems is not null)
-                foreach (T item in e.NewItems)
-                    OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+                case NotifyCollectionChangedAction.Reset:
+                    UnbindPropertyChangedBindingsBoundWithinObservableCollection(context,
+                        observableCollection, itemPropertyGetterExpr, itemPropertyChangedTrigger);
 
-            if (e.OldItems is not null)
-                foreach (T item in e.OldItems)
-                    UnbindPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+                    foreach (T item in observableCollection)
+                        OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+                    break;
+
+                default:
+                    if (e.NewItems is not null)
+                        foreach (T item in e.NewItems)
+                            OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+
+                    if (e.OldItems is not null)
+                        foreach (T item in e.OldItems)
+                            UnbindPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+                    break;
+            }
         }
 
         OnCollectionChangedAndItemPropertyChangedInternal(context, observableCollection,
@@ -386,16 +399,29 @@ public static class TriggerBinder
         {
             collectionChangedTrigger(observableCollection, e);
 
-            if (e.Action == NotifyCollectionChangedAction.Move)
-                return;
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Move:
+                    break;
 
-            if (e.NewItems is not null)
-                foreach (T item in e.NewItems)
-                    OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+                case NotifyCollectionChangedAction.Reset:
+                    UnbindPropertyChangedBindingsBoundWithinObservableCollection(context,
+                        observableCollection, itemPropertyGetterExpr, itemPropertyChangedTrigger);
 
-            if (e.OldItems is not null)
-                foreach (T item in e.OldItems)
-                    UnbindPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+                    foreach (T item in observableCollection)
+                        OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+                    break;
+
+                default:
+                    if (e.NewItems is not null)
+                        foreach (T item in e.NewItems)
+                            OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+
+                    if (e.OldItems is not null)
+                        foreach (T item in e.OldItems)
+                            UnbindPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+                    break;
+            }
         }
 
         OnCollectionChangedAndItemPropertyChangedInternal(context, observableCollection,
@@ -439,16 +465,29 @@ public static class TriggerBinder
         {
             collectionChangedTrigger(observableCollection, e);
 
-            if (e.Action == NotifyCollectionChangedAction.Move)
-                return;
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Move:
+                    break;
 
-            if (e.NewItems is not null)
-                foreach (T item in e.NewItems)
-                    OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+                case NotifyCollectionChangedAction.Reset:
+                    UnbindPropertyChangedBindingsBoundWithinObservableCollection(context,
+                        observableCollection, itemPropertyGetterExpr, itemPropertyChangedTrigger);
 
-            if (e.OldItems is not null)
-                foreach (T item in e.OldItems)
-                    UnbindPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+                    foreach (T item in observableCollection)
+                        OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+                    break;
+
+                default:
+                    if (e.NewItems is not null)
+                        foreach (T item in e.NewItems)
+                            OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+
+                    if (e.OldItems is not null)
+                        foreach (T item in e.OldItems)
+                            UnbindPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+                    break;
+            }
         }
 
         OnCollectionChangedAndItemPropertyChangedInternal(context, observableCollection,
@@ -494,16 +533,29 @@ public static class TriggerBinder
         {
             collectionChangedTrigger(e);
 
-            if (e.Action == NotifyCollectionChangedAction.Move)
-                return;
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Move:
+                    break;
 
-            if (e.NewItems is not null)
-                foreach (T item in e.NewItems)
-                    OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+                case NotifyCollectionChangedAction.Reset:
+                    UnbindPropertyChangedBindingsBoundWithinObservableCollection(context,
+                        observableCollection, itemPropertyGetterExpr, itemPropertyChangedTrigger);
 
-            if (e.OldItems is not null)
-                foreach (T item in e.OldItems)
-                    UnbindPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+                    foreach (T item in observableCollection)
+                        OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+                    break;
+
+                default:
+                    if (e.NewItems is not null)
+                        foreach (T item in e.NewItems)
+                            OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+
+                    if (e.OldItems is not null)
+                        foreach (T item in e.OldItems)
+                            UnbindPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+                    break;
+            }
         }
 
         OnCollectionChangedAndItemPropertyChangedInternal(context, observableCollection,
@@ -547,16 +599,29 @@ public static class TriggerBinder
         {
             collectionChangedTrigger(e);
 
-            if (e.Action == NotifyCollectionChangedAction.Move)
-                return;
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Move:
+                    break;
 
-            if (e.NewItems is not null)
-                foreach (T item in e.NewItems)
-                    OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+                case NotifyCollectionChangedAction.Reset:
+                    UnbindPropertyChangedBindingsBoundWithinObservableCollection(context,
+                        observableCollection, itemPropertyGetterExpr, itemPropertyChangedTrigger);
 
-            if (e.OldItems is not null)
-                foreach (T item in e.OldItems)
-                    UnbindPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+                    foreach (T item in observableCollection)
+                        OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+                    break;
+
+                default:
+                    if (e.NewItems is not null)
+                        foreach (T item in e.NewItems)
+                            OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+
+                    if (e.OldItems is not null)
+                        foreach (T item in e.OldItems)
+                            UnbindPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+                    break;
+            }
         }
 
         OnCollectionChangedAndItemPropertyChangedInternal(context, observableCollection,
@@ -600,16 +665,29 @@ public static class TriggerBinder
         {
             collectionChangedTrigger(e);
 
-            if (e.Action == NotifyCollectionChangedAction.Move)
-                return;
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Move:
+                    break;
 
-            if (e.NewItems is not null)
-                foreach (T item in e.NewItems)
-                    OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+                case NotifyCollectionChangedAction.Reset:
+                    UnbindPropertyChangedBindingsBoundWithinObservableCollection(context,
+                        observableCollection, itemPropertyGetterExpr, itemPropertyChangedTrigger);
 
-            if (e.OldItems is not null)
-                foreach (T item in e.OldItems)
-                    UnbindPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+                    foreach (T item in observableCollection)
+                        OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+                    break;
+
+                default:
+                    if (e.NewItems is not null)
+                        foreach (T item in e.NewItems)
+                            OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+
+                    if (e.OldItems is not null)
+                        foreach (T item in e.OldItems)
+                            UnbindPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+                    break;
+            }
         }
 
         OnCollectionChangedAndItemPropertyChangedInternal(context, observableCollection,
@@ -655,16 +733,29 @@ public static class TriggerBinder
         {
             collectionChangedTrigger();
 
-            if (e.Action == NotifyCollectionChangedAction.Move)
-                return;
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Move:
+                    break;
 
-            if (e.NewItems is not null)
-                foreach (T item in e.NewItems)
-                    OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+                case NotifyCollectionChangedAction.Reset:
+                    UnbindPropertyChangedBindingsBoundWithinObservableCollection(context,
+                        observableCollection, itemPropertyGetterExpr, itemPropertyChangedTrigger);
 
-            if (e.OldItems is not null)
-                foreach (T item in e.OldItems)
-                    UnbindPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+                    foreach (T item in observableCollection)
+                        OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+                    break;
+
+                default:
+                    if (e.NewItems is not null)
+                        foreach (T item in e.NewItems)
+                            OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+
+                    if (e.OldItems is not null)
+                        foreach (T item in e.OldItems)
+                            UnbindPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+                    break;
+            }
         }
 
         OnCollectionChangedAndItemPropertyChangedInternal(context, observableCollection,
@@ -708,16 +799,29 @@ public static class TriggerBinder
         {
             collectionChangedTrigger();
 
-            if (e.Action == NotifyCollectionChangedAction.Move)
-                return;
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Move:
+                    break;
 
-            if (e.NewItems is not null)
-                foreach (T item in e.NewItems)
-                    OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+                case NotifyCollectionChangedAction.Reset:
+                    UnbindPropertyChangedBindingsBoundWithinObservableCollection(context,
+                        observableCollection, itemPropertyGetterExpr, itemPropertyChangedTrigger);
 
-            if (e.OldItems is not null)
-                foreach (T item in e.OldItems)
-                    UnbindPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+                    foreach (T item in observableCollection)
+                        OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+                    break;
+
+                default:
+                    if (e.NewItems is not null)
+                        foreach (T item in e.NewItems)
+                            OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+
+                    if (e.OldItems is not null)
+                        foreach (T item in e.OldItems)
+                            UnbindPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+                    break;
+            }
         }
 
         OnCollectionChangedAndItemPropertyChangedInternal(context, observableCollection,
@@ -761,16 +865,29 @@ public static class TriggerBinder
         {
             collectionChangedTrigger();
 
-            if (e.Action == NotifyCollectionChangedAction.Move)
-                return;
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Move:
+                    break;
 
-            if (e.NewItems is not null)
-                foreach (T item in e.NewItems)
-                    OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+                case NotifyCollectionChangedAction.Reset:
+                    UnbindPropertyChangedBindingsBoundWithinObservableCollection(context,
+                        observableCollection, itemPropertyGetterExpr, itemPropertyChangedTrigger);
 
-            if (e.OldItems is not null)
-                foreach (T item in e.OldItems)
-                    UnbindPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+                    foreach (T item in observableCollection)
+                        OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+                    break;
+
+                default:
+                    if (e.NewItems is not null)
+                        foreach (T item in e.NewItems)
+                            OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+
+                    if (e.OldItems is not null)
+                        foreach (T item in e.OldItems)
+                            UnbindPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+                    break;
+            }
         }
 
         OnCollectionChangedAndItemPropertyChangedInternal(context, observableCollection,
@@ -818,16 +935,29 @@ public static class TriggerBinder
         {
             collectionChangedTrigger(observableCollection, e);
 
-            if (e.Action == NotifyCollectionChangedAction.Move)
-                return;
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Move:
+                    break;
 
-            if (e.NewItems is not null)
-                foreach (T item in e.NewItems)
-                    OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+                case NotifyCollectionChangedAction.Reset:
+                    UnbindPropertyChangingBindingsBoundWithinObservableCollection(context,
+                        observableCollection, itemPropertyGetterExpr, itemPropertyChangingTrigger);
 
-            if (e.OldItems is not null)
-                foreach (T item in e.OldItems)
-                    OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+                    foreach (T item in observableCollection)
+                        OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+                    break;
+
+                default:
+                    if (e.NewItems is not null)
+                        foreach (T item in e.NewItems)
+                            OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+
+                    if (e.OldItems is not null)
+                        foreach (T item in e.OldItems)
+                            OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+                    break;
+            }
         }
 
         OnCollectionChangedAndItemPropertyChangingInternal(context, observableCollection,
@@ -871,16 +1001,29 @@ public static class TriggerBinder
         {
             collectionChangedTrigger(observableCollection, e);
 
-            if (e.Action == NotifyCollectionChangedAction.Move)
-                return;
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Move:
+                    break;
 
-            if (e.NewItems is not null)
-                foreach (T item in e.NewItems)
-                    OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+                case NotifyCollectionChangedAction.Reset:
+                    UnbindPropertyChangingBindingsBoundWithinObservableCollection(context,
+                        observableCollection, itemPropertyGetterExpr, itemPropertyChangingTrigger);
 
-            if (e.OldItems is not null)
-                foreach (T item in e.OldItems)
-                    OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+                    foreach (T item in observableCollection)
+                        OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+                    break;
+
+                default:
+                    if (e.NewItems is not null)
+                        foreach (T item in e.NewItems)
+                            OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+
+                    if (e.OldItems is not null)
+                        foreach (T item in e.OldItems)
+                            OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+                    break;
+            }
         }
 
         OnCollectionChangedAndItemPropertyChangingInternal(context, observableCollection,
@@ -924,16 +1067,29 @@ public static class TriggerBinder
         {
             collectionChangedTrigger(observableCollection, e);
 
-            if (e.Action == NotifyCollectionChangedAction.Move)
-                return;
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Move:
+                    break;
 
-            if (e.NewItems is not null)
-                foreach (T item in e.NewItems)
-                    OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+                case NotifyCollectionChangedAction.Reset:
+                    UnbindPropertyChangingBindingsBoundWithinObservableCollection(context,
+                        observableCollection, itemPropertyGetterExpr, itemPropertyChangingTrigger);
 
-            if (e.OldItems is not null)
-                foreach (T item in e.OldItems)
-                    OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+                    foreach (T item in observableCollection)
+                        OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+                    break;
+
+                default:
+                    if (e.NewItems is not null)
+                        foreach (T item in e.NewItems)
+                            OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+
+                    if (e.OldItems is not null)
+                        foreach (T item in e.OldItems)
+                            OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+                    break;
+            }
         }
 
         OnCollectionChangedAndItemPropertyChangingInternal(context, observableCollection,
@@ -979,16 +1135,29 @@ public static class TriggerBinder
         {
             collectionChangedTrigger(e);
 
-            if (e.Action == NotifyCollectionChangedAction.Move)
-                return;
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Move:
+                    break;
 
-            if (e.NewItems is not null)
-                foreach (T item in e.NewItems)
-                    OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+                case NotifyCollectionChangedAction.Reset:
+                    UnbindPropertyChangingBindingsBoundWithinObservableCollection(context,
+                        observableCollection, itemPropertyGetterExpr, itemPropertyChangingTrigger);
 
-            if (e.OldItems is not null)
-                foreach (T item in e.OldItems)
-                    OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+                    foreach (T item in observableCollection)
+                        OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+                    break;
+
+                default:
+                    if (e.NewItems is not null)
+                        foreach (T item in e.NewItems)
+                            OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+
+                    if (e.OldItems is not null)
+                        foreach (T item in e.OldItems)
+                            OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+                    break;
+            }
         }
 
         OnCollectionChangedAndItemPropertyChangingInternal(context, observableCollection,
@@ -1032,16 +1201,29 @@ public static class TriggerBinder
         {
             collectionChangedTrigger(e);
 
-            if (e.Action == NotifyCollectionChangedAction.Move)
-                return;
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Move:
+                    break;
 
-            if (e.NewItems is not null)
-                foreach (T item in e.NewItems)
-                    OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+                case NotifyCollectionChangedAction.Reset:
+                    UnbindPropertyChangingBindingsBoundWithinObservableCollection(context,
+                        observableCollection, itemPropertyGetterExpr, itemPropertyChangingTrigger);
 
-            if (e.OldItems is not null)
-                foreach (T item in e.OldItems)
-                    OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+                    foreach (T item in observableCollection)
+                        OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+                    break;
+
+                default:
+                    if (e.NewItems is not null)
+                        foreach (T item in e.NewItems)
+                            OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+
+                    if (e.OldItems is not null)
+                        foreach (T item in e.OldItems)
+                            OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+                    break;
+            }
         }
 
         OnCollectionChangedAndItemPropertyChangingInternal(context, observableCollection,
@@ -1085,16 +1267,29 @@ public static class TriggerBinder
         {
             collectionChangedTrigger(e);
 
-            if (e.Action == NotifyCollectionChangedAction.Move)
-                return;
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Move:
+                    break;
 
-            if (e.NewItems is not null)
-                foreach (T item in e.NewItems)
-                    OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+                case NotifyCollectionChangedAction.Reset:
+                    UnbindPropertyChangingBindingsBoundWithinObservableCollection(context,
+                        observableCollection, itemPropertyGetterExpr, itemPropertyChangingTrigger);
 
-            if (e.OldItems is not null)
-                foreach (T item in e.OldItems)
-                    OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+                    foreach (T item in observableCollection)
+                        OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+                    break;
+
+                default:
+                    if (e.NewItems is not null)
+                        foreach (T item in e.NewItems)
+                            OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+
+                    if (e.OldItems is not null)
+                        foreach (T item in e.OldItems)
+                            OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+                    break;
+            }
         }
 
         OnCollectionChangedAndItemPropertyChangingInternal(context, observableCollection,
@@ -1140,16 +1335,29 @@ public static class TriggerBinder
         {
             collectionChangedTrigger();
 
-            if (e.Action == NotifyCollectionChangedAction.Move)
-                return;
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Move:
+                    break;
 
-            if (e.NewItems is not null)
-                foreach (T item in e.NewItems)
-                    OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+                case NotifyCollectionChangedAction.Reset:
+                    UnbindPropertyChangingBindingsBoundWithinObservableCollection(context,
+                        observableCollection, itemPropertyGetterExpr, itemPropertyChangingTrigger);
 
-            if (e.OldItems is not null)
-                foreach (T item in e.OldItems)
-                    OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+                    foreach (T item in observableCollection)
+                        OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+                    break;
+
+                default:
+                    if (e.NewItems is not null)
+                        foreach (T item in e.NewItems)
+                            OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+
+                    if (e.OldItems is not null)
+                        foreach (T item in e.OldItems)
+                            OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+                    break;
+            }
         }
 
         OnCollectionChangedAndItemPropertyChangingInternal(context, observableCollection,
@@ -1193,16 +1401,29 @@ public static class TriggerBinder
         {
             collectionChangedTrigger();
 
-            if (e.Action == NotifyCollectionChangedAction.Move)
-                return;
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Move:
+                    break;
 
-            if (e.NewItems is not null)
-                foreach (T item in e.NewItems)
-                    OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+                case NotifyCollectionChangedAction.Reset:
+                    UnbindPropertyChangingBindingsBoundWithinObservableCollection(context,
+                        observableCollection, itemPropertyGetterExpr, itemPropertyChangingTrigger);
 
-            if (e.OldItems is not null)
-                foreach (T item in e.OldItems)
-                    OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+                    foreach (T item in observableCollection)
+                        OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+                    break;
+
+                default:
+                    if (e.NewItems is not null)
+                        foreach (T item in e.NewItems)
+                            OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+
+                    if (e.OldItems is not null)
+                        foreach (T item in e.OldItems)
+                            OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+                    break;
+            }
         }
 
         OnCollectionChangedAndItemPropertyChangingInternal(context, observableCollection,
@@ -1246,16 +1467,29 @@ public static class TriggerBinder
         {
             collectionChangedTrigger();
 
-            if (e.Action == NotifyCollectionChangedAction.Move)
-                return;
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Move:
+                    break;
 
-            if (e.NewItems is not null)
-                foreach (T item in e.NewItems)
-                    OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+                case NotifyCollectionChangedAction.Reset:
+                    UnbindPropertyChangingBindingsBoundWithinObservableCollection(context,
+                        observableCollection, itemPropertyGetterExpr, itemPropertyChangingTrigger);
 
-            if (e.OldItems is not null)
-                foreach (T item in e.OldItems)
-                    OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+                    foreach (T item in observableCollection)
+                        OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+                    break;
+
+                default:
+                    if (e.NewItems is not null)
+                        foreach (T item in e.NewItems)
+                            OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+
+                    if (e.OldItems is not null)
+                        foreach (T item in e.OldItems)
+                            OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+                    break;
+            }
         }
 
         OnCollectionChangedAndItemPropertyChangingInternal(context, observableCollection,
@@ -1297,16 +1531,29 @@ public static class TriggerBinder
 
         void eventHandler(object? _, NotifyCollectionChangedEventArgs e)
         {
-            if (e.Action == NotifyCollectionChangedAction.Move)
-                return;
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Move:
+                    break;
 
-            if (e.NewItems is not null)
-                foreach (T item in e.NewItems)
-                    OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+                case NotifyCollectionChangedAction.Reset:
+                    UnbindPropertyChangedBindingsBoundWithinObservableCollection(context,
+                        observableCollection, itemPropertyGetterExpr, itemPropertyChangedTrigger);
 
-            if (e.OldItems is not null)
-                foreach (T item in e.OldItems)
-                    UnbindPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+                    foreach (T item in observableCollection)
+                        OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+                    break;
+
+                default:
+                    if (e.NewItems is not null)
+                        foreach (T item in e.NewItems)
+                            OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+
+                    if (e.OldItems is not null)
+                        foreach (T item in e.OldItems)
+                            UnbindPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+                    break;
+            }
         }
 
         OnCollectionItemPropertyChangedInternal(context, observableCollection,
@@ -1345,16 +1592,29 @@ public static class TriggerBinder
 
         void eventHandler(object? _, NotifyCollectionChangedEventArgs e)
         {
-            if (e.Action == NotifyCollectionChangedAction.Move)
-                return;
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Move:
+                    break;
 
-            if (e.NewItems is not null)
-                foreach (T item in e.NewItems)
-                    OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+                case NotifyCollectionChangedAction.Reset:
+                    UnbindPropertyChangedBindingsBoundWithinObservableCollection(context,
+                        observableCollection, itemPropertyGetterExpr, itemPropertyChangedTrigger);
 
-            if (e.OldItems is not null)
-                foreach (T item in e.OldItems)
-                    UnbindPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+                    foreach (T item in observableCollection)
+                        OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+                    break;
+
+                default:
+                    if (e.NewItems is not null)
+                        foreach (T item in e.NewItems)
+                            OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+
+                    if (e.OldItems is not null)
+                        foreach (T item in e.OldItems)
+                            UnbindPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+                    break;
+            }
         }
 
         OnCollectionItemPropertyChangedInternal(context, observableCollection,
@@ -1393,16 +1653,29 @@ public static class TriggerBinder
 
         void eventHandler(object? _, NotifyCollectionChangedEventArgs e)
         {
-            if (e.Action == NotifyCollectionChangedAction.Move)
-                return;
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Move:
+                    break;
 
-            if (e.NewItems is not null)
-                foreach (T item in e.NewItems)
-                    OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+                case NotifyCollectionChangedAction.Reset:
+                    UnbindPropertyChangedBindingsBoundWithinObservableCollection(context,
+                        observableCollection, itemPropertyGetterExpr, itemPropertyChangedTrigger);
 
-            if (e.OldItems is not null)
-                foreach (T item in e.OldItems)
-                    UnbindPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+                    foreach (T item in observableCollection)
+                        OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+                    break;
+
+                default:
+                    if (e.NewItems is not null)
+                        foreach (T item in e.NewItems)
+                            OnPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+
+                    if (e.OldItems is not null)
+                        foreach (T item in e.OldItems)
+                            UnbindPropertyChanged(context, item, itemPropertyGetterExpr, itemPropertyChangedTrigger);
+                    break;
+            }
         }
 
         OnCollectionItemPropertyChangedInternal(context, observableCollection,
@@ -1443,16 +1716,29 @@ public static class TriggerBinder
 
         void eventHandler(object? _, NotifyCollectionChangedEventArgs e)
         {
-            if (e.Action == NotifyCollectionChangedAction.Move)
-                return;
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Move:
+                    break;
 
-            if (e.NewItems is not null)
-                foreach (T item in e.NewItems)
-                    OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+                case NotifyCollectionChangedAction.Reset:
+                    UnbindPropertyChangingBindingsBoundWithinObservableCollection(context,
+                        observableCollection, itemPropertyGetterExpr, itemPropertyChangingTrigger);
 
-            if (e.OldItems is not null)
-                foreach (T item in e.OldItems)
-                    UnbindPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+                    foreach (T item in observableCollection)
+                        OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+                    break;
+
+                default:
+                    if (e.NewItems is not null)
+                        foreach (T item in e.NewItems)
+                            OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+
+                    if (e.OldItems is not null)
+                        foreach (T item in e.OldItems)
+                            OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+                    break;
+            }
         }
 
         OnCollectionItemPropertyChangingInternal(context, observableCollection,
@@ -1491,16 +1777,29 @@ public static class TriggerBinder
 
         void eventHandler(object? _, NotifyCollectionChangedEventArgs e)
         {
-            if (e.Action == NotifyCollectionChangedAction.Move)
-                return;
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Move:
+                    break;
 
-            if (e.NewItems is not null)
-                foreach (T item in e.NewItems)
-                    OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+                case NotifyCollectionChangedAction.Reset:
+                    UnbindPropertyChangingBindingsBoundWithinObservableCollection(context,
+                        observableCollection, itemPropertyGetterExpr, itemPropertyChangingTrigger);
 
-            if (e.OldItems is not null)
-                foreach (T item in e.OldItems)
-                    UnbindPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+                    foreach (T item in observableCollection)
+                        OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+                    break;
+
+                default:
+                    if (e.NewItems is not null)
+                        foreach (T item in e.NewItems)
+                            OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+
+                    if (e.OldItems is not null)
+                        foreach (T item in e.OldItems)
+                            OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+                    break;
+            }
         }
 
         OnCollectionItemPropertyChangingInternal(context, observableCollection,
@@ -1539,16 +1838,29 @@ public static class TriggerBinder
 
         void eventHandler(object? _, NotifyCollectionChangedEventArgs e)
         {
-            if (e.Action == NotifyCollectionChangedAction.Move)
-                return;
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Move:
+                    break;
 
-            if (e.NewItems is not null)
-                foreach (T item in e.NewItems)
-                    OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+                case NotifyCollectionChangedAction.Reset:
+                    UnbindPropertyChangingBindingsBoundWithinObservableCollection(context,
+                        observableCollection, itemPropertyGetterExpr, itemPropertyChangingTrigger);
 
-            if (e.OldItems is not null)
-                foreach (T item in e.OldItems)
-                    UnbindPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+                    foreach (T item in observableCollection)
+                        OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+                    break;
+
+                default:
+                    if (e.NewItems is not null)
+                        foreach (T item in e.NewItems)
+                            OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+
+                    if (e.OldItems is not null)
+                        foreach (T item in e.OldItems)
+                            OnPropertyChanging(context, item, itemPropertyGetterExpr, itemPropertyChangingTrigger);
+                    break;
+            }
         }
 
         OnCollectionItemPropertyChangingInternal(context, observableCollection,
@@ -2656,6 +2968,23 @@ public static class TriggerBinder
             UnbindCollectionItemPropertyChangedBinding(binding);
     }
 
+    private static void UnbindPropertyChangedBindingsBoundWithinObservableCollection<T, TProperty>
+    (
+        object context,
+        INotifyCollectionChanged observableCollection,
+        Expression<Func<T, TProperty>> itemPropertyGetterExpr,
+        Delegate itemPropertyChangedTrigger)
+    {
+        // Unbind all triggers bound to items
+        var itemPropertyName = GetPropertyName(itemPropertyGetterExpr);
+        UnbindPropertyChangedBindings(
+            _propertyChangedBindings
+                .IntersectBy((IEnumerable<INotifyPropertyChanged>)observableCollection, pb => pb.Observable)
+                .Where(pb => pb.Context == context &&
+                             pb.PropertyName == itemPropertyName &&
+                             pb.Trigger == (Delegate)itemPropertyChangedTrigger));
+    }
+
     private static void UnbindCollectionItemPropertyChangingBinding
     (
         CollectionItemPropertyChangingTriggerBinding triggerBinding)
@@ -2678,6 +3007,23 @@ public static class TriggerBinder
         var bindingsCopy = bindings.ToArray();
         foreach (var binding in bindingsCopy)
             UnbindCollectionItemPropertyChangingBinding(binding);
+    }
+
+    private static void UnbindPropertyChangingBindingsBoundWithinObservableCollection<T, TProperty>
+    (
+        object context,
+        INotifyCollectionChanged observableCollection,
+        Expression<Func<T, TProperty>> itemPropertyGetterExpr,
+        Delegate itemPropertyChangingTrigger)
+    {
+        // Unbind all triggers bound to items
+        var itemPropertyName = GetPropertyName(itemPropertyGetterExpr);
+        UnbindPropertyChangingBindings(
+            _propertyChangingBindings
+                .IntersectBy((IEnumerable<INotifyPropertyChanging>)observableCollection, pb => pb.Observable)
+                .Where(pb => pb.Context == context &&
+                             pb.PropertyName == itemPropertyName &&
+                             pb.Trigger == (Delegate)itemPropertyChangingTrigger));
     }
     #endregion
     #endregion
