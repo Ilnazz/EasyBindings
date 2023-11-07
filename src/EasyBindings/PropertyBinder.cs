@@ -11,7 +11,7 @@ namespace EasyBindings;
 /// </summary>
 public static class PropertyBinder
 {
-    private static readonly IList<PropertyBinding> _bindings = new List<PropertyBinding>();
+    private static readonly IList<PropertyBinding> Bindings = new List<PropertyBinding>();
 
     #region Public methods 
     #region Binding
@@ -43,28 +43,28 @@ public static class PropertyBinder
         var targetPropertyGetter = targetPropertyGetterExpr.Compile();
         var targetPropertySetter = CreatePropertySetter(targetPropertyGetterExpr);
 
-        void sourcePropertyChangedEventHandler(object? _, PropertyChangedEventArgs e)
+        void SourcePropertyChangedEventHandler(object? _, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == sourcePropertyName)
-            {
-                TProperty oldValue = targetPropertyGetter(target),
-                          newValue = sourcePropertyGetter(source);
+            if (e.PropertyName != sourcePropertyName)
+                return;
 
-                if (EqualityComparer<TProperty>.Default.Equals(oldValue, newValue) == false)
-                    targetPropertySetter(target, newValue);
-            }
+            TProperty oldValue = targetPropertyGetter(target),
+                      newValue = sourcePropertyGetter(source);
+
+            if (EqualityComparer<TProperty>.Default.Equals(oldValue, newValue) == false)
+                targetPropertySetter(target, newValue);
         }
 
-        source.PropertyChanged += sourcePropertyChangedEventHandler;
-        _bindings.Add(new PropertyBinding
+        source.PropertyChanged += SourcePropertyChangedEventHandler;
+        Bindings.Add(new PropertyBinding
         (
             context,
             target!, targetPropertyName, null,
-            source, sourcePropertyName, sourcePropertyChangedEventHandler
+            source, sourcePropertyName, SourcePropertyChangedEventHandler
         ));
 
         // Initialize target property by source property value
-        sourcePropertyChangedEventHandler(null, new PropertyChangedEventArgs(sourcePropertyName));
+        SourcePropertyChangedEventHandler(null, new PropertyChangedEventArgs(sourcePropertyName));
     }
 
     /// <summary>
@@ -99,28 +99,28 @@ public static class PropertyBinder
         var targetPropertyGetter = targetPropertyGetterExpr.Compile();
         var targetPropertySetter = CreatePropertySetter(targetPropertyGetterExpr);
 
-        void sourcePropertyChangedEventHandler(object? _, PropertyChangedEventArgs e)
+        void SourcePropertyChangedEventHandler(object? _, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == sourcePropertyName)
-            {
-                TTargetProperty oldValue = targetPropertyGetter(target),
-                                newValue = converter(sourcePropertyGetter(source));
+            if (e.PropertyName != sourcePropertyName)
+                return;
 
-                if (EqualityComparer<TTargetProperty>.Default.Equals(oldValue, newValue) == false)
-                    targetPropertySetter(target, newValue);
-            }
+            TTargetProperty oldValue = targetPropertyGetter(target),
+                            newValue = converter(sourcePropertyGetter(source));
+
+            if (EqualityComparer<TTargetProperty>.Default.Equals(oldValue, newValue) == false)
+                targetPropertySetter(target, newValue);
         }
 
-        source.PropertyChanged += sourcePropertyChangedEventHandler;
-        _bindings.Add(new PropertyBinding
+        source.PropertyChanged += SourcePropertyChangedEventHandler;
+        Bindings.Add(new PropertyBinding
         (
             context,
             target!, targetPropertyName, null,
-            source, sourcePropertyName, sourcePropertyChangedEventHandler
+            source, sourcePropertyName, SourcePropertyChangedEventHandler
         ));
 
         // Initialize target property by source property value
-        sourcePropertyChangedEventHandler(null, new PropertyChangedEventArgs(sourcePropertyName));
+        SourcePropertyChangedEventHandler(null, new PropertyChangedEventArgs(sourcePropertyName));
     }
 
     /// <summary>
@@ -224,7 +224,7 @@ public static class PropertyBinder
 
     #region Unbinding
     /// <summary>
-    /// Unbinds all bindigns from <paramref name="target"/> object's property.
+    /// Unbinds all bindings from <paramref name="target"/> object's property.
     /// </summary>
     /// <typeparam name="T">The type of the <paramref name="target"/> object.</typeparam>
     /// <typeparam name="TProperty">The of the <paramref name="target"/> object's property.</typeparam>
@@ -239,14 +239,14 @@ public static class PropertyBinder
 
         var targetPropertyName = GetPropertyName(targetPropertyGetterExpr);
         UnbindPropertyBindings(
-            _bindings.Where(b =>
+            Bindings.Where(b =>
                 b.Context == context &&
                 b.Target == (object)target &&
                 b.TargetPropertyName == targetPropertyName));
     }
 
     /// <summary>
-    /// Unbinds all property bindigns from all <paramref name="target"/> object's properties.
+    /// Unbinds all property bindings from all <paramref name="target"/> object's properties.
     /// </summary>
     /// <param name="context">The context in which the binding was made.</param>
     /// <param name="target">The object whose properties were bound.</param>
@@ -256,11 +256,11 @@ public static class PropertyBinder
         ArgumentNullException.ThrowIfNull(target, nameof(target));
 
         UnbindPropertyBindings(
-            _bindings.Where(b => b.Context == context && b.Target == target));
+            Bindings.Where(b => b.Context == context && b.Target == target));
     }
 
     /// <summary>
-    /// Unbinds all bindigns from <paramref name="source"/> object's property.
+    /// Unbinds all bindings from <paramref name="source"/> object's property.
     /// </summary>
     /// <typeparam name="T">The type of the <paramref name="source"/> object.</typeparam>
     /// <typeparam name="TProperty">The of the <paramref name="source"/> object's property.</typeparam>
@@ -275,14 +275,14 @@ public static class PropertyBinder
 
         var sourcePropertyName = GetPropertyName(sourcePropertyGetterExpr);
         UnbindPropertyBindings(
-            _bindings.Where(b =>
+            Bindings.Where(b =>
                 b.Context == context &&
                 b.Source == (object)source &&
                 b.SourcePropertyName == sourcePropertyName));
     }
 
     /// <summary>
-    /// Unbinds all property bindigns from all <paramref name="source"/> object's properties.
+    /// Unbinds all property bindings from all <paramref name="source"/> object's properties.
     /// </summary>
     /// <param name="context">The context in which the binding was made.</param>
     /// <param name="source">The object whose properties were bound.</param>
@@ -292,17 +292,15 @@ public static class PropertyBinder
         ArgumentNullException.ThrowIfNull(source, nameof(source));
 
         UnbindPropertyBindings(
-            _bindings.Where(b => b.Context == context && b.Source == source));
+            Bindings.Where(b => b.Context == context && b.Source == source));
     }
 
     /// <summary>
     /// Unbinds all bindings made in a given context.
     /// </summary>
     /// <param name="context">The context in which the binding was made.</param>
-    public static void Unbind(object context)
-    {
-        UnbindPropertyBindings(_bindings.Where(b => b.Context == context));
-    }
+    public static void Unbind(object context) =>
+        UnbindPropertyBindings(Bindings.Where(b => b.Context == context));
     #endregion
     #endregion
 
@@ -315,10 +313,10 @@ public static class PropertyBinder
         var propertyName = ((MemberExpression)propertyGetter.Body).Member.Name;
         var propertyInfo = typeof(T).GetProperty(propertyName)!;
 
-        void propertySetter(T target, TProperty newValue) =>
+        void PropertySetter(T target, TProperty newValue) =>
             propertyInfo.SetValue(target, newValue);
 
-        return propertySetter;
+        return PropertySetter;
     }
 
     private static void CheckBindingArgs<TTarget, TSource, TTargetProperty, TSourceProperty>
@@ -337,7 +335,7 @@ public static class PropertyBinder
         string targetPropertyName = GetPropertyName(targetPropertyGetterExpr),
                sourcePropertyName = GetPropertyName(sourcePropertyGetterExpr);
 
-        var isBindingExist =  _bindings.Any(b =>
+        var isBindingExist =  Bindings.Any(b =>
             b.Context == context &&
             b.Target == (object)target &&
             b.TargetPropertyName == targetPropertyName &&
@@ -363,25 +361,25 @@ public static class PropertyBinder
         else if (propertyBinding.Source is INotifyPropertyChanged observableSource)
             observableSource.PropertyChanged -= propertyBinding.SourcePropertyChangedEventHandler;
 
-        _bindings.Remove(propertyBinding);
+        Bindings.Remove(propertyBinding);
     }
     #endregion
 
     private class PropertyBinding
     {
-        public object Context { get; init; }
+        public object Context { get; }
 
-        public object Target { get; init; }
+        public object Target { get; }
 
-        public string TargetPropertyName { get; init; }
+        public string TargetPropertyName { get; }
 
-        public PropertyChangedEventHandler? TargetPropertyChangedEventHandler { get; init; }
+        public PropertyChangedEventHandler? TargetPropertyChangedEventHandler { get; }
 
-        public object Source { get; init; }
+        public object Source { get; }
 
-        public string SourcePropertyName { get; init; }
+        public string SourcePropertyName { get; }
 
-        public PropertyChangedEventHandler? SourcePropertyChangedEventHandler { get; init; }
+        public PropertyChangedEventHandler? SourcePropertyChangedEventHandler { get; }
 
         public PropertyBinding
         (

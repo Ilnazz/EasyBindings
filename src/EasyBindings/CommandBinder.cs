@@ -12,7 +12,7 @@ namespace EasyBindings;
 /// </summary>
 public static class CommandBinder
 {
-    private static readonly IList<CommandBinding> _bindings = new List<CommandBinding>();
+    private static readonly IList<CommandBinding> Bindings = new List<CommandBinding>();
 
     #region Public methods
     #region Binding methods
@@ -28,7 +28,7 @@ public static class CommandBinder
 
         BindInternal(context,
             commandExecutor, () => command.Execute(null),
-            command, (object? _, EventArgs _) => commandExecutor.CanExecuteCommand = command.CanExecute(null));
+            command, (_, _) => commandExecutor.CanExecuteCommand = command.CanExecute(null));
 
         commandExecutor.CanExecuteCommand = command.CanExecute(null);
     }
@@ -47,7 +47,7 @@ public static class CommandBinder
 
         BindInternal(context,
             commandExecutor, () => command.Execute(commandParameterGetter()),
-            command, (object? _, EventArgs _) => commandExecutor.CanExecuteCommand = command.CanExecute(commandParameterGetter()));
+            command, (_, _) => commandExecutor.CanExecuteCommand = command.CanExecute(commandParameterGetter()));
 
         commandExecutor.CanExecuteCommand = command.CanExecute(commandParameterGetter());
     }
@@ -67,7 +67,7 @@ public static class CommandBinder
 
         BindInternal(context,
             commandExecutor, () => command.Execute(commandParameterGetter()),
-            command, (object? _, EventArgs _) => commandExecutor.CanExecuteCommand = command.CanExecute(commandParameterGetter()));
+            command, (_, _) => commandExecutor.CanExecuteCommand = command.CanExecute(commandParameterGetter()));
 
         commandExecutor.CanExecuteCommand = command.CanExecute(commandParameterGetter());
     }
@@ -86,7 +86,7 @@ public static class CommandBinder
         ArgumentNullException.ThrowIfNull(commandExecutor, nameof(commandExecutor));
         ArgumentNullException.ThrowIfNull(command, nameof(command));
 
-        var binding = _bindings.FirstOrDefault(b =>
+        var binding = Bindings.FirstOrDefault(b =>
             b.Context == context &&
             b.CommandExecutor == commandExecutor &&
             b.Command == command);
@@ -106,7 +106,7 @@ public static class CommandBinder
         ArgumentNullException.ThrowIfNull(commandExecutor, nameof(commandExecutor));
 
         UnbindCommandBindings(
-            _bindings.Where(b => b.Context == context && b.CommandExecutor == commandExecutor));
+            Bindings.Where(b => b.Context == context && b.CommandExecutor == commandExecutor));
     }
 
     /// <summary>
@@ -117,7 +117,7 @@ public static class CommandBinder
     {
         ArgumentNullException.ThrowIfNull(context, nameof(context));
 
-        UnbindCommandBindings(_bindings.Where(b => b.Context == context));
+        UnbindCommandBindings(Bindings.Where(b => b.Context == context));
     }
     #endregion
     #endregion
@@ -129,7 +129,7 @@ public static class CommandBinder
         ArgumentNullException.ThrowIfNull(commandExecutor, nameof(commandExecutor));
         ArgumentNullException.ThrowIfNull(command, nameof(command));
 
-        var isBindingExist = _bindings.Any(b =>
+        var isBindingExist = Bindings.Any(b =>
             b.Context == context &&
             b.CommandExecutor == commandExecutor &&
             b.Command == command);
@@ -147,7 +147,7 @@ public static class CommandBinder
         commandExecutor.CommandExecutionRequested += commandExecutionRequestedEventHandler;
         command.CanExecuteChanged += commandCanExecuteChangedEventHandler;
 
-        _bindings.Add(new CommandBinding
+        Bindings.Add(new CommandBinding
         (
             context,
             commandExecutor, commandExecutionRequestedEventHandler,
@@ -165,34 +165,34 @@ public static class CommandBinder
     private static void UnbindCommandBinding(CommandBinding commandBinding)
     {
         commandBinding.CommandExecutor.CommandExecutionRequested -= commandBinding.CommandExecutionRequestedEventHandler;
-        commandBinding.Command.CanExecuteChanged -= commandBinding.CommanCanExecuteChangedEventHandler;
-        _bindings.Remove(commandBinding);
+        commandBinding.Command.CanExecuteChanged -= commandBinding.CommandCanExecuteChangedEventHandler;
+        Bindings.Remove(commandBinding);
     }
     #endregion
 
     private class CommandBinding
     {
-        public object Context { get; init; }
+        public object Context { get; }
 
-        public ICommandExecutor CommandExecutor { get; init; }
+        public ICommandExecutor CommandExecutor { get; }
 
-        public Action CommandExecutionRequestedEventHandler { get; init; }
+        public Action CommandExecutionRequestedEventHandler { get; }
 
-        public ICommand Command { get; init; }
+        public ICommand Command { get; }
 
-        public EventHandler CommanCanExecuteChangedEventHandler { get; init; }
+        public EventHandler CommandCanExecuteChangedEventHandler { get; }
 
         public CommandBinding
         (
             object context, ICommandExecutor commandExecutor,
             Action commandExecutionRequestedEventHandler,
-            ICommand command, EventHandler commanCanExecuteChangedEventHandler)
+            ICommand command, EventHandler commandCanExecuteChangedEventHandler)
         {
             Context = context;
             CommandExecutor = commandExecutor;
             CommandExecutionRequestedEventHandler = commandExecutionRequestedEventHandler;
             Command = command;
-            CommanCanExecuteChangedEventHandler = commanCanExecuteChangedEventHandler;
+            CommandCanExecuteChangedEventHandler = commandCanExecuteChangedEventHandler;
         }
     }
 }

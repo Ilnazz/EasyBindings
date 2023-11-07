@@ -9,7 +9,7 @@ namespace EasyBindings;
 [Serializable]
 public class BindingException : Exception
 {
-    public BindingException() : base() { }
+    public BindingException() { }
 
     public BindingException(string? message) : base(message) {}
 
