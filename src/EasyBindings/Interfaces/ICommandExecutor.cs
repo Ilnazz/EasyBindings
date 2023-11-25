@@ -15,5 +15,5 @@ public interface ICommandExecutor
     /// <summary>
     /// A property that allows to switch the ability of an object to execute a command.
     /// </summary>
-    bool CanExecuteCommand { get; set; }
+    bool CanExecuteCommand { set; }
 }
