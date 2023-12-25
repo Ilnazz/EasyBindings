@@ -175,6 +175,6 @@ public class Program
 
         // When you are not more need in object state changed notifier object,
         // you should call unsubscribe method to clean up subscriptions
-        personObserver.Unsubscribe();
+        personObserver.Dispose();
     }
 }
