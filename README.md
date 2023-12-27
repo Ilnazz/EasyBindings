@@ -1,33 +1,10 @@
 # EasyBindings
 
-## In Russian
-
-### Что это?
-EasyBindings - крохотная C# библиотека, которая позволяет осуществлять привязки триггеров, свойств и команд, как в WPF.
-
-### Для чего это нужно?
-EasyBindings даёт возможность использовать специфичный для WPF механизм привязок свойств, триггеров и команд за пределами какого-либо MVVM фреймворка.
-
-### Что привело к созданию EasyBindings?
-Когда я начал разрабатывать около-игровой проект на движке Godot и имея опыт разработки WPF-проектов, мне очень не хватало наличия механизма привязок.
-Я искал библиотеку, которая позволила бы делать подобные вещи, но не нашёл; поэтому я решил её создать.
-
-### Дополнительно
-- Код библиотеки задокументирован и протестирован.
-- EasyBindings использует официальную библиотеку CommunityToolkit.Mvvm от Microsoft,
-которая предоставляет инструменты для разработки приложений с применением паттерна MVVM.
-
-### Установка
-Вы можете установить EasyBindings через командную строку, используя инструмент dotnet:
-```sh
-> dotnet add package EasyBindings
-```
-или используя консоль менеджера пакетов [NuGet](https://www.nuget.org/packages/EasyBindings):
-```sh
-PM> Install-Package EasyBindings
-```
-
 ## In English
+
+### UPD:
+At the time of the development of this library, I was unaware of the existence of libraries such as [Rx.NET](https://github.com/dotnet/reactive) and [ReactiveUI](https://github.com/reactiveui/ReactiveUI), which allow you to do much more (and much better) than EasyBindings.
+Due to the existence of the mentioned libraries, this library becomes a public archive.
 
 ### What is it?
 EasyBindings is a tiny C# library that allows you perform trigger, property and command bindings, as in WPF.
@@ -43,17 +20,6 @@ I was looking for a library that would allow me to do similar things, but I didn
 - The library code is documented and tested.
 - EasyBindings uses the official Community Toolkit.Mvvm library from Microsoft,
 which provides tools for developing applications using the MVVM pattern.
-
-
-### Installation
-You can install EasyBindings using dotnet command-line tool:
-```sh
-> dotnet add package EasyBindings
-```
-or using [NuGet](https://www.nuget.org/packages/EasyBindings) package manager console:
-```sh
-PM> Install-Package EasyBindings
-```
 
 ### Examples
 #### Classes used in examples
